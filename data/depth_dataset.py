@@ -22,7 +22,10 @@ class DepthDataset(BaseDataset):
         self.C_paths = make_dataset(self.dir_C)
 
         self.A_paths = sorted(self.A_paths)
-        self.B_paths = sorted(self.B_paths)
+        if opt.isTrain:
+            random.shuffle(self.B_paths)    # ensure it is unaligned in training time
+        else:
+            self.B_paths = sorted(self.B_paths)
         self.C_paths = sorted(self.C_paths)
         self.A_size = len(self.A_paths)
         self.B_size = len(self.B_paths)

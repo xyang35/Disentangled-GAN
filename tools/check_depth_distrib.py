@@ -7,9 +7,10 @@ import glob
 import numpy as np
 import matplotlib.pyplot as plt
 
-root = '/home/xyang/UTS/Data/Haze/D-HAZY/NYU_GT/'
+#root = '/home/xyang/UTS/Data/Haze/D-HAZY/NYU_GT/'
+root = '/home/xyang/Downloads/GAN/disentangled_resnet_9blocks_sigmoid_A100_TV0.00001/disentangled_resnet_9blocks_sigmoid_A100_TV0.00001/test_latest/images/'
 
-filenames = glob.glob(root+'*Depth*')
+filenames = glob.glob(root+'*Estimate_depth*')
 images = []
 for name in filenames:
     img = Image.open(name)
