@@ -13,15 +13,15 @@ display_port: 8097
 display_single_pane_ncols: 0
 display_winsize: 256
 fineSize: 256
-gpu_ids: [0, 1]
+gpu_ids: [1]
 grad_clip: -1
 identity: 0.0
 input_nc: 3
 isTrain: True
-lambda_A: 100.0
+lambda_A: 1.0
 lambda_B: 10.0
 lambda_Content: 0.1
-lambda_TV: 1.0
+lambda_TV: 0.0
 lambda_perceptual: 0.1
 loadSize: 286
 lr: 0.0002
@@ -30,7 +30,7 @@ model: disentangled
 nThreads: 2
 n_layers: 3
 n_layers_D: 3
-name: disentangled_resnet_9blocks_sigmoid_A100_TV1_lr0.0002
+name: disentangled_resnet_9blocks_sigmoid_A1_TV0_lr0.0002
 ndf: 64
 ngf: 64
 niter: 50
@@ -242,1355 +242,130 @@ NLayerDiscriminator (
 Total number of parameters: 2764737
 -----------------------------------------------
 model [DisentangledModel] was created
-create web directory /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints/disentangled_resnet_9blocks_sigmoid_A100_TV1_lr0.0002/web...
-(epoch: 1, iters: 200, time: 0.089) G_B: 0.530 G_L1: 10.698 D: 1.392 TV: 0.006 
-(epoch: 1, iters: 400, time: 0.087) G_B: 0.569 G_L1: 8.947 D: 0.772 TV: 0.006 
-(epoch: 1, iters: 600, time: 0.088) G_B: 0.385 G_L1: 22.123 D: 0.645 TV: 0.009 
-(epoch: 1, iters: 800, time: 0.087) G_B: 0.417 G_L1: 11.832 D: 0.409 TV: 0.009 
-(epoch: 1, iters: 1000, time: 0.090) G_B: 0.449 G_L1: 11.333 D: 0.401 TV: 0.009 
-End of epoch 1 / 100 	 Time Taken: 49 sec
-(epoch: 2, iters: 200, time: 0.088) G_B: 0.517 G_L1: 13.730 D: 0.670 TV: 0.011 
-(epoch: 2, iters: 400, time: 0.091) G_B: 0.599 G_L1: 8.028 D: 0.291 TV: 0.012 
-(epoch: 2, iters: 600, time: 0.094) G_B: 0.560 G_L1: 7.267 D: 0.288 TV: 0.010 
-(epoch: 2, iters: 800, time: 0.094) G_B: 1.005 G_L1: 6.565 D: 0.380 TV: 0.011 
-(epoch: 2, iters: 1000, time: 0.094) G_B: 0.531 G_L1: 6.928 D: 0.339 TV: 0.009 
-End of epoch 2 / 100 	 Time Taken: 47 sec
-(epoch: 3, iters: 200, time: 0.095) G_B: 0.889 G_L1: 9.735 D: 0.288 TV: 0.008 
-(epoch: 3, iters: 400, time: 0.096) G_B: 0.502 G_L1: 12.672 D: 0.334 TV: 0.011 
-(epoch: 3, iters: 600, time: 0.096) G_B: 0.640 G_L1: 11.343 D: 0.258 TV: 0.012 
-(epoch: 3, iters: 800, time: 0.097) G_B: 0.805 G_L1: 6.998 D: 0.231 TV: 0.009 
-(epoch: 3, iters: 1000, time: 0.093) G_B: 0.505 G_L1: 9.977 D: 0.384 TV: 0.011 
-End of epoch 3 / 100 	 Time Taken: 47 sec
-(epoch: 4, iters: 200, time: 0.096) G_B: 0.551 G_L1: 7.066 D: 0.338 TV: 0.009 
-(epoch: 4, iters: 400, time: 0.102) G_B: 0.671 G_L1: 9.655 D: 0.187 TV: 0.010 
-(epoch: 4, iters: 600, time: 0.098) G_B: 0.540 G_L1: 5.488 D: 0.250 TV: 0.007 
-(epoch: 4, iters: 800, time: 0.094) G_B: 0.818 G_L1: 6.998 D: 0.378 TV: 0.009 
-(epoch: 4, iters: 1000, time: 0.099) G_B: 0.470 G_L1: 7.423 D: 0.378 TV: 0.010 
-End of epoch 4 / 100 	 Time Taken: 47 sec
-(epoch: 5, iters: 200, time: 0.091) G_B: 0.799 G_L1: 8.612 D: 0.548 TV: 0.009 
-(epoch: 5, iters: 400, time: 0.096) G_B: 0.473 G_L1: 12.393 D: 0.339 TV: 0.011 
-(epoch: 5, iters: 600, time: 0.101) G_B: 0.609 G_L1: 8.912 D: 0.264 TV: 0.010 
-(epoch: 5, iters: 800, time: 0.098) G_B: 0.516 G_L1: 8.437 D: 0.353 TV: 0.012 
-(epoch: 5, iters: 1000, time: 0.099) G_B: 0.562 G_L1: 6.925 D: 0.299 TV: 0.009 
+create web directory /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints/disentangled_resnet_9blocks_sigmoid_A1_TV0_lr0.0002/web...
+dataset [DepthDataset] was created
+(epoch: 1, iters: 200, time: 0.104) G_B: 1.450 G_L1: 0.314 D: 1.153 TV: 0.000 
+(epoch: 1, iters: 400, time: 0.105) G_B: 0.929 G_L1: 0.255 D: 0.896 TV: 0.000 
+(epoch: 1, iters: 600, time: 0.105) G_B: 0.597 G_L1: 0.189 D: 0.399 TV: 0.000 
+(epoch: 1, iters: 800, time: 0.107) G_B: 0.402 G_L1: 0.135 D: 0.799 TV: 0.000 
+(epoch: 1, iters: 1000, time: 0.109) G_B: 0.305 G_L1: 0.125 D: 0.591 TV: 0.000 
+End of epoch 1 / 100 	 Time Taken: 59 sec
+dataset [DepthDataset] was created
+(epoch: 2, iters: 200, time: 0.106) G_B: 0.323 G_L1: 0.113 D: 0.549 TV: 0.000 
+(epoch: 2, iters: 400, time: 0.105) G_B: 0.327 G_L1: 0.122 D: 0.532 TV: 0.000 
+(epoch: 2, iters: 600, time: 0.110) G_B: 0.457 G_L1: 0.103 D: 0.727 TV: 0.000 
+(epoch: 2, iters: 800, time: 0.111) G_B: 0.322 G_L1: 0.159 D: 0.585 TV: 0.000 
+(epoch: 2, iters: 1000, time: 0.109) G_B: 0.294 G_L1: 0.112 D: 0.509 TV: 0.000 
+End of epoch 2 / 100 	 Time Taken: 60 sec
+dataset [DepthDataset] was created
+(epoch: 3, iters: 200, time: 0.110) G_B: 0.345 G_L1: 0.113 D: 0.608 TV: 0.000 
+(epoch: 3, iters: 400, time: 0.114) G_B: 0.282 G_L1: 0.105 D: 0.533 TV: 0.000 
+(epoch: 3, iters: 600, time: 0.109) G_B: 0.393 G_L1: 0.105 D: 0.668 TV: 0.000 
+(epoch: 3, iters: 800, time: 0.110) G_B: 0.274 G_L1: 0.121 D: 0.518 TV: 0.000 
+(epoch: 3, iters: 1000, time: 0.112) G_B: 0.293 G_L1: 0.192 D: 0.528 TV: 0.000 
+End of epoch 3 / 100 	 Time Taken: 61 sec
+dataset [DepthDataset] was created
+(epoch: 4, iters: 200, time: 0.110) G_B: 0.285 G_L1: 0.102 D: 0.523 TV: 0.000 
+(epoch: 4, iters: 400, time: 0.110) G_B: 0.317 G_L1: 0.151 D: 0.551 TV: 0.000 
+(epoch: 4, iters: 600, time: 0.112) G_B: 0.289 G_L1: 0.119 D: 0.514 TV: 0.000 
+(epoch: 4, iters: 800, time: 0.114) G_B: 0.554 G_L1: 0.091 D: 0.994 TV: 0.000 
+(epoch: 4, iters: 1000, time: 0.116) G_B: 0.317 G_L1: 0.122 D: 0.549 TV: 0.000 
+End of epoch 4 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 5, iters: 200, time: 0.113) G_B: 0.297 G_L1: 0.161 D: 0.537 TV: 0.000 
+(epoch: 5, iters: 400, time: 0.110) G_B: 0.266 G_L1: 0.101 D: 0.535 TV: 0.000 
+(epoch: 5, iters: 600, time: 0.111) G_B: 0.264 G_L1: 0.096 D: 0.503 TV: 0.000 
+(epoch: 5, iters: 800, time: 0.109) G_B: 0.308 G_L1: 0.105 D: 0.597 TV: 0.000 
+(epoch: 5, iters: 1000, time: 0.110) G_B: 0.331 G_L1: 0.094 D: 0.507 TV: 0.000 
 saving the latest model (epoch 5, total_steps 5000)
 saving the model at the end of epoch 5, iters 5000
-End of epoch 5 / 100 	 Time Taken: 48 sec
-(epoch: 6, iters: 200, time: 0.097) G_B: 0.592 G_L1: 6.134 D: 0.330 TV: 0.010 
-(epoch: 6, iters: 400, time: 0.095) G_B: 0.467 G_L1: 9.601 D: 0.311 TV: 0.009 
-(epoch: 6, iters: 600, time: 0.096) G_B: 0.532 G_L1: 11.028 D: 0.449 TV: 0.011 
-(epoch: 6, iters: 800, time: 0.096) G_B: 0.669 G_L1: 7.386 D: 0.289 TV: 0.009 
-(epoch: 6, iters: 1000, time: 0.096) G_B: 0.801 G_L1: 6.241 D: 0.256 TV: 0.011 
-End of epoch 6 / 100 	 Time Taken: 48 sec
-(epoch: 7, iters: 200, time: 0.096) G_B: 0.478 G_L1: 10.435 D: 0.380 TV: 0.011 
-(epoch: 7, iters: 400, time: 0.098) G_B: 0.484 G_L1: 6.135 D: 0.407 TV: 0.010 
-(epoch: 7, iters: 600, time: 0.100) G_B: 0.602 G_L1: 7.654 D: 0.259 TV: 0.009 
-(epoch: 7, iters: 800, time: 0.095) G_B: 0.539 G_L1: 10.244 D: 0.392 TV: 0.011 
-(epoch: 7, iters: 1000, time: 0.100) G_B: 0.526 G_L1: 6.057 D: 0.349 TV: 0.012 
-End of epoch 7 / 100 	 Time Taken: 48 sec
-(epoch: 8, iters: 200, time: 0.099) G_B: 0.559 G_L1: 8.711 D: 0.315 TV: 0.010 
-(epoch: 8, iters: 400, time: 0.097) G_B: 0.628 G_L1: 6.651 D: 0.308 TV: 0.010 
-(epoch: 8, iters: 600, time: 0.098) G_B: 0.618 G_L1: 8.668 D: 0.256 TV: 0.007 
-(epoch: 8, iters: 800, time: 0.098) G_B: 0.515 G_L1: 5.717 D: 0.436 TV: 0.009 
-(epoch: 8, iters: 1000, time: 0.101) G_B: 0.650 G_L1: 7.631 D: 0.273 TV: 0.011 
-End of epoch 8 / 100 	 Time Taken: 48 sec
-(epoch: 9, iters: 200, time: 0.098) G_B: 0.760 G_L1: 6.249 D: 0.192 TV: 0.009 
-(epoch: 9, iters: 400, time: 0.102) G_B: 0.740 G_L1: 6.041 D: 0.293 TV: 0.010 
-(epoch: 9, iters: 600, time: 0.099) G_B: 0.601 G_L1: 7.483 D: 0.284 TV: 0.008 
-(epoch: 9, iters: 800, time: 0.095) G_B: 0.658 G_L1: 6.533 D: 0.231 TV: 0.008 
-(epoch: 9, iters: 1000, time: 0.101) G_B: 0.795 G_L1: 9.659 D: 0.318 TV: 0.009 
-End of epoch 9 / 100 	 Time Taken: 48 sec
-(epoch: 10, iters: 200, time: 0.098) G_B: 0.598 G_L1: 8.570 D: 0.281 TV: 0.010 
-(epoch: 10, iters: 400, time: 0.096) G_B: 0.570 G_L1: 10.919 D: 0.359 TV: 0.009 
-(epoch: 10, iters: 600, time: 0.097) G_B: 0.532 G_L1: 7.614 D: 0.404 TV: 0.008 
-(epoch: 10, iters: 800, time: 0.096) G_B: 0.909 G_L1: 7.100 D: 0.501 TV: 0.009 
-(epoch: 10, iters: 1000, time: 0.102) G_B: 0.589 G_L1: 8.862 D: 0.339 TV: 0.011 
+End of epoch 5 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 6, iters: 200, time: 0.111) G_B: 0.277 G_L1: 0.165 D: 0.509 TV: 0.000 
+(epoch: 6, iters: 400, time: 0.113) G_B: 0.291 G_L1: 0.106 D: 0.499 TV: 0.000 
+(epoch: 6, iters: 600, time: 0.115) G_B: 0.354 G_L1: 0.099 D: 0.518 TV: 0.000 
+(epoch: 6, iters: 800, time: 0.113) G_B: 0.288 G_L1: 0.100 D: 0.514 TV: 0.000 
+(epoch: 6, iters: 1000, time: 0.113) G_B: 0.280 G_L1: 0.106 D: 0.502 TV: 0.000 
+End of epoch 6 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 7, iters: 200, time: 0.113) G_B: 0.292 G_L1: 0.083 D: 0.488 TV: 0.000 
+(epoch: 7, iters: 400, time: 0.111) G_B: 0.407 G_L1: 0.087 D: 0.839 TV: 0.000 
+(epoch: 7, iters: 600, time: 0.112) G_B: 0.294 G_L1: 0.103 D: 0.523 TV: 0.000 
+(epoch: 7, iters: 800, time: 0.113) G_B: 0.273 G_L1: 0.112 D: 0.522 TV: 0.000 
+(epoch: 7, iters: 1000, time: 0.111) G_B: 0.266 G_L1: 0.092 D: 0.494 TV: 0.000 
+End of epoch 7 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 8, iters: 200, time: 0.111) G_B: 0.278 G_L1: 0.104 D: 0.553 TV: 0.000 
+(epoch: 8, iters: 400, time: 0.109) G_B: 0.283 G_L1: 0.107 D: 0.494 TV: 0.000 
+(epoch: 8, iters: 600, time: 0.112) G_B: 0.366 G_L1: 0.131 D: 0.658 TV: 0.000 
+(epoch: 8, iters: 800, time: 0.113) G_B: 0.271 G_L1: 0.100 D: 0.514 TV: 0.000 
+(epoch: 8, iters: 1000, time: 0.113) G_B: 0.258 G_L1: 0.101 D: 0.530 TV: 0.000 
+End of epoch 8 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 9, iters: 200, time: 0.116) G_B: 0.372 G_L1: 0.100 D: 0.638 TV: 0.000 
+(epoch: 9, iters: 400, time: 0.112) G_B: 0.227 G_L1: 0.106 D: 0.546 TV: 0.000 
+(epoch: 9, iters: 600, time: 0.112) G_B: 0.289 G_L1: 0.092 D: 0.539 TV: 0.000 
+(epoch: 9, iters: 800, time: 0.115) G_B: 0.263 G_L1: 0.136 D: 0.524 TV: 0.000 
+(epoch: 9, iters: 1000, time: 0.114) G_B: 0.268 G_L1: 0.084 D: 0.516 TV: 0.000 
+End of epoch 9 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 10, iters: 200, time: 0.111) G_B: 0.258 G_L1: 0.093 D: 0.524 TV: 0.000 
+(epoch: 10, iters: 400, time: 0.113) G_B: 0.286 G_L1: 0.089 D: 0.517 TV: 0.000 
+(epoch: 10, iters: 600, time: 0.118) G_B: 0.274 G_L1: 0.105 D: 0.489 TV: 0.000 
+(epoch: 10, iters: 800, time: 0.111) G_B: 0.266 G_L1: 0.091 D: 0.526 TV: 0.000 
+(epoch: 10, iters: 1000, time: 0.114) G_B: 0.282 G_L1: 0.114 D: 0.507 TV: 0.000 
 saving the latest model (epoch 10, total_steps 10000)
 saving the model at the end of epoch 10, iters 10000
-End of epoch 10 / 100 	 Time Taken: 49 sec
-(epoch: 11, iters: 200, time: 0.098) G_B: 0.825 G_L1: 10.889 D: 0.284 TV: 0.010 
-(epoch: 11, iters: 400, time: 0.096) G_B: 0.481 G_L1: 6.281 D: 0.308 TV: 0.008 
-(epoch: 11, iters: 600, time: 0.096) G_B: 0.590 G_L1: 8.633 D: 0.330 TV: 0.010 
-(epoch: 11, iters: 800, time: 0.098) G_B: 0.483 G_L1: 11.390 D: 0.485 TV: 0.008 
-(epoch: 11, iters: 1000, time: 0.102) G_B: 0.470 G_L1: 4.477 D: 0.297 TV: 0.009 
-End of epoch 11 / 100 	 Time Taken: 48 sec
-(epoch: 12, iters: 200, time: 0.097) G_B: 0.383 G_L1: 5.661 D: 0.319 TV: 0.009 
-(epoch: 12, iters: 400, time: 0.099) G_B: 0.548 G_L1: 5.297 D: 0.385 TV: 0.008 
-(epoch: 12, iters: 600, time: 0.102) G_B: 0.639 G_L1: 7.488 D: 0.427 TV: 0.009 
-(epoch: 12, iters: 800, time: 0.103) G_B: 0.841 G_L1: 5.264 D: 0.417 TV: 0.009 
-(epoch: 12, iters: 1000, time: 0.100) G_B: 0.926 G_L1: 8.011 D: 0.224 TV: 0.007 
-End of epoch 12 / 100 	 Time Taken: 48 sec
-(epoch: 13, iters: 200, time: 0.100) G_B: 0.575 G_L1: 9.522 D: 0.195 TV: 0.009 
-(epoch: 13, iters: 400, time: 0.100) G_B: 0.551 G_L1: 7.630 D: 0.249 TV: 0.010 
-(epoch: 13, iters: 600, time: 0.104) G_B: 0.774 G_L1: 6.971 D: 0.284 TV: 0.012 
-(epoch: 13, iters: 800, time: 0.097) G_B: 0.865 G_L1: 5.165 D: 0.286 TV: 0.011 
-(epoch: 13, iters: 1000, time: 0.103) G_B: 0.586 G_L1: 6.179 D: 0.318 TV: 0.009 
-End of epoch 13 / 100 	 Time Taken: 48 sec
-(epoch: 14, iters: 200, time: 0.100) G_B: 0.719 G_L1: 5.717 D: 0.237 TV: 0.006 
-(epoch: 14, iters: 400, time: 0.099) G_B: 0.454 G_L1: 7.203 D: 0.384 TV: 0.010 
-(epoch: 14, iters: 600, time: 0.097) G_B: 0.573 G_L1: 8.749 D: 0.275 TV: 0.008 
-(epoch: 14, iters: 800, time: 0.099) G_B: 0.735 G_L1: 7.572 D: 0.541 TV: 0.011 
-(epoch: 14, iters: 1000, time: 0.096) G_B: 0.707 G_L1: 7.938 D: 0.234 TV: 0.011 
-End of epoch 14 / 100 	 Time Taken: 49 sec
-(epoch: 15, iters: 200, time: 0.099) G_B: 0.482 G_L1: 7.756 D: 0.543 TV: 0.011 
-(epoch: 15, iters: 400, time: 0.099) G_B: 0.566 G_L1: 4.936 D: 0.325 TV: 0.009 
-(epoch: 15, iters: 600, time: 0.101) G_B: 0.691 G_L1: 10.088 D: 0.224 TV: 0.013 
-(epoch: 15, iters: 800, time: 0.098) G_B: 0.198 G_L1: 6.040 D: 0.406 TV: 0.010 
-(epoch: 15, iters: 1000, time: 0.101) G_B: 0.572 G_L1: 8.424 D: 0.224 TV: 0.008 
+End of epoch 10 / 100 	 Time Taken: 63 sec
+dataset [DepthDataset] was created
+(epoch: 11, iters: 200, time: 0.117) G_B: 0.277 G_L1: 0.091 D: 0.487 TV: 0.000 
+(epoch: 11, iters: 400, time: 0.116) G_B: 0.363 G_L1: 0.106 D: 0.610 TV: 0.000 
+(epoch: 11, iters: 600, time: 0.113) G_B: 0.280 G_L1: 0.079 D: 0.496 TV: 0.000 
+(epoch: 11, iters: 800, time: 0.113) G_B: 0.315 G_L1: 0.079 D: 0.595 TV: 0.000 
+(epoch: 11, iters: 1000, time: 0.117) G_B: 0.236 G_L1: 0.093 D: 0.526 TV: 0.000 
+End of epoch 11 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 12, iters: 200, time: 0.112) G_B: 0.308 G_L1: 0.081 D: 0.565 TV: 0.000 
+(epoch: 12, iters: 400, time: 0.111) G_B: 0.245 G_L1: 0.084 D: 0.496 TV: 0.000 
+(epoch: 12, iters: 600, time: 0.115) G_B: 0.249 G_L1: 0.086 D: 0.477 TV: 0.000 
+(epoch: 12, iters: 800, time: 0.118) G_B: 0.260 G_L1: 0.091 D: 0.506 TV: 0.000 
+(epoch: 12, iters: 1000, time: 0.114) G_B: 0.283 G_L1: 0.061 D: 0.604 TV: 0.000 
+End of epoch 12 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 13, iters: 200, time: 0.116) G_B: 0.279 G_L1: 0.087 D: 0.562 TV: 0.000 
+(epoch: 13, iters: 400, time: 0.121) G_B: 0.296 G_L1: 0.097 D: 0.587 TV: 0.000 
+(epoch: 13, iters: 600, time: 0.118) G_B: 0.277 G_L1: 0.080 D: 0.484 TV: 0.000 
+(epoch: 13, iters: 800, time: 0.113) G_B: 0.262 G_L1: 0.148 D: 0.532 TV: 0.000 
+(epoch: 13, iters: 1000, time: 0.115) G_B: 0.328 G_L1: 0.065 D: 0.564 TV: 0.000 
+End of epoch 13 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 14, iters: 200, time: 0.121) G_B: 0.295 G_L1: 0.087 D: 0.493 TV: 0.000 
+(epoch: 14, iters: 400, time: 0.116) G_B: 0.359 G_L1: 0.070 D: 0.599 TV: 0.000 
+(epoch: 14, iters: 600, time: 0.117) G_B: 0.279 G_L1: 0.081 D: 0.536 TV: 0.000 
+(epoch: 14, iters: 800, time: 0.113) G_B: 0.280 G_L1: 0.095 D: 0.491 TV: 0.000 
+(epoch: 14, iters: 1000, time: 0.117) G_B: 0.258 G_L1: 0.081 D: 0.500 TV: 0.000 
+End of epoch 14 / 100 	 Time Taken: 62 sec
+dataset [DepthDataset] was created
+(epoch: 15, iters: 200, time: 0.116) G_B: 0.368 G_L1: 0.098 D: 0.787 TV: 0.000 
+(epoch: 15, iters: 400, time: 0.113) G_B: 0.289 G_L1: 0.078 D: 0.499 TV: 0.000 
+(epoch: 15, iters: 600, time: 0.119) G_B: 0.294 G_L1: 0.113 D: 0.553 TV: 0.000 
+(epoch: 15, iters: 800, time: 0.118) G_B: 0.284 G_L1: 0.072 D: 0.509 TV: 0.000 
+(epoch: 15, iters: 1000, time: 0.115) G_B: 0.245 G_L1: 0.077 D: 0.525 TV: 0.000 
 saving the latest model (epoch 15, total_steps 15000)
 saving the model at the end of epoch 15, iters 15000
-End of epoch 15 / 100 	 Time Taken: 49 sec
-(epoch: 16, iters: 200, time: 0.103) G_B: 0.651 G_L1: 15.204 D: 0.157 TV: 0.008 
-(epoch: 16, iters: 400, time: 0.103) G_B: 0.707 G_L1: 5.895 D: 0.286 TV: 0.008 
-(epoch: 16, iters: 600, time: 0.105) G_B: 0.623 G_L1: 6.475 D: 0.266 TV: 0.011 
-(epoch: 16, iters: 800, time: 0.101) G_B: 0.605 G_L1: 7.064 D: 0.365 TV: 0.011 
-(epoch: 16, iters: 1000, time: 0.099) G_B: 0.406 G_L1: 4.758 D: 0.525 TV: 0.008 
-End of epoch 16 / 100 	 Time Taken: 49 sec
-(epoch: 17, iters: 200, time: 0.101) G_B: 0.931 G_L1: 5.388 D: 0.165 TV: 0.009 
-(epoch: 17, iters: 400, time: 0.096) G_B: 0.523 G_L1: 6.368 D: 0.305 TV: 0.007 
-(epoch: 17, iters: 600, time: 0.099) G_B: 0.506 G_L1: 4.503 D: 0.310 TV: 0.010 
-(epoch: 17, iters: 800, time: 0.101) G_B: 0.408 G_L1: 6.428 D: 0.281 TV: 0.010 
-(epoch: 17, iters: 1000, time: 0.095) G_B: 0.777 G_L1: 6.055 D: 0.285 TV: 0.010 
-End of epoch 17 / 100 	 Time Taken: 48 sec
-(epoch: 18, iters: 200, time: 0.097) G_B: 0.593 G_L1: 5.578 D: 0.253 TV: 0.009 
-(epoch: 18, iters: 400, time: 0.103) G_B: 0.790 G_L1: 8.181 D: 0.239 TV: 0.010 
-(epoch: 18, iters: 600, time: 0.099) G_B: 0.392 G_L1: 8.055 D: 0.265 TV: 0.008 
-(epoch: 18, iters: 800, time: 0.104) G_B: 0.550 G_L1: 6.128 D: 0.291 TV: 0.007 
-(epoch: 18, iters: 1000, time: 0.100) G_B: 0.966 G_L1: 6.378 D: 0.550 TV: 0.009 
-End of epoch 18 / 100 	 Time Taken: 48 sec
-(epoch: 19, iters: 200, time: 0.102) G_B: 0.610 G_L1: 5.596 D: 0.386 TV: 0.010 
-(epoch: 19, iters: 400, time: 0.101) G_B: 0.575 G_L1: 6.517 D: 0.453 TV: 0.010 
-(epoch: 19, iters: 600, time: 0.104) G_B: 0.719 G_L1: 4.863 D: 0.206 TV: 0.009 
-(epoch: 19, iters: 800, time: 0.103) G_B: 0.387 G_L1: 13.095 D: 0.395 TV: 0.009 
-(epoch: 19, iters: 1000, time: 0.102) G_B: 0.436 G_L1: 4.861 D: 0.530 TV: 0.010 
-End of epoch 19 / 100 	 Time Taken: 48 sec
-(epoch: 20, iters: 200, time: 0.100) G_B: 0.405 G_L1: 9.496 D: 0.362 TV: 0.008 
-(epoch: 20, iters: 400, time: 0.101) G_B: 0.860 G_L1: 6.376 D: 0.334 TV: 0.007 
-(epoch: 20, iters: 600, time: 0.103) G_B: 0.306 G_L1: 6.031 D: 0.327 TV: 0.008 
-(epoch: 20, iters: 800, time: 0.101) G_B: 0.553 G_L1: 9.186 D: 0.448 TV: 0.010 
-(epoch: 20, iters: 1000, time: 0.097) G_B: 0.650 G_L1: 4.184 D: 0.283 TV: 0.008 
-saving the latest model (epoch 20, total_steps 20000)
-saving the model at the end of epoch 20, iters 20000
-End of epoch 20 / 100 	 Time Taken: 49 sec
-(epoch: 21, iters: 200, time: 0.101) G_B: 0.577 G_L1: 5.318 D: 0.303 TV: 0.009 
-(epoch: 21, iters: 400, time: 0.098) G_B: 0.638 G_L1: 4.856 D: 0.220 TV: 0.009 
-(epoch: 21, iters: 600, time: 0.101) G_B: 0.561 G_L1: 5.116 D: 0.411 TV: 0.010 
-(epoch: 21, iters: 800, time: 0.102) G_B: 0.282 G_L1: 4.777 D: 0.354 TV: 0.009 
-(epoch: 21, iters: 1000, time: 0.100) G_B: 0.457 G_L1: 5.487 D: 0.380 TV: 0.008 
-End of epoch 21 / 100 	 Time Taken: 48 sec
-(epoch: 22, iters: 200, time: 0.098) G_B: 0.594 G_L1: 5.639 D: 0.327 TV: 0.008 
-(epoch: 22, iters: 400, time: 0.100) G_B: 0.534 G_L1: 5.310 D: 0.244 TV: 0.008 
-(epoch: 22, iters: 600, time: 0.101) G_B: 0.562 G_L1: 4.889 D: 0.228 TV: 0.008 
-(epoch: 22, iters: 800, time: 0.099) G_B: 0.676 G_L1: 10.963 D: 0.267 TV: 0.009 
-(epoch: 22, iters: 1000, time: 0.100) G_B: 0.547 G_L1: 5.570 D: 0.341 TV: 0.008 
-End of epoch 22 / 100 	 Time Taken: 48 sec
-(epoch: 23, iters: 200, time: 0.101) G_B: 0.519 G_L1: 5.602 D: 0.405 TV: 0.008 
-(epoch: 23, iters: 400, time: 0.100) G_B: 0.529 G_L1: 5.586 D: 0.340 TV: 0.008 
-(epoch: 23, iters: 600, time: 0.108) G_B: 0.549 G_L1: 7.294 D: 0.310 TV: 0.009 
-(epoch: 23, iters: 800, time: 0.104) G_B: 0.567 G_L1: 6.118 D: 0.507 TV: 0.009 
-(epoch: 23, iters: 1000, time: 0.104) G_B: 0.375 G_L1: 4.913 D: 0.273 TV: 0.007 
-End of epoch 23 / 100 	 Time Taken: 49 sec
-(epoch: 24, iters: 200, time: 0.102) G_B: 0.353 G_L1: 6.005 D: 0.378 TV: 0.011 
-(epoch: 24, iters: 400, time: 0.107) G_B: 0.727 G_L1: 5.780 D: 0.393 TV: 0.008 
-(epoch: 24, iters: 600, time: 0.101) G_B: 0.564 G_L1: 5.925 D: 0.211 TV: 0.008 
-(epoch: 24, iters: 800, time: 0.103) G_B: 0.655 G_L1: 4.438 D: 0.278 TV: 0.009 
-(epoch: 24, iters: 1000, time: 0.101) G_B: 0.537 G_L1: 4.518 D: 0.337 TV: 0.008 
-End of epoch 24 / 100 	 Time Taken: 49 sec
-(epoch: 25, iters: 200, time: 0.107) G_B: 0.391 G_L1: 5.242 D: 0.344 TV: 0.009 
-(epoch: 25, iters: 400, time: 0.106) G_B: 0.719 G_L1: 5.759 D: 0.235 TV: 0.010 
-(epoch: 25, iters: 600, time: 0.104) G_B: 0.741 G_L1: 4.602 D: 0.240 TV: 0.009 
-(epoch: 25, iters: 800, time: 0.105) G_B: 0.630 G_L1: 5.215 D: 0.266 TV: 0.008 
-(epoch: 25, iters: 1000, time: 0.103) G_B: 0.586 G_L1: 5.493 D: 0.215 TV: 0.009 
-saving the latest model (epoch 25, total_steps 25000)
-saving the model at the end of epoch 25, iters 25000
-End of epoch 25 / 100 	 Time Taken: 49 sec
-(epoch: 26, iters: 200, time: 0.101) G_B: 0.440 G_L1: 6.317 D: 0.303 TV: 0.009 
-(epoch: 26, iters: 400, time: 0.101) G_B: 0.624 G_L1: 4.722 D: 0.409 TV: 0.008 
-(epoch: 26, iters: 600, time: 0.101) G_B: 0.538 G_L1: 4.934 D: 0.235 TV: 0.005 
-(epoch: 26, iters: 800, time: 0.100) G_B: 0.712 G_L1: 4.403 D: 0.407 TV: 0.008 
-(epoch: 26, iters: 1000, time: 0.104) G_B: 0.480 G_L1: 4.441 D: 0.426 TV: 0.009 
-End of epoch 26 / 100 	 Time Taken: 49 sec
-(epoch: 27, iters: 200, time: 0.106) G_B: 0.386 G_L1: 4.657 D: 0.371 TV: 0.005 
-(epoch: 27, iters: 400, time: 0.107) G_B: 0.405 G_L1: 5.319 D: 0.273 TV: 0.007 
-(epoch: 27, iters: 600, time: 0.105) G_B: 0.606 G_L1: 7.711 D: 0.250 TV: 0.008 
-(epoch: 27, iters: 800, time: 0.104) G_B: 0.575 G_L1: 5.694 D: 0.387 TV: 0.012 
-(epoch: 27, iters: 1000, time: 0.104) G_B: 0.767 G_L1: 5.869 D: 0.232 TV: 0.008 
-End of epoch 27 / 100 	 Time Taken: 49 sec
-(epoch: 28, iters: 200, time: 0.114) G_B: 0.879 G_L1: 4.200 D: 0.186 TV: 0.008 
-(epoch: 28, iters: 400, time: 0.105) G_B: 0.572 G_L1: 5.438 D: 0.469 TV: 0.009 
-(epoch: 28, iters: 600, time: 0.100) G_B: 0.669 G_L1: 5.081 D: 0.539 TV: 0.009 
-(epoch: 28, iters: 800, time: 0.100) G_B: 0.627 G_L1: 9.349 D: 0.461 TV: 0.010 
-(epoch: 28, iters: 1000, time: 0.099) G_B: 0.389 G_L1: 5.194 D: 0.299 TV: 0.008 
-End of epoch 28 / 100 	 Time Taken: 49 sec
-(epoch: 29, iters: 200, time: 0.099) G_B: 0.529 G_L1: 5.828 D: 0.283 TV: 0.008 
-(epoch: 29, iters: 400, time: 0.109) G_B: 0.343 G_L1: 4.149 D: 0.397 TV: 0.009 
-(epoch: 29, iters: 600, time: 0.102) G_B: 0.540 G_L1: 4.291 D: 0.222 TV: 0.007 
-(epoch: 29, iters: 800, time: 0.113) G_B: 0.614 G_L1: 9.254 D: 0.425 TV: 0.007 
-(epoch: 29, iters: 1000, time: 0.103) G_B: 0.567 G_L1: 5.812 D: 0.259 TV: 0.009 
-End of epoch 29 / 100 	 Time Taken: 49 sec
-(epoch: 30, iters: 200, time: 0.099) G_B: 0.607 G_L1: 4.518 D: 0.367 TV: 0.011 
-(epoch: 30, iters: 400, time: 0.103) G_B: 0.440 G_L1: 4.905 D: 0.344 TV: 0.011 
-(epoch: 30, iters: 600, time: 0.101) G_B: 0.817 G_L1: 5.428 D: 0.336 TV: 0.008 
-(epoch: 30, iters: 800, time: 0.102) G_B: 0.527 G_L1: 4.302 D: 0.294 TV: 0.009 
-(epoch: 30, iters: 1000, time: 0.107) G_B: 0.722 G_L1: 4.795 D: 0.341 TV: 0.009 
-saving the latest model (epoch 30, total_steps 30000)
-saving the model at the end of epoch 30, iters 30000
-End of epoch 30 / 100 	 Time Taken: 50 sec
-(epoch: 31, iters: 200, time: 0.104) G_B: 0.584 G_L1: 4.920 D: 0.251 TV: 0.009 
-(epoch: 31, iters: 400, time: 0.107) G_B: 0.846 G_L1: 5.144 D: 0.342 TV: 0.009 
-(epoch: 31, iters: 600, time: 0.105) G_B: 0.554 G_L1: 5.423 D: 0.360 TV: 0.009 
-(epoch: 31, iters: 800, time: 0.103) G_B: 0.486 G_L1: 5.680 D: 0.342 TV: 0.010 
-(epoch: 31, iters: 1000, time: 0.106) G_B: 0.843 G_L1: 7.629 D: 0.268 TV: 0.009 
-End of epoch 31 / 100 	 Time Taken: 49 sec
-(epoch: 32, iters: 200, time: 0.108) G_B: 0.536 G_L1: 5.398 D: 0.246 TV: 0.007 
-(epoch: 32, iters: 400, time: 0.104) G_B: 0.757 G_L1: 4.130 D: 0.210 TV: 0.007 
-(epoch: 32, iters: 600, time: 0.105) G_B: 0.509 G_L1: 4.740 D: 0.379 TV: 0.009 
-(epoch: 32, iters: 800, time: 0.106) G_B: 0.647 G_L1: 5.494 D: 0.406 TV: 0.011 
-(epoch: 32, iters: 1000, time: 0.101) G_B: 0.656 G_L1: 5.108 D: 0.418 TV: 0.009 
-End of epoch 32 / 100 	 Time Taken: 49 sec
-(epoch: 33, iters: 200, time: 0.107) G_B: 0.583 G_L1: 4.389 D: 0.219 TV: 0.009 
-(epoch: 33, iters: 400, time: 0.104) G_B: 0.761 G_L1: 8.077 D: 0.376 TV: 0.010 
-(epoch: 33, iters: 600, time: 0.116) G_B: 0.861 G_L1: 4.886 D: 0.202 TV: 0.008 
-(epoch: 33, iters: 800, time: 0.106) G_B: 0.632 G_L1: 4.586 D: 0.270 TV: 0.011 
-(epoch: 33, iters: 1000, time: 0.109) G_B: 0.704 G_L1: 5.838 D: 0.235 TV: 0.006 
-End of epoch 33 / 100 	 Time Taken: 49 sec
-(epoch: 34, iters: 200, time: 0.110) G_B: 0.429 G_L1: 4.080 D: 0.201 TV: 0.007 
-(epoch: 34, iters: 400, time: 0.111) G_B: 0.454 G_L1: 5.820 D: 0.431 TV: 0.009 
-(epoch: 34, iters: 600, time: 0.099) G_B: 0.713 G_L1: 6.011 D: 0.212 TV: 0.010 
-(epoch: 34, iters: 800, time: 0.106) G_B: 0.783 G_L1: 4.236 D: 0.508 TV: 0.009 
-(epoch: 34, iters: 1000, time: 0.098) G_B: 0.456 G_L1: 4.092 D: 0.381 TV: 0.007 
-End of epoch 34 / 100 	 Time Taken: 50 sec
-(epoch: 35, iters: 200, time: 0.107) G_B: 0.787 G_L1: 4.471 D: 0.153 TV: 0.008 
-(epoch: 35, iters: 400, time: 0.107) G_B: 0.446 G_L1: 6.708 D: 0.414 TV: 0.010 
-(epoch: 35, iters: 600, time: 0.105) G_B: 0.630 G_L1: 4.956 D: 0.238 TV: 0.007 
-(epoch: 35, iters: 800, time: 0.104) G_B: 0.818 G_L1: 4.890 D: 0.215 TV: 0.009 
-(epoch: 35, iters: 1000, time: 0.111) G_B: 0.568 G_L1: 3.936 D: 0.321 TV: 0.008 
-saving the latest model (epoch 35, total_steps 35000)
-saving the model at the end of epoch 35, iters 35000
-End of epoch 35 / 100 	 Time Taken: 50 sec
-(epoch: 36, iters: 200, time: 0.108) G_B: 0.645 G_L1: 6.717 D: 0.242 TV: 0.008 
-(epoch: 36, iters: 400, time: 0.107) G_B: 0.537 G_L1: 6.975 D: 0.367 TV: 0.009 
-(epoch: 36, iters: 600, time: 0.104) G_B: 0.350 G_L1: 5.255 D: 0.296 TV: 0.008 
-(epoch: 36, iters: 800, time: 0.110) G_B: 0.828 G_L1: 7.035 D: 0.240 TV: 0.009 
-(epoch: 36, iters: 1000, time: 0.114) G_B: 0.548 G_L1: 5.786 D: 0.257 TV: 0.007 
-End of epoch 36 / 100 	 Time Taken: 50 sec
-(epoch: 37, iters: 200, time: 0.112) G_B: 0.762 G_L1: 4.454 D: 0.222 TV: 0.007 
-(epoch: 37, iters: 400, time: 0.104) G_B: 0.654 G_L1: 4.889 D: 0.252 TV: 0.008 
-(epoch: 37, iters: 600, time: 0.110) G_B: 0.603 G_L1: 4.187 D: 0.277 TV: 0.008 
-(epoch: 37, iters: 800, time: 0.109) G_B: 0.614 G_L1: 5.724 D: 0.263 TV: 0.007 
-(epoch: 37, iters: 1000, time: 0.116) G_B: 0.677 G_L1: 5.064 D: 0.239 TV: 0.008 
-End of epoch 37 / 100 	 Time Taken: 50 sec
-(epoch: 38, iters: 200, time: 0.099) G_B: 0.573 G_L1: 6.493 D: 0.209 TV: 0.008 
-(epoch: 38, iters: 400, time: 0.109) G_B: 0.695 G_L1: 3.716 D: 0.342 TV: 0.006 
-(epoch: 38, iters: 600, time: 0.102) G_B: 0.411 G_L1: 4.758 D: 0.391 TV: 0.008 
-(epoch: 38, iters: 800, time: 0.104) G_B: 0.731 G_L1: 4.469 D: 0.298 TV: 0.008 
-(epoch: 38, iters: 1000, time: 0.102) G_B: 0.426 G_L1: 4.199 D: 0.219 TV: 0.007 
-End of epoch 38 / 100 	 Time Taken: 50 sec
-(epoch: 39, iters: 200, time: 0.106) G_B: 0.428 G_L1: 4.870 D: 0.397 TV: 0.008 
-(epoch: 39, iters: 400, time: 0.100) G_B: 0.566 G_L1: 4.599 D: 0.302 TV: 0.010 
-(epoch: 39, iters: 600, time: 0.102) G_B: 0.407 G_L1: 5.801 D: 0.329 TV: 0.007 
-(epoch: 39, iters: 800, time: 0.105) G_B: 0.665 G_L1: 3.469 D: 0.382 TV: 0.008 
-(epoch: 39, iters: 1000, time: 0.111) G_B: 0.497 G_L1: 5.438 D: 0.366 TV: 0.008 
-End of epoch 39 / 100 	 Time Taken: 49 sec
-(epoch: 40, iters: 200, time: 0.104) G_B: 0.588 G_L1: 3.842 D: 0.254 TV: 0.007 
-(epoch: 40, iters: 400, time: 0.103) G_B: 0.803 G_L1: 4.992 D: 0.277 TV: 0.007 
-(epoch: 40, iters: 600, time: 0.109) G_B: 0.580 G_L1: 7.085 D: 0.155 TV: 0.007 
-(epoch: 40, iters: 800, time: 0.109) G_B: 0.686 G_L1: 4.275 D: 0.325 TV: 0.009 
-(epoch: 40, iters: 1000, time: 0.109) G_B: 0.775 G_L1: 4.270 D: 0.257 TV: 0.008 
-saving the latest model (epoch 40, total_steps 40000)
-saving the model at the end of epoch 40, iters 40000
-End of epoch 40 / 100 	 Time Taken: 50 sec
-(epoch: 41, iters: 200, time: 0.103) G_B: 0.788 G_L1: 3.521 D: 0.184 TV: 0.008 
-(epoch: 41, iters: 400, time: 0.110) G_B: 0.478 G_L1: 4.088 D: 0.552 TV: 0.008 
-(epoch: 41, iters: 600, time: 0.101) G_B: 0.501 G_L1: 6.395 D: 0.538 TV: 0.008 
-(epoch: 41, iters: 800, time: 0.106) G_B: 0.737 G_L1: 5.194 D: 0.225 TV: 0.008 
-(epoch: 41, iters: 1000, time: 0.105) G_B: 0.651 G_L1: 5.655 D: 0.362 TV: 0.010 
-End of epoch 41 / 100 	 Time Taken: 49 sec
-(epoch: 42, iters: 200, time: 0.110) G_B: 0.656 G_L1: 4.770 D: 0.327 TV: 0.009 
-(epoch: 42, iters: 400, time: 0.106) G_B: 0.741 G_L1: 8.963 D: 0.442 TV: 0.009 
-(epoch: 42, iters: 600, time: 0.111) G_B: 0.680 G_L1: 4.997 D: 0.191 TV: 0.008 
-(epoch: 42, iters: 800, time: 0.110) G_B: 0.740 G_L1: 4.459 D: 0.201 TV: 0.009 
-(epoch: 42, iters: 1000, time: 0.113) G_B: 0.674 G_L1: 5.602 D: 0.442 TV: 0.007 
-End of epoch 42 / 100 	 Time Taken: 50 sec
-(epoch: 43, iters: 200, time: 0.120) G_B: 0.356 G_L1: 4.189 D: 0.290 TV: 0.007 
-(epoch: 43, iters: 400, time: 0.113) G_B: 0.678 G_L1: 4.452 D: 0.333 TV: 0.007 
-(epoch: 43, iters: 600, time: 0.105) G_B: 0.433 G_L1: 7.083 D: 0.283 TV: 0.008 
-(epoch: 43, iters: 800, time: 0.114) G_B: 0.667 G_L1: 6.511 D: 0.216 TV: 0.007 
-(epoch: 43, iters: 1000, time: 0.107) G_B: 0.646 G_L1: 4.152 D: 0.280 TV: 0.008 
-End of epoch 43 / 100 	 Time Taken: 51 sec
-(epoch: 44, iters: 200, time: 0.110) G_B: 0.488 G_L1: 5.770 D: 0.234 TV: 0.009 
-(epoch: 44, iters: 400, time: 0.105) G_B: 0.502 G_L1: 7.951 D: 0.333 TV: 0.008 
-(epoch: 44, iters: 600, time: 0.115) G_B: 0.234 G_L1: 4.399 D: 0.484 TV: 0.008 
-(epoch: 44, iters: 800, time: 0.105) G_B: 0.811 G_L1: 5.388 D: 0.442 TV: 0.008 
-(epoch: 44, iters: 1000, time: 0.111) G_B: 0.752 G_L1: 4.950 D: 0.240 TV: 0.008 
-End of epoch 44 / 100 	 Time Taken: 50 sec
-(epoch: 45, iters: 200, time: 0.115) G_B: 0.470 G_L1: 4.392 D: 0.413 TV: 0.009 
-(epoch: 45, iters: 400, time: 0.108) G_B: 0.797 G_L1: 5.026 D: 0.458 TV: 0.008 
-(epoch: 45, iters: 600, time: 0.112) G_B: 0.657 G_L1: 3.765 D: 0.221 TV: 0.008 
-(epoch: 45, iters: 800, time: 0.112) G_B: 0.470 G_L1: 3.923 D: 0.200 TV: 0.007 
-(epoch: 45, iters: 1000, time: 0.105) G_B: 0.916 G_L1: 4.863 D: 0.141 TV: 0.008 
-saving the latest model (epoch 45, total_steps 45000)
-saving the model at the end of epoch 45, iters 45000
-End of epoch 45 / 100 	 Time Taken: 51 sec
-(epoch: 46, iters: 200, time: 0.111) G_B: 0.688 G_L1: 4.763 D: 0.209 TV: 0.008 
-(epoch: 46, iters: 400, time: 0.110) G_B: 0.511 G_L1: 4.133 D: 0.279 TV: 0.007 
-(epoch: 46, iters: 600, time: 0.107) G_B: 0.715 G_L1: 3.990 D: 0.346 TV: 0.007 
-(epoch: 46, iters: 800, time: 0.112) G_B: 0.464 G_L1: 6.307 D: 0.353 TV: 0.011 
-(epoch: 46, iters: 1000, time: 0.107) G_B: 0.532 G_L1: 3.799 D: 0.372 TV: 0.009 
-End of epoch 46 / 100 	 Time Taken: 49 sec
-(epoch: 47, iters: 200, time: 0.104) G_B: 0.500 G_L1: 4.228 D: 0.263 TV: 0.008 
-(epoch: 47, iters: 400, time: 0.105) G_B: 0.764 G_L1: 7.264 D: 0.241 TV: 0.009 
-(epoch: 47, iters: 600, time: 0.099) G_B: 0.781 G_L1: 4.259 D: 0.221 TV: 0.008 
-(epoch: 47, iters: 800, time: 0.105) G_B: 0.548 G_L1: 3.040 D: 0.221 TV: 0.006 
-(epoch: 47, iters: 1000, time: 0.105) G_B: 0.569 G_L1: 7.592 D: 0.273 TV: 0.008 
-End of epoch 47 / 100 	 Time Taken: 49 sec
-(epoch: 48, iters: 200, time: 0.104) G_B: 0.478 G_L1: 3.405 D: 0.229 TV: 0.007 
-(epoch: 48, iters: 400, time: 0.103) G_B: 0.932 G_L1: 6.754 D: 0.340 TV: 0.007 
-(epoch: 48, iters: 600, time: 0.104) G_B: 0.616 G_L1: 7.518 D: 0.531 TV: 0.007 
-(epoch: 48, iters: 800, time: 0.108) G_B: 0.601 G_L1: 5.859 D: 0.279 TV: 0.008 
-(epoch: 48, iters: 1000, time: 0.108) G_B: 0.726 G_L1: 4.719 D: 0.277 TV: 0.008 
-End of epoch 48 / 100 	 Time Taken: 48 sec
-(epoch: 49, iters: 200, time: 0.102) G_B: 0.757 G_L1: 4.610 D: 0.280 TV: 0.007 
-(epoch: 49, iters: 400, time: 0.109) G_B: 0.631 G_L1: 6.923 D: 0.292 TV: 0.007 
-(epoch: 49, iters: 600, time: 0.104) G_B: 0.371 G_L1: 3.870 D: 0.328 TV: 0.007 
-(epoch: 49, iters: 800, time: 0.106) G_B: 0.468 G_L1: 3.886 D: 0.328 TV: 0.008 
-(epoch: 49, iters: 1000, time: 0.107) G_B: 0.557 G_L1: 4.749 D: 0.324 TV: 0.009 
-End of epoch 49 / 100 	 Time Taken: 48 sec
-(epoch: 50, iters: 200, time: 0.104) G_B: 0.667 G_L1: 5.240 D: 0.317 TV: 0.008 
-(epoch: 50, iters: 400, time: 0.110) G_B: 0.581 G_L1: 3.931 D: 0.286 TV: 0.008 
-(epoch: 50, iters: 600, time: 0.102) G_B: 0.806 G_L1: 3.382 D: 0.248 TV: 0.009 
-(epoch: 50, iters: 800, time: 0.108) G_B: 0.518 G_L1: 4.100 D: 0.233 TV: 0.008 
-(epoch: 50, iters: 1000, time: 0.109) G_B: 0.397 G_L1: 4.270 D: 0.275 TV: 0.007 
-saving the latest model (epoch 50, total_steps 50000)
-saving the model at the end of epoch 50, iters 50000
-End of epoch 50 / 100 	 Time Taken: 49 sec
-(epoch: 51, iters: 200, time: 0.106) G_B: 0.736 G_L1: 5.798 D: 0.314 TV: 0.007 
-(epoch: 51, iters: 400, time: 0.107) G_B: 0.551 G_L1: 5.432 D: 0.301 TV: 0.008 
-(epoch: 51, iters: 600, time: 0.106) G_B: 0.438 G_L1: 3.775 D: 0.437 TV: 0.008 
-(epoch: 51, iters: 800, time: 0.111) G_B: 0.479 G_L1: 5.077 D: 0.617 TV: 0.009 
-(epoch: 51, iters: 1000, time: 0.107) G_B: 0.481 G_L1: 4.235 D: 0.281 TV: 0.009 
-End of epoch 51 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000200 -> 0.000196
-(epoch: 52, iters: 200, time: 0.111) G_B: 0.844 G_L1: 3.024 D: 0.239 TV: 0.006 
-(epoch: 52, iters: 400, time: 0.104) G_B: 0.631 G_L1: 3.181 D: 0.295 TV: 0.008 
-(epoch: 52, iters: 600, time: 0.106) G_B: 0.658 G_L1: 4.815 D: 0.160 TV: 0.007 
-(epoch: 52, iters: 800, time: 0.106) G_B: 0.291 G_L1: 3.597 D: 0.462 TV: 0.007 
-(epoch: 52, iters: 1000, time: 0.104) G_B: 0.627 G_L1: 4.857 D: 0.218 TV: 0.007 
-End of epoch 52 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000196 -> 0.000192
-(epoch: 53, iters: 200, time: 0.107) G_B: 0.526 G_L1: 4.822 D: 0.269 TV: 0.007 
-(epoch: 53, iters: 400, time: 0.108) G_B: 0.390 G_L1: 7.851 D: 0.472 TV: 0.008 
-(epoch: 53, iters: 600, time: 0.104) G_B: 0.610 G_L1: 6.000 D: 0.368 TV: 0.010 
-(epoch: 53, iters: 800, time: 0.109) G_B: 0.521 G_L1: 4.182 D: 0.251 TV: 0.008 
-(epoch: 53, iters: 1000, time: 0.109) G_B: 0.591 G_L1: 3.537 D: 0.343 TV: 0.007 
-End of epoch 53 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000192 -> 0.000188
-(epoch: 54, iters: 200, time: 0.110) G_B: 0.981 G_L1: 4.466 D: 0.175 TV: 0.008 
-(epoch: 54, iters: 400, time: 0.107) G_B: 0.445 G_L1: 3.715 D: 0.363 TV: 0.009 
-(epoch: 54, iters: 600, time: 0.108) G_B: 0.432 G_L1: 3.621 D: 0.222 TV: 0.008 
-(epoch: 54, iters: 800, time: 0.109) G_B: 0.439 G_L1: 2.940 D: 0.396 TV: 0.008 
-(epoch: 54, iters: 1000, time: 0.105) G_B: 1.056 G_L1: 3.943 D: 0.272 TV: 0.008 
-End of epoch 54 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000188 -> 0.000184
-(epoch: 55, iters: 200, time: 0.107) G_B: 0.760 G_L1: 4.107 D: 0.261 TV: 0.007 
-(epoch: 55, iters: 400, time: 0.111) G_B: 0.466 G_L1: 3.810 D: 0.255 TV: 0.007 
-(epoch: 55, iters: 600, time: 0.109) G_B: 0.996 G_L1: 5.135 D: 0.185 TV: 0.007 
-(epoch: 55, iters: 800, time: 0.107) G_B: 0.593 G_L1: 4.433 D: 0.234 TV: 0.010 
-(epoch: 55, iters: 1000, time: 0.111) G_B: 0.407 G_L1: 6.043 D: 0.224 TV: 0.006 
-saving the latest model (epoch 55, total_steps 55000)
-saving the model at the end of epoch 55, iters 55000
-End of epoch 55 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000184 -> 0.000180
-(epoch: 56, iters: 200, time: 0.110) G_B: 0.503 G_L1: 5.330 D: 0.408 TV: 0.008 
-(epoch: 56, iters: 400, time: 0.105) G_B: 0.627 G_L1: 3.680 D: 0.418 TV: 0.010 
-(epoch: 56, iters: 600, time: 0.111) G_B: 0.479 G_L1: 3.335 D: 0.221 TV: 0.007 
-(epoch: 56, iters: 800, time: 0.108) G_B: 0.605 G_L1: 4.394 D: 0.347 TV: 0.009 
-(epoch: 56, iters: 1000, time: 0.105) G_B: 0.448 G_L1: 6.166 D: 0.349 TV: 0.009 
-End of epoch 56 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000180 -> 0.000176
-(epoch: 57, iters: 200, time: 0.108) G_B: 0.720 G_L1: 3.747 D: 0.137 TV: 0.006 
-(epoch: 57, iters: 400, time: 0.109) G_B: 0.686 G_L1: 3.637 D: 0.285 TV: 0.007 
-(epoch: 57, iters: 600, time: 0.106) G_B: 0.485 G_L1: 4.185 D: 0.278 TV: 0.007 
-(epoch: 57, iters: 800, time: 0.105) G_B: 0.620 G_L1: 4.171 D: 0.361 TV: 0.006 
-(epoch: 57, iters: 1000, time: 0.111) G_B: 0.669 G_L1: 3.695 D: 0.338 TV: 0.008 
-End of epoch 57 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000176 -> 0.000172
-(epoch: 58, iters: 200, time: 0.112) G_B: 0.687 G_L1: 3.568 D: 0.192 TV: 0.008 
-(epoch: 58, iters: 400, time: 0.110) G_B: 0.531 G_L1: 3.755 D: 0.257 TV: 0.006 
-(epoch: 58, iters: 600, time: 0.113) G_B: 0.813 G_L1: 3.928 D: 0.226 TV: 0.008 
-(epoch: 58, iters: 800, time: 0.112) G_B: 0.757 G_L1: 3.987 D: 0.276 TV: 0.010 
-(epoch: 58, iters: 1000, time: 0.112) G_B: 0.711 G_L1: 5.958 D: 0.374 TV: 0.007 
-End of epoch 58 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000172 -> 0.000168
-(epoch: 59, iters: 200, time: 0.110) G_B: 0.438 G_L1: 4.402 D: 0.214 TV: 0.007 
-(epoch: 59, iters: 400, time: 0.109) G_B: 0.571 G_L1: 3.777 D: 0.314 TV: 0.009 
-(epoch: 59, iters: 600, time: 0.117) G_B: 0.701 G_L1: 3.006 D: 0.227 TV: 0.005 
-(epoch: 59, iters: 800, time: 0.113) G_B: 0.618 G_L1: 4.115 D: 0.311 TV: 0.008 
-(epoch: 59, iters: 1000, time: 0.114) G_B: 0.328 G_L1: 5.223 D: 0.316 TV: 0.006 
-End of epoch 59 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000168 -> 0.000164
-(epoch: 60, iters: 200, time: 0.110) G_B: 0.768 G_L1: 3.934 D: 0.267 TV: 0.006 
-(epoch: 60, iters: 400, time: 0.111) G_B: 0.945 G_L1: 3.107 D: 0.208 TV: 0.008 
-(epoch: 60, iters: 600, time: 0.111) G_B: 0.659 G_L1: 4.606 D: 0.251 TV: 0.007 
-(epoch: 60, iters: 800, time: 0.112) G_B: 0.576 G_L1: 4.004 D: 0.261 TV: 0.007 
-(epoch: 60, iters: 1000, time: 0.109) G_B: 0.408 G_L1: 4.498 D: 0.372 TV: 0.008 
-saving the latest model (epoch 60, total_steps 60000)
-saving the model at the end of epoch 60, iters 60000
-End of epoch 60 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000164 -> 0.000160
-(epoch: 61, iters: 200, time: 0.114) G_B: 0.544 G_L1: 6.707 D: 0.468 TV: 0.010 
-(epoch: 61, iters: 400, time: 0.106) G_B: 0.805 G_L1: 4.103 D: 0.232 TV: 0.007 
-(epoch: 61, iters: 600, time: 0.111) G_B: 0.403 G_L1: 4.817 D: 0.331 TV: 0.008 
-(epoch: 61, iters: 800, time: 0.105) G_B: 0.523 G_L1: 4.162 D: 0.381 TV: 0.010 
-(epoch: 61, iters: 1000, time: 0.111) G_B: 0.572 G_L1: 4.960 D: 0.275 TV: 0.007 
-End of epoch 61 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000160 -> 0.000156
-(epoch: 62, iters: 200, time: 0.111) G_B: 0.451 G_L1: 3.729 D: 0.501 TV: 0.007 
-(epoch: 62, iters: 400, time: 0.110) G_B: 0.590 G_L1: 3.489 D: 0.205 TV: 0.007 
-(epoch: 62, iters: 600, time: 0.113) G_B: 0.431 G_L1: 3.400 D: 0.284 TV: 0.007 
-(epoch: 62, iters: 800, time: 0.109) G_B: 0.658 G_L1: 3.879 D: 0.353 TV: 0.009 
-(epoch: 62, iters: 1000, time: 0.114) G_B: 0.366 G_L1: 3.242 D: 0.335 TV: 0.007 
-End of epoch 62 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000156 -> 0.000152
-(epoch: 63, iters: 200, time: 0.109) G_B: 0.684 G_L1: 2.864 D: 0.215 TV: 0.006 
-(epoch: 63, iters: 400, time: 0.111) G_B: 0.548 G_L1: 3.038 D: 0.256 TV: 0.007 
-(epoch: 63, iters: 600, time: 0.110) G_B: 0.443 G_L1: 4.481 D: 0.592 TV: 0.007 
-(epoch: 63, iters: 800, time: 0.120) G_B: 0.625 G_L1: 3.208 D: 0.347 TV: 0.007 
-(epoch: 63, iters: 1000, time: 0.109) G_B: 0.687 G_L1: 3.481 D: 0.384 TV: 0.007 
-End of epoch 63 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000152 -> 0.000148
-(epoch: 64, iters: 200, time: 0.114) G_B: 0.702 G_L1: 4.620 D: 0.248 TV: 0.008 
-(epoch: 64, iters: 400, time: 0.113) G_B: 0.617 G_L1: 4.348 D: 0.235 TV: 0.008 
-(epoch: 64, iters: 600, time: 0.108) G_B: 0.486 G_L1: 4.013 D: 0.267 TV: 0.006 
-(epoch: 64, iters: 800, time: 0.113) G_B: 0.693 G_L1: 4.346 D: 0.197 TV: 0.008 
-(epoch: 64, iters: 1000, time: 0.111) G_B: 0.759 G_L1: 4.372 D: 0.175 TV: 0.007 
-End of epoch 64 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000148 -> 0.000144
-(epoch: 65, iters: 200, time: 0.108) G_B: 0.667 G_L1: 4.548 D: 0.218 TV: 0.008 
-(epoch: 65, iters: 400, time: 0.118) G_B: 0.452 G_L1: 3.112 D: 0.227 TV: 0.008 
-(epoch: 65, iters: 600, time: 0.113) G_B: 0.586 G_L1: 4.004 D: 0.273 TV: 0.007 
-(epoch: 65, iters: 800, time: 0.110) G_B: 0.678 G_L1: 4.862 D: 0.197 TV: 0.006 
-(epoch: 65, iters: 1000, time: 0.111) G_B: 0.615 G_L1: 4.184 D: 0.210 TV: 0.010 
-saving the latest model (epoch 65, total_steps 65000)
-saving the model at the end of epoch 65, iters 65000
-End of epoch 65 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000144 -> 0.000140
-(epoch: 66, iters: 200, time: 0.111) G_B: 0.665 G_L1: 3.127 D: 0.215 TV: 0.007 
-(epoch: 66, iters: 400, time: 0.113) G_B: 0.507 G_L1: 6.319 D: 0.230 TV: 0.009 
-(epoch: 66, iters: 600, time: 0.113) G_B: 0.741 G_L1: 3.215 D: 0.202 TV: 0.007 
-(epoch: 66, iters: 800, time: 0.112) G_B: 0.618 G_L1: 3.574 D: 0.340 TV: 0.009 
-(epoch: 66, iters: 1000, time: 0.115) G_B: 0.309 G_L1: 3.640 D: 0.544 TV: 0.008 
-End of epoch 66 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000140 -> 0.000136
-(epoch: 67, iters: 200, time: 0.111) G_B: 0.674 G_L1: 3.690 D: 0.284 TV: 0.008 
-(epoch: 67, iters: 400, time: 0.111) G_B: 0.301 G_L1: 4.346 D: 0.408 TV: 0.009 
-(epoch: 67, iters: 600, time: 0.111) G_B: 0.618 G_L1: 4.231 D: 0.207 TV: 0.009 
-(epoch: 67, iters: 800, time: 0.112) G_B: 0.598 G_L1: 3.533 D: 0.208 TV: 0.009 
-(epoch: 67, iters: 1000, time: 0.110) G_B: 0.564 G_L1: 4.110 D: 0.225 TV: 0.006 
-End of epoch 67 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000136 -> 0.000132
-(epoch: 68, iters: 200, time: 0.104) G_B: 0.556 G_L1: 3.838 D: 0.315 TV: 0.008 
-(epoch: 68, iters: 400, time: 0.111) G_B: 0.411 G_L1: 4.751 D: 0.369 TV: 0.007 
-(epoch: 68, iters: 600, time: 0.112) G_B: 0.774 G_L1: 2.771 D: 0.360 TV: 0.006 
-(epoch: 68, iters: 800, time: 0.114) G_B: 0.558 G_L1: 5.250 D: 0.317 TV: 0.007 
-(epoch: 68, iters: 1000, time: 0.110) G_B: 0.494 G_L1: 3.504 D: 0.298 TV: 0.008 
-End of epoch 68 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000132 -> 0.000128
-(epoch: 69, iters: 200, time: 0.120) G_B: 0.538 G_L1: 3.189 D: 0.356 TV: 0.008 
-(epoch: 69, iters: 400, time: 0.111) G_B: 0.698 G_L1: 3.174 D: 0.327 TV: 0.009 
-(epoch: 69, iters: 600, time: 0.106) G_B: 0.696 G_L1: 5.913 D: 0.217 TV: 0.009 
-(epoch: 69, iters: 800, time: 0.112) G_B: 0.545 G_L1: 4.289 D: 0.260 TV: 0.008 
-(epoch: 69, iters: 1000, time: 0.111) G_B: 0.769 G_L1: 3.754 D: 0.198 TV: 0.006 
-End of epoch 69 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000128 -> 0.000124
-(epoch: 70, iters: 200, time: 0.109) G_B: 0.522 G_L1: 3.399 D: 0.385 TV: 0.006 
-(epoch: 70, iters: 400, time: 0.109) G_B: 0.656 G_L1: 3.009 D: 0.298 TV: 0.010 
-(epoch: 70, iters: 600, time: 0.113) G_B: 0.644 G_L1: 3.476 D: 0.275 TV: 0.005 
-(epoch: 70, iters: 800, time: 0.110) G_B: 0.604 G_L1: 3.595 D: 0.270 TV: 0.007 
-(epoch: 70, iters: 1000, time: 0.117) G_B: 0.656 G_L1: 4.952 D: 0.303 TV: 0.007 
-saving the latest model (epoch 70, total_steps 70000)
-saving the model at the end of epoch 70, iters 70000
-End of epoch 70 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000124 -> 0.000120
-(epoch: 71, iters: 200, time: 0.108) G_B: 0.690 G_L1: 4.092 D: 0.259 TV: 0.008 
-(epoch: 71, iters: 400, time: 0.110) G_B: 0.747 G_L1: 3.392 D: 0.200 TV: 0.007 
-(epoch: 71, iters: 600, time: 0.109) G_B: 0.720 G_L1: 3.186 D: 0.300 TV: 0.008 
-(epoch: 71, iters: 800, time: 0.107) G_B: 0.465 G_L1: 3.704 D: 0.511 TV: 0.010 
-(epoch: 71, iters: 1000, time: 0.113) G_B: 0.725 G_L1: 5.551 D: 0.220 TV: 0.007 
-End of epoch 71 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000120 -> 0.000116
-(epoch: 72, iters: 200, time: 0.111) G_B: 0.642 G_L1: 3.040 D: 0.235 TV: 0.006 
-(epoch: 72, iters: 400, time: 0.110) G_B: 0.583 G_L1: 3.133 D: 0.343 TV: 0.007 
-(epoch: 72, iters: 600, time: 0.110) G_B: 0.569 G_L1: 3.865 D: 0.247 TV: 0.008 
-(epoch: 72, iters: 800, time: 0.114) G_B: 0.728 G_L1: 3.094 D: 0.279 TV: 0.007 
-(epoch: 72, iters: 1000, time: 0.113) G_B: 0.488 G_L1: 3.007 D: 0.315 TV: 0.007 
-End of epoch 72 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000116 -> 0.000112
-(epoch: 73, iters: 200, time: 0.112) G_B: 0.825 G_L1: 4.328 D: 0.289 TV: 0.005 
-(epoch: 73, iters: 400, time: 0.113) G_B: 0.576 G_L1: 3.192 D: 0.285 TV: 0.006 
-(epoch: 73, iters: 600, time: 0.110) G_B: 0.524 G_L1: 4.253 D: 0.264 TV: 0.008 
-(epoch: 73, iters: 800, time: 0.107) G_B: 0.791 G_L1: 3.465 D: 0.297 TV: 0.008 
-(epoch: 73, iters: 1000, time: 0.111) G_B: 0.559 G_L1: 4.471 D: 0.229 TV: 0.008 
-End of epoch 73 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000112 -> 0.000108
-(epoch: 74, iters: 200, time: 0.113) G_B: 0.556 G_L1: 3.526 D: 0.225 TV: 0.009 
-(epoch: 74, iters: 400, time: 0.109) G_B: 0.681 G_L1: 4.556 D: 0.187 TV: 0.008 
-(epoch: 74, iters: 600, time: 0.110) G_B: 0.406 G_L1: 4.286 D: 0.497 TV: 0.009 
-(epoch: 74, iters: 800, time: 0.107) G_B: 0.599 G_L1: 3.744 D: 0.205 TV: 0.008 
-(epoch: 74, iters: 1000, time: 0.115) G_B: 0.829 G_L1: 3.310 D: 0.256 TV: 0.007 
-End of epoch 74 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000108 -> 0.000104
-(epoch: 75, iters: 200, time: 0.112) G_B: 0.561 G_L1: 4.058 D: 0.278 TV: 0.007 
-(epoch: 75, iters: 400, time: 0.111) G_B: 0.636 G_L1: 3.159 D: 0.340 TV: 0.009 
-(epoch: 75, iters: 600, time: 0.114) G_B: 0.453 G_L1: 3.648 D: 0.347 TV: 0.008 
-(epoch: 75, iters: 800, time: 0.116) G_B: 0.542 G_L1: 3.361 D: 0.350 TV: 0.007 
-(epoch: 75, iters: 1000, time: 0.114) G_B: 0.654 G_L1: 4.397 D: 0.279 TV: 0.008 
-saving the latest model (epoch 75, total_steps 75000)
-saving the model at the end of epoch 75, iters 75000
-End of epoch 75 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000104 -> 0.000100
-(epoch: 76, iters: 200, time: 0.115) G_B: 0.636 G_L1: 3.677 D: 0.203 TV: 0.006 
-(epoch: 76, iters: 400, time: 0.112) G_B: 0.886 G_L1: 3.030 D: 0.175 TV: 0.008 
-(epoch: 76, iters: 600, time: 0.112) G_B: 0.719 G_L1: 3.028 D: 0.179 TV: 0.006 
-(epoch: 76, iters: 800, time: 0.109) G_B: 0.449 G_L1: 4.157 D: 0.288 TV: 0.009 
-(epoch: 76, iters: 1000, time: 0.115) G_B: 0.668 G_L1: 2.931 D: 0.287 TV: 0.007 
-End of epoch 76 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000100 -> 0.000096
-(epoch: 77, iters: 200, time: 0.111) G_B: 0.748 G_L1: 2.724 D: 0.262 TV: 0.006 
-(epoch: 77, iters: 400, time: 0.110) G_B: 0.859 G_L1: 2.819 D: 0.233 TV: 0.007 
-(epoch: 77, iters: 600, time: 0.110) G_B: 0.749 G_L1: 2.869 D: 0.306 TV: 0.008 
-(epoch: 77, iters: 800, time: 0.111) G_B: 0.606 G_L1: 3.613 D: 0.243 TV: 0.007 
-(epoch: 77, iters: 1000, time: 0.112) G_B: 0.692 G_L1: 4.024 D: 0.296 TV: 0.010 
-End of epoch 77 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000096 -> 0.000092
-(epoch: 78, iters: 200, time: 0.116) G_B: 0.619 G_L1: 3.980 D: 0.356 TV: 0.009 
-(epoch: 78, iters: 400, time: 0.119) G_B: 0.564 G_L1: 3.701 D: 0.322 TV: 0.008 
-(epoch: 78, iters: 600, time: 0.112) G_B: 0.531 G_L1: 2.803 D: 0.299 TV: 0.007 
-(epoch: 78, iters: 800, time: 0.113) G_B: 0.592 G_L1: 3.965 D: 0.262 TV: 0.007 
-(epoch: 78, iters: 1000, time: 0.113) G_B: 0.676 G_L1: 3.412 D: 0.239 TV: 0.006 
-End of epoch 78 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000092 -> 0.000088
-(epoch: 79, iters: 200, time: 0.117) G_B: 0.640 G_L1: 3.465 D: 0.199 TV: 0.008 
-(epoch: 79, iters: 400, time: 0.114) G_B: 0.428 G_L1: 3.390 D: 0.421 TV: 0.008 
-(epoch: 79, iters: 600, time: 0.113) G_B: 0.651 G_L1: 3.317 D: 0.219 TV: 0.008 
-(epoch: 79, iters: 800, time: 0.118) G_B: 0.612 G_L1: 4.283 D: 0.272 TV: 0.010 
-(epoch: 79, iters: 1000, time: 0.122) G_B: 0.768 G_L1: 4.343 D: 0.213 TV: 0.008 
-End of epoch 79 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000088 -> 0.000084
-(epoch: 80, iters: 200, time: 0.116) G_B: 0.717 G_L1: 4.139 D: 0.146 TV: 0.007 
-(epoch: 80, iters: 400, time: 0.106) G_B: 0.632 G_L1: 3.260 D: 0.226 TV: 0.008 
-(epoch: 80, iters: 600, time: 0.112) G_B: 0.577 G_L1: 3.029 D: 0.204 TV: 0.006 
-(epoch: 80, iters: 800, time: 0.117) G_B: 0.760 G_L1: 3.343 D: 0.262 TV: 0.009 
-(epoch: 80, iters: 1000, time: 0.114) G_B: 0.668 G_L1: 3.026 D: 0.195 TV: 0.007 
-saving the latest model (epoch 80, total_steps 80000)
-saving the model at the end of epoch 80, iters 80000
-End of epoch 80 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000084 -> 0.000080
-(epoch: 81, iters: 200, time: 0.112) G_B: 0.723 G_L1: 2.959 D: 0.184 TV: 0.007 
-(epoch: 81, iters: 400, time: 0.114) G_B: 0.567 G_L1: 2.739 D: 0.342 TV: 0.007 
-(epoch: 81, iters: 600, time: 0.111) G_B: 0.461 G_L1: 3.842 D: 0.337 TV: 0.007 
-(epoch: 81, iters: 800, time: 0.116) G_B: 0.684 G_L1: 3.689 D: 0.297 TV: 0.007 
-(epoch: 81, iters: 1000, time: 0.115) G_B: 0.675 G_L1: 4.529 D: 0.234 TV: 0.010 
-End of epoch 81 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000080 -> 0.000076
-(epoch: 82, iters: 200, time: 0.111) G_B: 0.496 G_L1: 3.974 D: 0.365 TV: 0.009 
-(epoch: 82, iters: 400, time: 0.114) G_B: 0.711 G_L1: 4.626 D: 0.188 TV: 0.007 
-(epoch: 82, iters: 600, time: 0.112) G_B: 0.397 G_L1: 3.743 D: 0.410 TV: 0.008 
-(epoch: 82, iters: 800, time: 0.119) G_B: 0.595 G_L1: 2.907 D: 0.321 TV: 0.007 
-(epoch: 82, iters: 1000, time: 0.115) G_B: 0.494 G_L1: 3.231 D: 0.303 TV: 0.006 
-End of epoch 82 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000076 -> 0.000072
-(epoch: 83, iters: 200, time: 0.115) G_B: 0.642 G_L1: 3.106 D: 0.253 TV: 0.006 
-(epoch: 83, iters: 400, time: 0.115) G_B: 0.663 G_L1: 2.972 D: 0.203 TV: 0.007 
-(epoch: 83, iters: 600, time: 0.112) G_B: 0.538 G_L1: 2.937 D: 0.250 TV: 0.007 
-(epoch: 83, iters: 800, time: 0.106) G_B: 0.567 G_L1: 3.429 D: 0.207 TV: 0.008 
-(epoch: 83, iters: 1000, time: 0.115) G_B: 0.742 G_L1: 3.485 D: 0.233 TV: 0.006 
-End of epoch 83 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000072 -> 0.000068
-(epoch: 84, iters: 200, time: 0.110) G_B: 0.776 G_L1: 3.125 D: 0.153 TV: 0.008 
-(epoch: 84, iters: 400, time: 0.111) G_B: 0.664 G_L1: 3.151 D: 0.240 TV: 0.006 
-(epoch: 84, iters: 600, time: 0.116) G_B: 0.526 G_L1: 3.394 D: 0.287 TV: 0.007 
-(epoch: 84, iters: 800, time: 0.112) G_B: 0.770 G_L1: 2.990 D: 0.143 TV: 0.007 
-(epoch: 84, iters: 1000, time: 0.117) G_B: 0.831 G_L1: 4.725 D: 0.196 TV: 0.009 
-End of epoch 84 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000068 -> 0.000064
-(epoch: 85, iters: 200, time: 0.116) G_B: 0.608 G_L1: 3.426 D: 0.328 TV: 0.007 
-(epoch: 85, iters: 400, time: 0.117) G_B: 0.504 G_L1: 3.066 D: 0.332 TV: 0.009 
-(epoch: 85, iters: 600, time: 0.116) G_B: 0.701 G_L1: 3.840 D: 0.211 TV: 0.007 
-(epoch: 85, iters: 800, time: 0.115) G_B: 0.592 G_L1: 3.177 D: 0.282 TV: 0.008 
-(epoch: 85, iters: 1000, time: 0.113) G_B: 0.906 G_L1: 3.125 D: 0.201 TV: 0.006 
-saving the latest model (epoch 85, total_steps 85000)
-saving the model at the end of epoch 85, iters 85000
-End of epoch 85 / 100 	 Time Taken: 49 sec
-update learning rate: 0.000064 -> 0.000060
-(epoch: 86, iters: 200, time: 0.115) G_B: 0.606 G_L1: 3.760 D: 0.253 TV: 0.009 
-(epoch: 86, iters: 400, time: 0.111) G_B: 0.783 G_L1: 2.993 D: 0.138 TV: 0.007 
-(epoch: 86, iters: 600, time: 0.113) G_B: 0.766 G_L1: 3.973 D: 0.097 TV: 0.008 
-(epoch: 86, iters: 800, time: 0.114) G_B: 0.565 G_L1: 2.829 D: 0.250 TV: 0.007 
-(epoch: 86, iters: 1000, time: 0.116) G_B: 0.699 G_L1: 3.132 D: 0.180 TV: 0.006 
-End of epoch 86 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000060 -> 0.000056
-(epoch: 87, iters: 200, time: 0.116) G_B: 0.524 G_L1: 2.612 D: 0.200 TV: 0.005 
-(epoch: 87, iters: 400, time: 0.112) G_B: 0.550 G_L1: 3.157 D: 0.287 TV: 0.009 
-(epoch: 87, iters: 600, time: 0.118) G_B: 0.665 G_L1: 2.847 D: 0.215 TV: 0.007 
-(epoch: 87, iters: 800, time: 0.118) G_B: 0.738 G_L1: 3.481 D: 0.109 TV: 0.008 
-(epoch: 87, iters: 1000, time: 0.113) G_B: 0.588 G_L1: 3.519 D: 0.336 TV: 0.008 
-End of epoch 87 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000056 -> 0.000052
-(epoch: 88, iters: 200, time: 0.120) G_B: 0.600 G_L1: 3.331 D: 0.280 TV: 0.008 
-(epoch: 88, iters: 400, time: 0.116) G_B: 0.663 G_L1: 4.241 D: 0.239 TV: 0.007 
-(epoch: 88, iters: 600, time: 0.114) G_B: 0.551 G_L1: 4.074 D: 0.201 TV: 0.006 
-(epoch: 88, iters: 800, time: 0.114) G_B: 0.792 G_L1: 2.715 D: 0.232 TV: 0.007 
-(epoch: 88, iters: 1000, time: 0.113) G_B: 0.660 G_L1: 3.537 D: 0.117 TV: 0.008 
-End of epoch 88 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000052 -> 0.000048
-(epoch: 89, iters: 200, time: 0.117) G_B: 0.552 G_L1: 3.306 D: 0.267 TV: 0.007 
-(epoch: 89, iters: 400, time: 0.115) G_B: 0.545 G_L1: 3.418 D: 0.392 TV: 0.007 
-(epoch: 89, iters: 600, time: 0.118) G_B: 0.643 G_L1: 3.297 D: 0.248 TV: 0.008 
-(epoch: 89, iters: 800, time: 0.121) G_B: 0.635 G_L1: 4.898 D: 0.224 TV: 0.006 
-(epoch: 89, iters: 1000, time: 0.114) G_B: 0.713 G_L1: 3.402 D: 0.214 TV: 0.007 
-End of epoch 89 / 100 	 Time Taken: 48 sec
-update learning rate: 0.000048 -> 0.000044
-(epoch: 90, iters: 200, time: 0.118) G_B: 0.525 G_L1: 2.989 D: 0.263 TV: 0.009 
-(epoch: 90, iters: 400, time: 0.207) G_B: 0.557 G_L1: 3.047 D: 0.491 TV: 0.008 
-(epoch: 90, iters: 600, time: 0.194) G_B: 0.487 G_L1: 2.668 D: 0.323 TV: 0.006 
-(epoch: 90, iters: 800, time: 0.178) G_B: 0.631 G_L1: 2.582 D: 0.298 TV: 0.007 
-(epoch: 90, iters: 1000, time: 0.201) G_B: 0.649 G_L1: 3.051 D: 0.164 TV: 0.007 
-saving the latest model (epoch 90, total_steps 90000)
-saving the model at the end of epoch 90, iters 90000
-End of epoch 90 / 100 	 Time Taken: 84 sec
-update learning rate: 0.000044 -> 0.000040
-(epoch: 91, iters: 200, time: 0.190) G_B: 0.593 G_L1: 3.326 D: 0.260 TV: 0.008 
-(epoch: 91, iters: 400, time: 0.183) G_B: 0.522 G_L1: 3.388 D: 0.378 TV: 0.009 
-(epoch: 91, iters: 600, time: 0.180) G_B: 0.596 G_L1: 3.157 D: 0.217 TV: 0.008 
-(epoch: 91, iters: 800, time: 0.177) G_B: 0.677 G_L1: 2.744 D: 0.203 TV: 0.007 
-(epoch: 91, iters: 1000, time: 0.192) G_B: 0.441 G_L1: 3.040 D: 0.232 TV: 0.008 
-End of epoch 91 / 100 	 Time Taken: 94 sec
-update learning rate: 0.000040 -> 0.000036
-(epoch: 92, iters: 200, time: 0.129) G_B: 0.727 G_L1: 2.878 D: 0.147 TV: 0.006 
-(epoch: 92, iters: 400, time: 0.167) G_B: 0.682 G_L1: 3.261 D: 0.201 TV: 0.007 
-(epoch: 92, iters: 600, time: 0.209) G_B: 0.765 G_L1: 2.605 D: 0.217 TV: 0.006 
-(epoch: 92, iters: 800, time: 0.198) G_B: 0.604 G_L1: 4.102 D: 0.165 TV: 0.007 
-(epoch: 92, iters: 1000, time: 0.193) G_B: 0.468 G_L1: 3.252 D: 0.313 TV: 0.008 
-End of epoch 92 / 100 	 Time Taken: 91 sec
-update learning rate: 0.000036 -> 0.000032
-(epoch: 93, iters: 200, time: 0.201) G_B: 0.675 G_L1: 2.795 D: 0.170 TV: 0.005 
-(epoch: 93, iters: 400, time: 0.191) G_B: 0.580 G_L1: 3.028 D: 0.282 TV: 0.007 
-(epoch: 93, iters: 600, time: 0.184) G_B: 0.533 G_L1: 3.824 D: 0.249 TV: 0.009 
-(epoch: 93, iters: 800, time: 0.207) G_B: 0.550 G_L1: 2.633 D: 0.248 TV: 0.007 
-(epoch: 93, iters: 1000, time: 0.201) G_B: 0.620 G_L1: 3.033 D: 0.176 TV: 0.006 
-End of epoch 93 / 100 	 Time Taken: 92 sec
-update learning rate: 0.000032 -> 0.000028
-(epoch: 94, iters: 200, time: 0.194) G_B: 0.744 G_L1: 3.798 D: 0.151 TV: 0.006 
-(epoch: 94, iters: 400, time: 0.195) G_B: 0.634 G_L1: 3.028 D: 0.192 TV: 0.007 
-(epoch: 94, iters: 600, time: 0.186) G_B: 0.746 G_L1: 3.203 D: 0.219 TV: 0.006 
-(epoch: 94, iters: 800, time: 0.189) G_B: 0.567 G_L1: 3.576 D: 0.196 TV: 0.009 
-(epoch: 94, iters: 1000, time: 0.202) G_B: 0.564 G_L1: 2.826 D: 0.225 TV: 0.006 
-End of epoch 94 / 100 	 Time Taken: 92 sec
-update learning rate: 0.000028 -> 0.000024
-(epoch: 95, iters: 200, time: 0.193) G_B: 0.550 G_L1: 5.601 D: 0.228 TV: 0.007 
-(epoch: 95, iters: 400, time: 0.185) G_B: 0.726 G_L1: 2.358 D: 0.291 TV: 0.007 
-(epoch: 95, iters: 600, time: 0.196) G_B: 0.709 G_L1: 2.911 D: 0.262 TV: 0.005 
-(epoch: 95, iters: 800, time: 0.195) G_B: 0.484 G_L1: 2.788 D: 0.240 TV: 0.008 
-(epoch: 95, iters: 1000, time: 0.198) G_B: 0.455 G_L1: 3.615 D: 0.309 TV: 0.007 
-saving the latest model (epoch 95, total_steps 95000)
-saving the model at the end of epoch 95, iters 95000
-End of epoch 95 / 100 	 Time Taken: 92 sec
-update learning rate: 0.000024 -> 0.000020
-(epoch: 96, iters: 200, time: 0.200) G_B: 0.657 G_L1: 3.573 D: 0.236 TV: 0.007 
-(epoch: 96, iters: 400, time: 0.210) G_B: 0.530 G_L1: 2.903 D: 0.218 TV: 0.008 
-(epoch: 96, iters: 600, time: 0.193) G_B: 0.539 G_L1: 3.115 D: 0.275 TV: 0.007 
-(epoch: 96, iters: 800, time: 0.174) G_B: 0.730 G_L1: 3.288 D: 0.152 TV: 0.008 
-(epoch: 96, iters: 1000, time: 0.184) G_B: 0.515 G_L1: 2.555 D: 0.295 TV: 0.007 
-End of epoch 96 / 100 	 Time Taken: 92 sec
-update learning rate: 0.000020 -> 0.000016
-(epoch: 97, iters: 200, time: 0.180) G_B: 0.586 G_L1: 2.442 D: 0.235 TV: 0.006 
-(epoch: 97, iters: 400, time: 0.201) G_B: 0.567 G_L1: 3.165 D: 0.261 TV: 0.007 
-(epoch: 97, iters: 600, time: 0.178) G_B: 0.490 G_L1: 3.042 D: 0.317 TV: 0.006 
-(epoch: 97, iters: 800, time: 0.213) G_B: 0.772 G_L1: 2.273 D: 0.181 TV: 0.006 
-(epoch: 97, iters: 1000, time: 0.179) G_B: 0.473 G_L1: 2.978 D: 0.360 TV: 0.007 
-End of epoch 97 / 100 	 Time Taken: 91 sec
-update learning rate: 0.000016 -> 0.000012
-(epoch: 98, iters: 200, time: 0.201) G_B: 0.454 G_L1: 2.995 D: 0.268 TV: 0.008 
-(epoch: 98, iters: 400, time: 0.180) G_B: 0.705 G_L1: 3.060 D: 0.191 TV: 0.009 
-(epoch: 98, iters: 600, time: 0.193) G_B: 0.723 G_L1: 3.977 D: 0.237 TV: 0.006 
-(epoch: 98, iters: 800, time: 0.175) G_B: 0.613 G_L1: 3.072 D: 0.280 TV: 0.007 
-(epoch: 98, iters: 1000, time: 0.175) G_B: 0.530 G_L1: 2.898 D: 0.275 TV: 0.007 
-End of epoch 98 / 100 	 Time Taken: 92 sec
-update learning rate: 0.000012 -> 0.000008
-(epoch: 99, iters: 200, time: 0.202) G_B: 0.666 G_L1: 3.085 D: 0.240 TV: 0.006 
-(epoch: 99, iters: 400, time: 0.190) G_B: 0.519 G_L1: 2.799 D: 0.298 TV: 0.007 
-(epoch: 99, iters: 600, time: 0.182) G_B: 0.585 G_L1: 2.986 D: 0.161 TV: 0.008 
-(epoch: 99, iters: 800, time: 0.179) G_B: 0.558 G_L1: 2.922 D: 0.201 TV: 0.008 
-(epoch: 99, iters: 1000, time: 0.184) G_B: 0.611 G_L1: 4.283 D: 0.140 TV: 0.009 
-End of epoch 99 / 100 	 Time Taken: 93 sec
-update learning rate: 0.000008 -> 0.000004
-(epoch: 100, iters: 200, time: 0.193) G_B: 0.694 G_L1: 2.344 D: 0.260 TV: 0.006 
-(epoch: 100, iters: 400, time: 0.173) G_B: 0.596 G_L1: 2.661 D: 0.248 TV: 0.008 
-(epoch: 100, iters: 600, time: 0.187) G_B: 0.625 G_L1: 2.677 D: 0.247 TV: 0.007 
-(epoch: 100, iters: 800, time: 0.189) G_B: 0.584 G_L1: 2.675 D: 0.190 TV: 0.007 
-(epoch: 100, iters: 1000, time: 0.179) G_B: 0.866 G_L1: 2.405 D: 0.214 TV: 0.006 
-saving the latest model (epoch 100, total_steps 100000)
-saving the model at the end of epoch 100, iters 100000
-End of epoch 100 / 100 	 Time Taken: 92 sec
-update learning rate: 0.000004 -> 0.000000
------------- Options -------------
-aspect_ratio: 1.0
-batchSize: 1
-checkpoints_dir: /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints
-dataroot: /home/xyang/UTS/Data/Haze/D-HAZY/NYU
-dataset_mode: depth
-depth_nc: 3
-depth_reverse: True
-display_id: 0
-display_port: 8097
-display_single_pane_ncols: 0
-display_winsize: 256
-fineSize: 256
-gpu_ids: [0]
-how_many: 500
-identity: 0.0
-input_nc: 3
-isTrain: False
-loadSize: 286
-max_dataset_size: inf
-model: disentangled
-nThreads: 2
-n_layers: 3
-n_layers_D: 3
-name: disentangled_resnet_9blocks_sigmoid_A100_TV1_lr0.0002
-ndf: 64
-ngf: 64
-no_dropout: True
-no_flip: False
-non_linearity: sigmoid
-norm: instance
-ntest: inf
-output_nc: 3
-phase: test
-pooling: True
-resize_or_crop: resize_and_crop
-results_dir: /home/xyang/UTS/Data/Haze/D-HAZY/NYU/results
-serial_batches: True
-which_direction: AtoB
-which_epoch: latest
-which_model_depth: aod
-which_model_netD: basic
-which_model_netG: resnet_9blocks
--------------- End ----------------
-CustomDatasetDataLoader
+End of epoch 15 / 100 	 Time Taken: 63 sec
 dataset [DepthDataset] was created
-disentangled
----------- Networks initialized -------------
-ResnetGenerator (
-  (model): Sequential (
-    (0): ReflectionPad2d (3, 3, 3, 3)
-    (1): Conv2d(3, 64, kernel_size=(7, 7), stride=(1, 1))
-    (2): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
-    (3): ReLU (inplace)
-    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
-    (5): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
-    (6): ReLU (inplace)
-    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
-    (8): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-    (9): ReLU (inplace)
-    (10): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (11): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (12): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (13): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (14): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (15): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (16): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (17): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (18): ResnetBlock (
-      (conv_block): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-        (3): ReLU (inplace)
-        (4): ReflectionPad2d (1, 1, 1, 1)
-        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
-        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-      )
-    )
-    (19): ConvTranspose2d(256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
-    (20): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
-    (21): ReLU (inplace)
-    (22): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
-    (23): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
-    (24): ReLU (inplace)
-    (25): ReflectionPad2d (3, 3, 3, 3)
-    (26): Conv2d(64, 3, kernel_size=(7, 7), stride=(1, 1))
-    (27): Tanh ()
-  )
-)
-Total number of parameters: 11378179
-AODNetGenerator (
-  (model): Sequential (
-    (0): Conv2d(3, 6, kernel_size=(1, 1), stride=(1, 1))
-    (1): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
-    (2): ReLU (inplace)
-    (3): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
-    (4): Upsample(scale_factor=2, mode=nearest)
-    (5): ConcatBlock (
-      (conv_block1): Sequential (
-        (0): ReflectionPad2d (1, 1, 1, 1)
-        (1): Conv2d(6, 6, kernel_size=(3, 3), stride=(1, 1))
-        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
-        (3): ReLU (inplace)
-        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
-        (5): Upsample(scale_factor=2, mode=nearest)
-      )
-      (conv_block2): Sequential (
-        (0): ReflectionPad2d (2, 2, 2, 2)
-        (1): Conv2d(12, 6, kernel_size=(5, 5), stride=(1, 1))
-        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
-        (3): ReLU (inplace)
-        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
-        (5): Upsample(scale_factor=2, mode=nearest)
-      )
-      (conv_block3): Sequential (
-        (0): ReflectionPad2d (3, 3, 3, 3)
-        (1): Conv2d(12, 6, kernel_size=(7, 7), stride=(1, 1))
-        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
-        (3): ReLU (inplace)
-        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
-        (5): Upsample(scale_factor=2, mode=nearest)
-      )
-    )
-    (6): ReflectionPad2d (1, 1, 1, 1)
-    (7): Conv2d(24, 1, kernel_size=(3, 3), stride=(1, 1))
-    (8): Sigmoid ()
-  )
-)
-Total number of parameters: 5959
------------------------------------------------
-model [DisentangledModel] was created
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1001_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1002_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1003_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1004_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1005_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1006_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1007_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1008_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1009_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1010_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1011_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1012_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1013_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1014_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1015_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1016_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1017_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1018_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1019_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1020_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1021_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1022_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1023_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1024_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1025_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1026_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1027_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1028_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1029_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1030_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1031_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1032_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1033_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1034_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1035_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1036_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1037_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1038_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1039_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1040_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1041_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1042_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1043_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1044_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1045_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1046_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1047_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1048_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1049_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1050_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1051_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1052_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1053_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1054_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1055_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1056_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1057_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1058_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1059_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1060_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1061_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1062_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1063_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1064_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1065_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1066_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1067_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1068_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1069_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1070_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1071_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1072_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1073_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1074_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1075_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1076_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1077_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1078_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1079_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1080_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1081_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1082_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1083_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1084_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1085_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1086_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1087_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1088_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1089_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1090_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1091_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1092_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1093_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1094_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1095_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1096_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1097_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1098_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1099_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1100_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1101_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1102_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1103_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1104_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1105_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1106_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1107_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1108_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1109_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1110_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1111_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1112_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1113_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1114_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1115_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1116_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1117_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1118_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1119_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1120_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1121_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1122_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1123_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1124_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1125_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1126_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1127_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1128_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1129_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1130_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1131_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1132_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1133_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1134_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1135_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1136_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1137_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1138_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1139_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1140_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1141_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1142_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1143_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1144_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1145_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1146_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1147_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1148_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1149_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1150_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1151_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1152_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1153_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1154_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1155_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1156_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1157_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1158_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1159_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1160_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1161_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1162_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1163_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1164_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1165_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1166_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1167_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1168_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1169_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1170_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1171_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1172_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1173_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1174_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1175_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1176_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1177_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1178_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1179_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1180_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1181_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1182_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1183_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1184_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1185_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1186_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1187_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1188_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1189_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1190_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1191_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1192_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1193_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1194_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1195_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1196_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1197_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1198_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1199_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1200_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1201_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1202_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1203_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1204_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1205_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1206_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1207_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1208_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1209_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1210_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1211_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1212_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1213_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1214_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1215_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1216_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1217_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1218_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1219_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1220_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1221_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1222_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1223_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1224_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1225_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1226_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1227_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1228_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1229_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1230_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1231_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1232_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1233_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1234_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1235_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1236_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1237_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1238_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1239_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1240_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1241_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1242_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1243_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1244_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1245_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1246_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1247_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1248_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1249_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1250_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1251_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1252_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1253_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1254_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1255_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1256_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1257_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1258_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1259_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1260_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1261_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1262_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1263_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1264_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1265_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1266_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1267_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1268_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1269_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1270_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1271_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1272_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1273_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1274_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1275_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1276_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1277_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1278_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1279_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1280_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1281_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1282_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1283_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1284_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1285_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1286_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1287_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1288_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1289_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1290_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1291_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1292_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1293_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1294_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1295_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1296_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1297_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1298_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1299_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1300_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1301_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1302_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1303_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1304_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1305_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1306_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1307_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1308_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1309_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1310_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1311_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1312_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1313_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1314_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1315_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1316_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1317_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1318_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1319_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1320_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1321_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1322_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1323_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1324_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1325_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1326_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1327_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1328_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1329_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1330_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1331_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1332_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1333_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1334_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1335_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1336_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1337_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1338_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1339_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1340_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1341_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1342_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1343_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1344_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1345_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1346_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1347_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1348_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1349_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1350_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1351_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1352_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1353_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1354_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1355_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1356_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1357_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1358_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1359_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1360_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1361_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1362_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1363_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1364_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1365_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1366_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1367_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1368_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1369_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1370_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1371_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1372_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1373_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1374_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1375_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1376_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1377_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1378_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1379_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1380_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1381_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1382_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1383_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1384_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1385_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1386_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1387_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1388_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1389_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1390_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1391_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1392_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1393_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1394_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1395_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1396_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1397_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1398_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1399_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1400_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1401_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1402_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1403_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1404_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1405_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1406_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1407_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1408_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1409_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1410_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1411_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1412_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1413_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1414_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1415_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1416_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1417_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1418_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1419_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1420_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1421_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1422_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1423_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1424_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1425_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1426_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1427_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1428_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1429_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1430_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1431_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1432_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1433_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1434_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1435_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1436_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1437_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1438_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1439_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1440_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1441_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1442_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1443_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1444_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1445_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1446_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1447_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1448_Hazy.bmp']
-process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/testA/1449_Hazy.bmp']
+(epoch: 16, iters: 200, time: 0.124) G_B: 0.600 G_L1: 0.072 D: 1.087 TV: 0.000 
+(epoch: 16, iters: 400, time: 0.220) G_B: 0.267 G_L1: 0.104 D: 0.500 TV: 0.000 
+(epoch: 16, iters: 600, time: 0.221) G_B: 0.262 G_L1: 0.114 D: 0.515 TV: 0.000 
+(epoch: 16, iters: 800, time: 0.211) G_B: 0.245 G_L1: 0.074 D: 0.499 TV: 0.000 
+(epoch: 16, iters: 1000, time: 0.213) G_B: 0.315 G_L1: 0.090 D: 0.597 TV: 0.000 
+End of epoch 16 / 100 	 Time Taken: 112 sec
+dataset [DepthDataset] was created
+(epoch: 17, iters: 200, time: 0.226) G_B: 0.260 G_L1: 0.085 D: 0.496 TV: 0.000 
+(epoch: 17, iters: 400, time: 0.211) G_B: 0.283 G_L1: 0.078 D: 0.529 TV: 0.000 
+(epoch: 17, iters: 600, time: 0.214) G_B: 0.295 G_L1: 0.088 D: 0.535 TV: 0.000 
+(epoch: 17, iters: 800, time: 0.217) G_B: 0.280 G_L1: 0.104 D: 0.520 TV: 0.000 
+(epoch: 17, iters: 1000, time: 0.228) G_B: 0.284 G_L1: 0.076 D: 0.560 TV: 0.000 
+End of epoch 17 / 100 	 Time Taken: 128 sec
+dataset [DepthDataset] was created
