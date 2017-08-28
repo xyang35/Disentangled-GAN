@@ -2,7 +2,7 @@
 %root = '/home/xyang/Downloads/GAN/disentangled_resnet_9blocks_sigmoid_A100_TV0.00001/disentangled_resnet_9blocks_sigmoid_A100_TV0.00001/test_latest/images/';
 %name = 'disentangled_resnet_9blocks_sigmoid_A100_TV1';
 
-root = ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results/',name,'/test_latest/images/'];
+root = ['/home-4/xyang35@umd.edu/work/xyang/GAN/Haze/D-HAZY/results/',name,'/test_latest/images/'];
 
 %suffix = '_dcp_radiance-refinedt'; folder = ['DCP/',name,'/']; 
 %suffix = '_DehazeNet'; folder = ['DehazeNet/',name,'/'];
