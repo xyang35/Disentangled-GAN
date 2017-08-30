@@ -7,18 +7,18 @@ cd ..
 
 netG=resnet_9blocks
 nonlinear=sigmoid
-lambda_A=10
-lambda_TV=1
+lambda_A=100
+lambda_TV=0
 lr=0.0002
 gpu_ids=0,1
 
 #name=disentangled_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}
-name=disentangledMax_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}
-model=disentangled
+name=disentangledLBSep_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}
+model=disentangled_LB
 
-dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/NYU
-checkpoints_dir=/home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints
-results_dir=/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results
+dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/temp
+checkpoints_dir=/home/xyang/UTS/Data/Haze/D-HAZY/temp/checkpoints
+results_dir=/home/xyang/UTS/Data/Haze/D-HAZY/temp/results
 
 python train.py --dataroot $dataroot \
     --checkpoints_dir $checkpoints_dir \
@@ -34,8 +34,9 @@ python test.py --dataroot $dataroot \
     --non_linearity $nonlinear  --pooling --no_dropout --depth_reverse \
     --dataset_mode depth --display_id 0 --serial_batches --phase test --how_many 500
 
-# evaluation
-echo "Evaluation ..."
 
-cd tools
-matlab <<< "name = '$name'; evaluation;"
+# evaluation
+#echo "Evaluation ..."
+
+#cd tools
+#matlab <<< "name = '$name'; evaluation;"

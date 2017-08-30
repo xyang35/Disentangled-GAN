@@ -1,6 +1,8 @@
 #!/bin/bash
 
-name='disentangled_shuffle_resnet_9blocks_sigmoid_A100_TV1_lr0.0002'
+#name='disentangled_shuffle_resnet_9blocks_sigmoid_A100_TV1_lr0.0002'
+#name='disentangled_resnet_9blocks_sigmoid_A10_TV1_lr0.0002'
+name=$1
 
 mkdir demo/app/static/$name
 

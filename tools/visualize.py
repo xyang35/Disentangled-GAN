@@ -54,7 +54,7 @@ def main():
     root = '/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results/'+name+'/test_latest/images/'
 
     web_name = 'Dehaze_'+name
-    suffix = ['_Hazy', '_dcp_radiance-refinedt', '_DehazeNet', '_Haze-free', '_real_B']
+    suffix = ['_Hazy', '_dcp_radiance-refinedt', '_DehazeNet', '_fake_B', '_Haze-free', '_Haze-free-depth', '_real_B']
 #    folder = ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results/'+name+'/test_latest/images/',
 #              'DCP/'+name+'/',   
 #              'DehazeNet/'+name+'/',   
@@ -63,6 +63,8 @@ def main():
     folder = ['/static/'+name+'/images/', 
               '/static/DCP/',
               '/static/DehazeNet/',
+              '/static/cyclegan/',
+              '/static/'+name+'/images/', 
               '/static/'+name+'/images/', 
               '/static/'+name+'/images/']
 

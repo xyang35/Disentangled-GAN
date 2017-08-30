@@ -87,6 +87,9 @@ class DisentangledModel(BaseModel):
         self.real_B = Variable(self.input_B)
         self.depth = self.netDepth.forward(self.real_A)
 
+        # clip with 0.9
+        self.depth = torch.clamp(self.depth, max=0.9)
+
         # recover B according to depth
         self.fake_B2 = util.reverse_matting(self.real_A, self.depth)
 
@@ -99,6 +102,9 @@ class DisentangledModel(BaseModel):
         self.fake_B = self.netG.forward(self.real_A)
         self.real_B = Variable(self.input_B, volatile=True)
         self.depth = self.netDepth.forward(self.real_A)
+
+        # clip with 0.9
+        self.depth = torch.clamp(self.depth, max=0.9)
 
         # recover B according to depth
         self.fake_B2 = util.reverse_matting(self.real_A, self.depth)

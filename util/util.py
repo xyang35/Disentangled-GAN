@@ -23,7 +23,7 @@ def synthesize_matting(F, alpha, B=None):
 
     return F * alpha.expand_as(F) + B * (1 - alpha.expand_as(F))
 
-def reverse_matting(I, t, A=1, t0=0):
+def reverse_matting(I, t, A=1, t0=0.01):
     """
     Recover haze-free image using hazy image and depth
     J = (I - A) / max(t, t0) + A
