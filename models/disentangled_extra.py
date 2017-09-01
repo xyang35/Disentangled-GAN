@@ -11,12 +11,14 @@ from . import networks
 import pdb
 
 """
-Use Lower bound in Nonlocal image dehzaing paper, and combine into training procedure
+Use haze-free image as extra input
+Output of netG should be the same input
+Output of netDepth should be 1
 """
 
-class DisentangledLBModel(BaseModel):
+class DisentangledExtraModel(BaseModel):
     def name(self):
-        return 'DisentangledLBModel'
+        return 'DisentangledExtraModel'
 
     def initialize(self, opt):
         BaseModel.initialize(self, opt)
@@ -56,6 +58,7 @@ class DisentangledLBModel(BaseModel):
             self.criterionGAN = networks.GANLoss(use_lsgan=not opt.no_lsgan, tensor=self.Tensor)
             self.criterionL1 = torch.nn.L1Loss()
             self.criterionTV = networks.TVLoss()
+            self.criterionL2 = torch.nn.MSELoss()
 
             # initialize optimizers
             self.optimizer_G = torch.optim.Adam(itertools.chain(self.netG.parameters(), self.netDepth.parameters()),
@@ -107,6 +110,12 @@ class DisentangledLBModel(BaseModel):
         # reconstruct A based on optical model
         self.fake_A = util.synthesize_matting(self.fake_B, self.depth_LB)
 
+        # feed haze-free image
+        self.extra_B = self.netG.forward(self.real_B)
+        self.extra_depth = self.netDepth.forward(self.real_B)
+        if not self.opt.which_model_depth == 'aod':
+            self.extra_depth = (self.extra_depth + 1) / 2.    # scale it to [0,1]
+
     # no backprop gradients
     def test(self):
         self.real_A = Variable(self.input_A, volatile=True)
@@ -128,6 +137,13 @@ class DisentangledLBModel(BaseModel):
 
         # reconstruct A based on optical model
         self.fake_A = util.synthesize_matting(self.fake_B, self.depth_LB)
+
+        # feed haze-free image
+        self.extra_B = self.netG.forward(self.real_B)
+        self.extra_depth = self.netDepth.forward(self.real_B)
+        if not self.opt.which_model_depth == 'aod':
+            self.extra_depth = (self.extra_depth + 1) / 2.    # scale it to [0,1]
+
 
     # get image paths
     def get_image_paths(self):
@@ -164,7 +180,11 @@ class DisentangledLBModel(BaseModel):
         # Third, total variance loss
         self.loss_TV = self.criterionTV(self.depth_LB) * self.opt.lambda_TV
 
-        self.loss_G = self.loss_G_L1 + self.loss_G_B + self.loss_TV
+        # Forth, loss from extra input
+        one_var = Variable(self.Tensor(self.extra_depth.size()).fill_(1), requires_grad=False)
+        self.loss_extra = (self.criterionL1(self.extra_B, self.real_B) + self.criterionL2(self.extra_depth, one_var)) * self.opt.lambda_extra
+
+        self.loss_G = self.loss_G_L1 + self.loss_G_B + self.loss_TV + self.loss_extra
 
         self.loss_G.backward()
 
@@ -183,7 +203,8 @@ class DisentangledLBModel(BaseModel):
         return OrderedDict([('G_B', self.loss_G_B.data[0]),
                             ('G_L1', self.loss_G_L1.data[0]),
                             ('D', self.loss_D.data[0]),
-                            ('TV', self.loss_TV.data[0])
+                            ('TV', self.loss_TV.data[0]),
+                            ('extra', self.loss_extra.data[0])
                             ])
 
     def get_current_visuals(self):
@@ -194,8 +215,10 @@ class DisentangledLBModel(BaseModel):
         real_depth = util.tensor2im(self.input_C)
         fake_A = util.tensor2im(self.fake_A.data)
         fake_B2 = util.tensor2im(self.fake_B2.data)
+        extra_B = util.tensor2im(self.extra_B.data)
+        extra_depth = util.tensor2im(self.extra_depth.data)
         return OrderedDict([('Hazy', real_A), ('Haze-free', fake_B), ('Haze-free-depth', fake_B2), ('Estimate_depth', fake_depth), 
-            ('recover', fake_A), ('real_depth', real_depth), ('real_B', real_B)])
+            ('recover', fake_A), ('real_depth', real_depth), ('real_B', real_B), ('extra_B', extra_B), ('extra_depth', extra_depth)])
 
     def save(self, label):
         self.save_network(self.netG, 'G', label, self.gpu_ids)

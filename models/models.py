@@ -30,6 +30,10 @@ def create_model(opt):
         assert(opt.dataset_mode == 'depth')
         from .disentangled_LB import DisentangledLBModel
         model = DisentangledLBModel()
+    elif opt.model == 'disentangled_extra':
+        assert(opt.dataset_mode == 'depth')
+        from .disentangled_extra import DisentangledExtraModel
+        model = DisentangledExtraModel()
     elif opt.model == 'test':
         assert(opt.dataset_mode == 'single')
         from .test_model import TestModel

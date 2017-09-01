@@ -391,7 +391,7 @@ class UnetGenerator(nn.Module):
         self.gpu_ids = gpu_ids
 
         # currently support only input_nc == output_nc
-        assert(input_nc == output_nc)
+#        assert(input_nc == output_nc)
 
         # construct unet structure
         unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, norm_layer=norm_layer, innermost=True)
@@ -420,7 +420,8 @@ class UnetSkipConnectionBlock(nn.Module):
         super(UnetSkipConnectionBlock, self).__init__()
         self.outermost = outermost
 
-        downconv = nn.Conv2d(outer_nc, inner_nc, kernel_size=4,
+        # modify it temporally for depth output
+        downconv = nn.Conv2d(3 if outermost else outer_nc, inner_nc, kernel_size=4,
                              stride=2, padding=1)
         downrelu = nn.LeakyReLU(0.2, True)
         downnorm = norm_layer(inner_nc)

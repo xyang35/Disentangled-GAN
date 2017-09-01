@@ -1,0 +1,321 @@
+------------ Options -------------
+batchSize: 8
+beta1: 0.5
+checkpoints_dir: /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints
+continue_train: False
+dataroot: /home/xyang/UTS/Data/Haze/D-HAZY/NYU
+dataset_mode: depth
+depth_nc: 3
+depth_reverse: True
+display_freq: 100
+display_id: 0
+display_port: 8097
+display_single_pane_ncols: 0
+display_winsize: 256
+fineSize: 256
+gpu_ids: [0, 1]
+grad_clip: -1
+identity: 0.0
+input_nc: 3
+isTrain: True
+lambda_A: 100.0
+lambda_B: 10.0
+lambda_Content: 0.1
+lambda_TV: 0.0
+lambda_extra: 1.0
+lambda_perceptual: 0.1
+loadSize: 286
+lr: 0.0002
+max_dataset_size: inf
+model: disentangled_extra
+nThreads: 2
+n_layers: 3
+n_layers_D: 3
+name: disentangled_extra_A100_TV0_lr0.0002_extra1
+ndf: 64
+ngf: 64
+niter: 100
+niter_decay: 100
+no_dropout: True
+no_flip: False
+no_html: False
+no_lsgan: False
+non_linearity: sigmoid
+norm: instance
+output_nc: 3
+phase: train
+pool_size: 50
+pooling: True
+print_freq: 100
+resize_or_crop: resize_and_crop
+save_epoch_freq: 5
+save_latest_freq: 5000
+serial_batches: False
+which_direction: AtoB
+which_epoch: latest
+which_model_depth: aod
+which_model_netD: basic
+which_model_netG: resnet_9blocks
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [DepthDataset] was created
+#training images = 1000
+disentangled_extra
+---------- Networks initialized -------------
+ResnetGenerator (
+  (model): Sequential (
+    (0): ReflectionPad2d (3, 3, 3, 3)
+    (1): Conv2d(3, 64, kernel_size=(7, 7), stride=(1, 1))
+    (2): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (3): ReLU (inplace)
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (5): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (6): ReLU (inplace)
+    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (9): ReLU (inplace)
+    (10): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (11): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (12): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (13): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (14): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (15): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (16): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (17): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (18): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (19): ConvTranspose2d(256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (20): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (21): ReLU (inplace)
+    (22): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (23): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (24): ReLU (inplace)
+    (25): ReflectionPad2d (3, 3, 3, 3)
+    (26): Conv2d(64, 3, kernel_size=(7, 7), stride=(1, 1))
+    (27): Tanh ()
+  )
+)
+Total number of parameters: 11378179
+AODNetGenerator (
+  (model): Sequential (
+    (0): Conv2d(3, 6, kernel_size=(1, 1), stride=(1, 1))
+    (1): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+    (2): ReLU (inplace)
+    (3): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+    (4): Upsample(scale_factor=2, mode=nearest)
+    (5): ConcatBlock (
+      (conv_block1): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(6, 6, kernel_size=(3, 3), stride=(1, 1))
+        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+        (3): ReLU (inplace)
+        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+        (5): Upsample(scale_factor=2, mode=nearest)
+      )
+      (conv_block2): Sequential (
+        (0): ReflectionPad2d (2, 2, 2, 2)
+        (1): Conv2d(12, 6, kernel_size=(5, 5), stride=(1, 1))
+        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+        (3): ReLU (inplace)
+        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+        (5): Upsample(scale_factor=2, mode=nearest)
+      )
+      (conv_block3): Sequential (
+        (0): ReflectionPad2d (3, 3, 3, 3)
+        (1): Conv2d(12, 6, kernel_size=(7, 7), stride=(1, 1))
+        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+        (3): ReLU (inplace)
+        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+        (5): Upsample(scale_factor=2, mode=nearest)
+      )
+    )
+    (6): ReflectionPad2d (1, 1, 1, 1)
+    (7): Conv2d(24, 1, kernel_size=(3, 3), stride=(1, 1))
+    (8): Sigmoid ()
+  )
+)
+Total number of parameters: 5959
+NLayerDiscriminator (
+  (model): Sequential (
+    (0): Conv2d(3, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (1): LeakyReLU (0.2, inplace)
+    (2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (4): LeakyReLU (0.2, inplace)
+    (5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (7): LeakyReLU (0.2, inplace)
+    (8): Conv2d(256, 512, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+    (9): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (10): LeakyReLU (0.2, inplace)
+    (11): Conv2d(512, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+  )
+)
+Total number of parameters: 2764737
+-----------------------------------------------
+model [DisentangledExtraModel] was created
+create web directory /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints/disentangled_extra_A100_TV0_lr0.0002_extra1/web...
+dataset [DepthDataset] was created
+(epoch: 1, iters: 200, time: 0.230) G_B: 0.423 G_L1: 10.715 D: 0.778 TV: 0.000 extra: 0.672 
+(epoch: 1, iters: 400, time: 0.236) G_B: 0.430 G_L1: 8.707 D: 0.622 TV: 0.000 extra: 0.897 
+(epoch: 1, iters: 600, time: 0.240) G_B: 0.652 G_L1: 5.664 D: 0.833 TV: 0.000 extra: 1.113 
+(epoch: 1, iters: 800, time: 0.248) G_B: 0.559 G_L1: 5.284 D: 0.542 TV: 0.000 extra: 1.163 
+(epoch: 1, iters: 1000, time: 0.226) G_B: 0.740 G_L1: 4.011 D: 0.347 TV: 0.000 extra: 1.274 
+End of epoch 1 / 200 	 Time Taken: 170 sec
+dataset [DepthDataset] was created
+(epoch: 2, iters: 200, time: 0.243) G_B: 0.631 G_L1: 4.736 D: 0.386 TV: 0.000 extra: 1.190 
+(epoch: 2, iters: 400, time: 0.239) G_B: 0.684 G_L1: 3.719 D: 0.335 TV: 0.000 extra: 1.255 
+(epoch: 2, iters: 600, time: 0.236) G_B: 0.742 G_L1: 3.909 D: 0.247 TV: 0.000 extra: 1.295 
+(epoch: 2, iters: 800, time: 0.132) G_B: 0.662 G_L1: 2.479 D: 0.232 TV: 0.000 extra: 1.131 
+(epoch: 2, iters: 1000, time: 0.132) G_B: 0.800 G_L1: 3.248 D: 0.134 TV: 0.000 extra: 1.307 
+End of epoch 2 / 200 	 Time Taken: 141 sec
+dataset [DepthDataset] was created
+(epoch: 3, iters: 200, time: 0.136) G_B: 0.768 G_L1: 3.500 D: 0.159 TV: 0.000 extra: 1.288 
+(epoch: 3, iters: 400, time: 0.134) G_B: 0.899 G_L1: 3.037 D: 0.074 TV: 0.000 extra: 1.268 
+(epoch: 3, iters: 600, time: 0.136) G_B: 0.886 G_L1: 4.580 D: 0.384 TV: 0.000 extra: 1.136 
+(epoch: 3, iters: 800, time: 0.137) G_B: 0.842 G_L1: 2.926 D: 0.172 TV: 0.000 extra: 1.345 
+(epoch: 3, iters: 1000, time: 0.136) G_B: 0.863 G_L1: 3.114 D: 0.083 TV: 0.000 extra: 1.302 
+End of epoch 3 / 200 	 Time Taken: 85 sec
+dataset [DepthDataset] was created
+(epoch: 4, iters: 200, time: 0.132) G_B: 0.814 G_L1: 2.838 D: 0.176 TV: 0.000 extra: 1.265 
+(epoch: 4, iters: 400, time: 0.137) G_B: 0.678 G_L1: 2.274 D: 0.199 TV: 0.000 extra: 1.173 
+(epoch: 4, iters: 600, time: 0.129) G_B: 0.760 G_L1: 3.729 D: 0.130 TV: 0.000 extra: 1.155 
+(epoch: 4, iters: 800, time: 0.133) G_B: 0.743 G_L1: 2.395 D: 0.259 TV: 0.000 extra: 1.242 
+(epoch: 4, iters: 1000, time: 0.134) G_B: 0.626 G_L1: 2.563 D: 0.236 TV: 0.000 extra: 1.143 
+End of epoch 4 / 200 	 Time Taken: 84 sec
+dataset [DepthDataset] was created
+(epoch: 5, iters: 200, time: 0.134) G_B: 0.931 G_L1: 3.058 D: 0.189 TV: 0.000 extra: 1.096 
+(epoch: 5, iters: 400, time: 0.141) G_B: 0.846 G_L1: 2.105 D: 0.203 TV: 0.000 extra: 1.162 
+(epoch: 5, iters: 600, time: 0.133) G_B: 1.055 G_L1: 2.862 D: 0.139 TV: 0.000 extra: 1.339 
+(epoch: 5, iters: 800, time: 0.132) G_B: 1.024 G_L1: 2.914 D: 0.073 TV: 0.000 extra: 1.279 
+(epoch: 5, iters: 1000, time: 0.134) G_B: 0.872 G_L1: 2.762 D: 0.124 TV: 0.000 extra: 1.144 
+saving the latest model (epoch 5, total_steps 5000)
+saving the model at the end of epoch 5, iters 5000
+End of epoch 5 / 200 	 Time Taken: 85 sec
+dataset [DepthDataset] was created
+(epoch: 6, iters: 200, time: 0.136) G_B: 1.045 G_L1: 2.912 D: 0.094 TV: 0.000 extra: 1.272 
+(epoch: 6, iters: 400, time: 0.137) G_B: 0.749 G_L1: 2.406 D: 0.083 TV: 0.000 extra: 1.092 
+(epoch: 6, iters: 600, time: 0.136) G_B: 0.888 G_L1: 2.312 D: 0.062 TV: 0.000 extra: 1.248 
+(epoch: 6, iters: 800, time: 0.133) G_B: 0.792 G_L1: 2.204 D: 0.117 TV: 0.000 extra: 1.192 
+(epoch: 6, iters: 1000, time: 0.137) G_B: 0.764 G_L1: 2.311 D: 0.127 TV: 0.000 extra: 1.002 
+End of epoch 6 / 200 	 Time Taken: 85 sec
+dataset [DepthDataset] was created
+(epoch: 7, iters: 200, time: 0.132) G_B: 1.020 G_L1: 2.399 D: 0.052 TV: 0.000 extra: 1.334 
+(epoch: 7, iters: 400, time: 0.139) G_B: 0.960 G_L1: 2.737 D: 0.189 TV: 0.000 extra: 1.141 
+(epoch: 7, iters: 600, time: 0.137) G_B: 0.969 G_L1: 2.599 D: 0.149 TV: 0.000 extra: 1.159 
+(epoch: 7, iters: 800, time: 0.137) G_B: 1.424 G_L1: 2.203 D: 0.692 TV: 0.000 extra: 1.164 
+(epoch: 7, iters: 1000, time: 0.135) G_B: 0.705 G_L1: 2.872 D: 0.173 TV: 0.000 extra: 1.140 
+End of epoch 7 / 200 	 Time Taken: 85 sec
+dataset [DepthDataset] was created
+(epoch: 8, iters: 200, time: 0.135) G_B: 0.906 G_L1: 3.280 D: 0.065 TV: 0.000 extra: 1.243 
+(epoch: 8, iters: 400, time: 0.139) G_B: 1.031 G_L1: 1.802 D: 0.056 TV: 0.000 extra: 1.212 
+(epoch: 8, iters: 600, time: 0.134) G_B: 0.851 G_L1: 2.444 D: 0.071 TV: 0.000 extra: 1.134 
+(epoch: 8, iters: 800, time: 0.135) G_B: 0.888 G_L1: 2.381 D: 0.176 TV: 0.000 extra: 1.187 
+(epoch: 8, iters: 1000, time: 0.141) G_B: 0.790 G_L1: 3.143 D: 0.100 TV: 0.000 extra: 1.252 
+End of epoch 8 / 200 	 Time Taken: 85 sec
+dataset [DepthDataset] was created
+(epoch: 9, iters: 200, time: 0.136) G_B: 0.857 G_L1: 1.650 D: 0.073 TV: 0.000 extra: 1.325 
+(epoch: 9, iters: 400, time: 0.139) G_B: 0.955 G_L1: 1.814 D: 0.058 TV: 0.000 extra: 1.181 
+(epoch: 9, iters: 600, time: 0.139) G_B: 0.909 G_L1: 2.448 D: 0.072 TV: 0.000 extra: 1.264 
+(epoch: 9, iters: 800, time: 0.133) G_B: 0.949 G_L1: 2.218 D: 0.110 TV: 0.000 extra: 1.108 
+(epoch: 9, iters: 1000, time: 0.139) G_B: 0.803 G_L1: 2.359 D: 0.068 TV: 0.000 extra: 1.199 
+End of epoch 9 / 200 	 Time Taken: 85 sec
+dataset [DepthDataset] was created
+(epoch: 10, iters: 200, time: 0.227) G_B: 0.782 G_L1: 2.468 D: 0.069 TV: 0.000 extra: 1.038 
+(epoch: 10, iters: 400, time: 0.230) G_B: 0.997 G_L1: 1.838 D: 0.074 TV: 0.000 extra: 1.285 
+(epoch: 10, iters: 600, time: 0.232) G_B: 1.114 G_L1: 2.224 D: 0.089 TV: 0.000 extra: 1.170 
+(epoch: 10, iters: 800, time: 0.250) G_B: 1.031 G_L1: 2.074 D: 0.118 TV: 0.000 extra: 1.137 
+(epoch: 10, iters: 1000, time: 0.249) G_B: 0.955 G_L1: 1.885 D: 0.054 TV: 0.000 extra: 1.310 
+saving the latest model (epoch 10, total_steps 10000)
+saving the model at the end of epoch 10, iters 10000
+End of epoch 10 / 200 	 Time Taken: 153 sec
+dataset [DepthDataset] was created

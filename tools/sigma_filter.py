@@ -1,4 +1,5 @@
 import numpy as np
+import pdb
 
 """
 Implementation of Sigma filter (Lee's filter)
@@ -76,8 +77,9 @@ class SigmaFilter(object):
         self.mean_I = boxfilter(I, self.radius) / self.N
         self.mean_II = boxfilter(I*I, self.radius) / self.N
         self.var_I = self.mean_II - self.mean_I * self.mean_I
+        self.var_I = np.clip(self.var_I, 0, None)
 
-        self.sigmaRange = self.sigma * np.sqrt(self.var_I)
+        self.sigmaRange = self.sigma * np.sqrt(self.var_I + np.finfo(np.float32).eps)
         self.sigmaBottom = self.I - self.sigmaRange
         self.sigmaTop = self.I + self.sigmaRange
 
