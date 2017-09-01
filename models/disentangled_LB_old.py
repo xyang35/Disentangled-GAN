@@ -98,8 +98,8 @@ class DisentangledLBModel(BaseModel):
         real_A = (self.real_A + 1) / 2    # scale it to [0,1]
         A = 1.    # A is 1 at this moment
         LB = 1 - torch.min(real_A / A, dim=1, keepdim=True)[0]    # get lower bould of depth
-        self.depth_LB = torch.max(self.depth, LB)
-#        self.depth_LB = torch.max(self.depth, torch.clamp(LB, max=0.1))
+#        self.depth_LB = torch.max(self.depth, LB)
+        self.depth_LB = torch.max(self.depth, torch.clamp(LB, max=0.1))
 
         # recover B according to depth
         self.fake_B2 = util.reverse_matting(self.real_A, self.depth_LB)

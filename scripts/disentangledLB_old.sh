@@ -7,13 +7,13 @@ cd ..
 
 netG=resnet_9blocks
 nonlinear=sigmoid
-lambda_A=100
+lambda_A=10
 lambda_TV=0
 lr=0.0002
 gpu_ids=1
 
 #name=disentangled_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}
-name=disentangledLB_old_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}
+name=disentangledLB_old_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}_withclamp
 model=disentangled_LB_old
 
 dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/NYU

@@ -11,7 +11,7 @@ netG=resnet_9blocks
 lambda_A=10
 lambda_TV=0
 lr=0.0002
-gpu_ids=0,1
+gpu_ids=0
 
 #name=disentangled_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}
 name=disentangledUnet_A${lambda_A}_TV${lambda_TV}_lr${lr}

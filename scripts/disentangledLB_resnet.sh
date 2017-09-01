@@ -14,8 +14,8 @@ cd ..
 
 netG=resnet_9blocks
 nonlinear=sigmoid
-lambda_A=100
-lambda_TV=10
+lambda_A=10
+lambda_TV=0
 lr=0.0002
 
 name=disentangledLB_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}
