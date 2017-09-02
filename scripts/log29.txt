@@ -1,0 +1,251 @@
+------------ Options -------------
+batchSize: 8
+beta1: 0.5
+checkpoints_dir: /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints
+continue_train: False
+dataroot: /home/xyang/UTS/Data/Haze/D-HAZY/NYU
+dataset_mode: depth
+depth_nc: 3
+depth_reverse: True
+display_freq: 100
+display_id: 0
+display_port: 8097
+display_single_pane_ncols: 0
+display_winsize: 256
+filtering: guided
+fineSize: 256
+gpu_ids: [1]
+grad_clip: -1
+identity: 0.0
+input_nc: 3
+isTrain: True
+lambda_A: 10.0
+lambda_B: 10.0
+lambda_Content: 0.1
+lambda_TV: 0.0
+lambda_extra: 0.1
+lambda_perceptual: 0.1
+loadSize: 286
+lr: 0.0002
+max_dataset_size: inf
+model: disentangled_LB
+nThreads: 2
+n_layers: 3
+n_layers_D: 5
+name: disentangledLB_A10_TV0_lr0.0002_guided_id3
+ndf: 64
+ngf: 64
+niter: 50
+niter_decay: 50
+no_dropout: True
+no_flip: False
+no_html: False
+no_lsgan: False
+non_linearity: sigmoid
+norm: instance
+output_nc: 3
+phase: train
+pool_size: 50
+pooling: True
+print_freq: 100
+resize_or_crop: resize_and_crop
+save_epoch_freq: 5
+save_latest_freq: 5000
+serial_batches: False
+which_direction: AtoB
+which_epoch: latest
+which_model_depth: aod
+which_model_netD: basic
+which_model_netG: resnet_9blocks
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [DepthDataset] was created
+#training images = 1000
+disentangled_LB
+---------- Networks initialized -------------
+ResnetGenerator (
+  (model): Sequential (
+    (0): ReflectionPad2d (3, 3, 3, 3)
+    (1): Conv2d(3, 64, kernel_size=(7, 7), stride=(1, 1))
+    (2): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (3): ReLU (inplace)
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (5): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (6): ReLU (inplace)
+    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (9): ReLU (inplace)
+    (10): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (11): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (12): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (13): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (14): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (15): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (16): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (17): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (18): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (19): ConvTranspose2d(256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (20): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (21): ReLU (inplace)
+    (22): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (23): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (24): ReLU (inplace)
+    (25): ReflectionPad2d (3, 3, 3, 3)
+    (26): Conv2d(64, 3, kernel_size=(7, 7), stride=(1, 1))
+    (27): Tanh ()
+  )
+)
+Total number of parameters: 11378179
+AODNetGenerator (
+  (model): Sequential (
+    (0): Conv2d(3, 6, kernel_size=(1, 1), stride=(1, 1))
+    (1): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+    (2): ReLU (inplace)
+    (3): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+    (4): Upsample(scale_factor=2, mode=nearest)
+    (5): ConcatBlock (
+      (conv_block1): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(6, 6, kernel_size=(3, 3), stride=(1, 1))
+        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+        (3): ReLU (inplace)
+        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+        (5): Upsample(scale_factor=2, mode=nearest)
+      )
+      (conv_block2): Sequential (
+        (0): ReflectionPad2d (2, 2, 2, 2)
+        (1): Conv2d(12, 6, kernel_size=(5, 5), stride=(1, 1))
+        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+        (3): ReLU (inplace)
+        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+        (5): Upsample(scale_factor=2, mode=nearest)
+      )
+      (conv_block3): Sequential (
+        (0): ReflectionPad2d (3, 3, 3, 3)
+        (1): Conv2d(12, 6, kernel_size=(7, 7), stride=(1, 1))
+        (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True)
+        (3): ReLU (inplace)
+        (4): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+        (5): Upsample(scale_factor=2, mode=nearest)
+      )
+    )
+    (6): ReflectionPad2d (1, 1, 1, 1)
+    (7): Conv2d(24, 1, kernel_size=(3, 3), stride=(1, 1))
+    (8): Sigmoid ()
+  )
+  (last_layer): GuidedFilter (
+    (boxfilter): AvgPool2d (size=21, stride=1, padding=10, ceil_mode=False, count_include_pad=True)
+  )
+)
+Total number of parameters: 5959
+NLayerDiscriminator (
+  (model): Sequential (
+    (0): Conv2d(3, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (1): LeakyReLU (0.2, inplace)
+    (2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (4): LeakyReLU (0.2, inplace)
+    (5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (7): LeakyReLU (0.2, inplace)
+    (8): Conv2d(256, 512, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+    (9): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (10): LeakyReLU (0.2, inplace)
+    (11): Conv2d(512, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+  )
+)
+Total number of parameters: 2764737
+-----------------------------------------------
+model [DisentangledLBModel] was created
+create web directory /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints/disentangledLB_A10_TV0_lr0.0002_guided_id3/web...
+dataset [DepthDataset] was created

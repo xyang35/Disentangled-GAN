@@ -4,7 +4,8 @@ from torch.nn import init
 import functools
 from torch.autograd import Variable
 import numpy as np
-from vgg16 import Vgg16
+#from vgg16 import Vgg16
+import pdb
 ###############################################################################
 # Functions
 ###############################################################################
@@ -229,48 +230,43 @@ class AODNetGenerator(nn.Module):
         model += [nn.ReflectionPad2d(1),
                   nn.Conv2d(4*ngf, output_nc, kernel_size=3, padding=0)]
 
-        self.model = nn.Sequential(*model)
-
-        last_layer = []
         if last_act is not None:
-            last_layer += [last_act]
+            model += [last_act]
+        self.model = nn.Sequential(*model)    # nn.Sequential only accepts a single input.
 
         if filtering is not None:
             if filtering == 'max':
-                last_layer += [nn.MaxPool2d(kernel_size=7, stride=1, padding=3)]
+                self.last_layer = nn.MaxPool2d(kernel_size=7, stride=1, padding=3)
             elif filtering == 'guided':
-                last_layer += [GuidedFilter(r=r, eps=eps)]
+                self.last_layer = GuidedFilter(r=r, eps=eps)
 
-        self.last_layer = nn.Sequential(*last_layer)
-
-
-    def forward(self, input, guidance=None):
-        if guidance is not None:
-            assert (self.filtering == 'guided')
-
+    def forward(self, input):
+        if self.filtering == 'guided':
             # rgb2gray
-            guidance_gray = 0.2989 * guidance[:,0,:,:] + 0.5870 * guidance[:,1,:,:] + 0.1140 * guidance[:,2,:,:]
+            guidance = 0.2989 * input[:,0,:,:] + 0.5870 * input[:,1,:,:] + 0.1140 * input[:,2,:,:]
+            guidance = torch.unsqueeze(guidance, dim=1)
 
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
             pre_last = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
-            if guidance is None:
-                return nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
+            if self.filtering == 'guided':
+                return self.last_layer(guidance, pre_last)
             else:
-                return self.last_layer(guidance_gray, pre_last)
+                return nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
         else:
             pre_last = self.model(input)
-            if guidance is None:
-                return self.last_layer(pre_last)
+            if self.filtering == 'guided':
+                return self.last_layer(guidance, pre_last)
             else:
-                return self.last_layer(guidance_gray, pre_last)
+                return self.last_layer(pre_last)
 
 
 # Guided image filtering for grayscale images
 class GuidedFilter(nn.Module):
-    def __init__(self, r=40, eps=1e-3):
-        super(GUidedFilter, self).__init__()
+    def __init__(self, r=40, eps=1e-3, tensor=torch.cuda.FloatTensor):
+        super(GuidedFilter, self).__init__()
         self.r = r
         self.eps = eps
+        self.tensor = tensor
 
         self.boxfilter = nn.AvgPool2d(kernel_size=2*self.r+1, stride=1,padding=self.r)
 
@@ -280,7 +276,7 @@ class GuidedFilter(nn.Module):
         p -- filtering input image, should be [0, 1]
         """
         
-        N = self.boxfilter(Variable(torch.ones_like(p),requires_grad=False))
+        N = self.boxfilter(Variable(self.tensor(p.size()).fill_(1),requires_grad=False))
 
         mean_I = self.boxfilter(I) / N
         mean_p = self.boxfilter(p) / N

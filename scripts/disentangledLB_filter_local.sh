@@ -10,7 +10,7 @@ nonlinear=sigmoid
 lambda_A=10
 lambda_TV=0
 lr=0.0002
-filtering=max
+filtering=guided
 gpu_ids=$2
 id=$1
 
