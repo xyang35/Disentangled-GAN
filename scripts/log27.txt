@@ -12,7 +12,7 @@ display_id: 0
 display_port: 8097
 display_single_pane_ncols: 0
 display_winsize: 256
-filtering: guided
+filtering: None
 fineSize: 256
 gpu_ids: [0]
 grad_clip: -1
@@ -28,11 +28,11 @@ lambda_perceptual: 0.1
 loadSize: 286
 lr: 0.0002
 max_dataset_size: inf
-model: disentangled_LB
+model: disentangled_multi
 nThreads: 2
 n_layers: 3
 n_layers_D: 5
-name: disentangledLB_A10_TV0_lr0.0002_guided_id1
+name: disentangledLB_multi_A10_TV0_lr0.0002_id1
 ndf: 64
 ngf: 64
 niter: 50
@@ -55,13 +55,13 @@ serial_batches: False
 which_direction: AtoB
 which_epoch: latest
 which_model_depth: aod
-which_model_netD: basic
+which_model_netD: multi
 which_model_netG: resnet_9blocks
 -------------- End ----------------
 CustomDatasetDataLoader
 dataset [DepthDataset] was created
 #training images = 1000
-disentangled_LB
+disentangled_multi
 ---------- Networks initialized -------------
 ResnetGenerator (
   (model): Sequential (
@@ -223,43 +223,130 @@ AODNetGenerator (
     (7): Conv2d(24, 1, kernel_size=(3, 3), stride=(1, 1))
     (8): Sigmoid ()
   )
-  (last_layer): GuidedFilter (
-    (boxfilter): AvgPool2d (size=21, stride=1, padding=10, ceil_mode=False, count_include_pad=True)
-  )
 )
 Total number of parameters: 5959
-NLayerDiscriminator (
-  (model): Sequential (
+MultiDiscriminator (
+  (scale1): Sequential (
     (0): Conv2d(3, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
     (1): LeakyReLU (0.2, inplace)
     (2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
     (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
     (4): LeakyReLU (0.2, inplace)
-    (5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
-    (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
-    (7): LeakyReLU (0.2, inplace)
-    (8): Conv2d(256, 512, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
-    (9): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
-    (10): LeakyReLU (0.2, inplace)
-    (11): Conv2d(512, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+  )
+  (scale1_output): Conv2d(128, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+  (scale2): Sequential (
+    (0): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (2): LeakyReLU (0.2, inplace)
+    (3): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (4): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (5): LeakyReLU (0.2, inplace)
+    (6): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (7): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (8): LeakyReLU (0.2, inplace)
+    (9): Conv2d(512, 512, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+    (10): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (11): LeakyReLU (0.2, inplace)
+    (12): Conv2d(512, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
   )
 )
-Total number of parameters: 2764737
+Total number of parameters: 11156418
 -----------------------------------------------
-model [DisentangledLBModel] was created
-create web directory /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints/disentangledLB_A10_TV0_lr0.0002_guided_id1/web...
+model [DisentangledMultiModel] was created
+create web directory /home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints/disentangledLB_multi_A10_TV0_lr0.0002_id1/web...
 dataset [DepthDataset] was created
-(epoch: 1, iters: 200, time: 0.112) G_B: 1.159 G_L1: 1.882 D: 1.989 TV: 0.000 
-(epoch: 1, iters: 400, time: 0.113) G_B: 0.415 G_L1: 0.939 D: 0.666 TV: 0.000 
-(epoch: 1, iters: 600, time: 0.113) G_B: 0.354 G_L1: 0.607 D: 0.635 TV: 0.000 
-(epoch: 1, iters: 800, time: 0.114) G_B: 1.156 G_L1: 0.598 D: 1.480 TV: 0.000 
-(epoch: 1, iters: 1000, time: 0.121) G_B: 0.367 G_L1: 0.666 D: 0.513 TV: 0.000 
-End of epoch 1 / 100 	 Time Taken: 63 sec
+(epoch: 1, iters: 200, time: 0.201) G_B: 1.469 G_L1: 1.431 D: 1.934 TV: 0.000 
+(epoch: 1, iters: 400, time: 0.232) G_B: 0.501 G_L1: 0.807 D: 0.774 TV: 0.000 
+(epoch: 1, iters: 600, time: 0.226) G_B: 0.471 G_L1: 0.677 D: 0.630 TV: 0.000 
+(epoch: 1, iters: 800, time: 0.222) G_B: 0.653 G_L1: 0.654 D: 0.767 TV: 0.000 
+(epoch: 1, iters: 1000, time: 0.206) G_B: 0.478 G_L1: 0.573 D: 0.480 TV: 0.000 
+End of epoch 1 / 100 	 Time Taken: 131 sec
 dataset [DepthDataset] was created
-(epoch: 2, iters: 200, time: 0.116) G_B: 0.484 G_L1: 0.586 D: 0.398 TV: 0.000 
-(epoch: 2, iters: 400, time: 0.119) G_B: 0.348 G_L1: 0.458 D: 0.505 TV: 0.000 
-(epoch: 2, iters: 600, time: 0.118) G_B: 1.009 G_L1: 0.798 D: 1.461 TV: 0.000 
-(epoch: 2, iters: 800, time: 0.231) G_B: 0.329 G_L1: 0.593 D: 0.484 TV: 0.000 
-(epoch: 2, iters: 1000, time: 0.240) G_B: 0.440 G_L1: 0.555 D: 0.396 TV: 0.000 
-End of epoch 2 / 100 	 Time Taken: 86 sec
+(epoch: 2, iters: 200, time: 0.230) G_B: 0.467 G_L1: 0.520 D: 0.458 TV: 0.000 
+(epoch: 2, iters: 400, time: 0.212) G_B: 0.441 G_L1: 0.504 D: 0.510 TV: 0.000 
+(epoch: 2, iters: 600, time: 0.226) G_B: 0.472 G_L1: 0.555 D: 0.464 TV: 0.000 
+(epoch: 2, iters: 800, time: 0.216) G_B: 0.448 G_L1: 0.498 D: 0.544 TV: 0.000 
+(epoch: 2, iters: 1000, time: 0.214) G_B: 0.564 G_L1: 0.474 D: 0.376 TV: 0.000 
+End of epoch 2 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 3, iters: 200, time: 0.217) G_B: 0.426 G_L1: 0.727 D: 0.478 TV: 0.000 
+(epoch: 3, iters: 400, time: 0.228) G_B: 0.512 G_L1: 0.552 D: 0.415 TV: 0.000 
+(epoch: 3, iters: 600, time: 0.209) G_B: 0.605 G_L1: 0.497 D: 0.450 TV: 0.000 
+(epoch: 3, iters: 800, time: 0.228) G_B: 0.436 G_L1: 0.563 D: 0.411 TV: 0.000 
+(epoch: 3, iters: 1000, time: 0.224) G_B: 0.431 G_L1: 0.488 D: 0.459 TV: 0.000 
+End of epoch 3 / 100 	 Time Taken: 132 sec
+dataset [DepthDataset] was created
+(epoch: 4, iters: 200, time: 0.224) G_B: 0.469 G_L1: 0.508 D: 0.376 TV: 0.000 
+(epoch: 4, iters: 400, time: 0.231) G_B: 0.452 G_L1: 0.550 D: 0.519 TV: 0.000 
+(epoch: 4, iters: 600, time: 0.231) G_B: 0.503 G_L1: 0.464 D: 0.425 TV: 0.000 
+(epoch: 4, iters: 800, time: 0.227) G_B: 0.494 G_L1: 0.535 D: 0.371 TV: 0.000 
+(epoch: 4, iters: 1000, time: 0.215) G_B: 0.487 G_L1: 0.893 D: 0.472 TV: 0.000 
+End of epoch 4 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 5, iters: 200, time: 0.227) G_B: 0.478 G_L1: 0.493 D: 0.431 TV: 0.000 
+(epoch: 5, iters: 400, time: 0.226) G_B: 0.597 G_L1: 0.569 D: 0.326 TV: 0.000 
+(epoch: 5, iters: 600, time: 0.232) G_B: 0.600 G_L1: 0.608 D: 0.356 TV: 0.000 
+(epoch: 5, iters: 800, time: 0.213) G_B: 0.544 G_L1: 0.375 D: 0.373 TV: 0.000 
+(epoch: 5, iters: 1000, time: 0.227) G_B: 0.313 G_L1: 0.599 D: 0.558 TV: 0.000 
+saving the latest model (epoch 5, total_steps 5000)
+saving the model at the end of epoch 5, iters 5000
+End of epoch 5 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 6, iters: 200, time: 0.233) G_B: 0.466 G_L1: 0.523 D: 0.479 TV: 0.000 
+(epoch: 6, iters: 400, time: 0.227) G_B: 0.345 G_L1: 0.713 D: 0.444 TV: 0.000 
+(epoch: 6, iters: 600, time: 0.226) G_B: 0.449 G_L1: 0.531 D: 0.568 TV: 0.000 
+(epoch: 6, iters: 800, time: 0.223) G_B: 0.392 G_L1: 0.441 D: 0.568 TV: 0.000 
+(epoch: 6, iters: 1000, time: 0.213) G_B: 0.476 G_L1: 0.626 D: 0.585 TV: 0.000 
+End of epoch 6 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 7, iters: 200, time: 0.230) G_B: 0.515 G_L1: 0.416 D: 0.450 TV: 0.000 
+(epoch: 7, iters: 400, time: 0.228) G_B: 0.451 G_L1: 0.361 D: 0.342 TV: 0.000 
+(epoch: 7, iters: 600, time: 0.230) G_B: 0.425 G_L1: 0.463 D: 0.433 TV: 0.000 
+(epoch: 7, iters: 800, time: 0.221) G_B: 0.554 G_L1: 0.451 D: 0.390 TV: 0.000 
+(epoch: 7, iters: 1000, time: 0.231) G_B: 0.495 G_L1: 0.585 D: 0.390 TV: 0.000 
+End of epoch 7 / 100 	 Time Taken: 134 sec
+dataset [DepthDataset] was created
+(epoch: 8, iters: 200, time: 0.224) G_B: 0.455 G_L1: 0.404 D: 0.387 TV: 0.000 
+(epoch: 8, iters: 400, time: 0.221) G_B: 0.706 G_L1: 0.364 D: 0.406 TV: 0.000 
+(epoch: 8, iters: 600, time: 0.222) G_B: 0.422 G_L1: 0.411 D: 0.479 TV: 0.000 
+(epoch: 8, iters: 800, time: 0.218) G_B: 0.513 G_L1: 0.581 D: 0.403 TV: 0.000 
+(epoch: 8, iters: 1000, time: 0.228) G_B: 0.438 G_L1: 0.384 D: 0.334 TV: 0.000 
+End of epoch 8 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 9, iters: 200, time: 0.217) G_B: 0.531 G_L1: 0.509 D: 0.431 TV: 0.000 
+(epoch: 9, iters: 400, time: 0.220) G_B: 0.481 G_L1: 0.404 D: 0.336 TV: 0.000 
+(epoch: 9, iters: 600, time: 0.237) G_B: 0.507 G_L1: 0.397 D: 0.397 TV: 0.000 
+(epoch: 9, iters: 800, time: 0.219) G_B: 0.501 G_L1: 0.655 D: 0.430 TV: 0.000 
+(epoch: 9, iters: 1000, time: 0.218) G_B: 0.372 G_L1: 0.511 D: 0.458 TV: 0.000 
+End of epoch 9 / 100 	 Time Taken: 132 sec
+dataset [DepthDataset] was created
+(epoch: 10, iters: 200, time: 0.217) G_B: 0.447 G_L1: 0.428 D: 0.444 TV: 0.000 
+(epoch: 10, iters: 400, time: 0.219) G_B: 0.522 G_L1: 0.376 D: 0.332 TV: 0.000 
+(epoch: 10, iters: 600, time: 0.218) G_B: 0.388 G_L1: 0.732 D: 0.564 TV: 0.000 
+(epoch: 10, iters: 800, time: 0.229) G_B: 0.471 G_L1: 0.414 D: 0.429 TV: 0.000 
+(epoch: 10, iters: 1000, time: 0.207) G_B: 0.382 G_L1: 0.587 D: 0.451 TV: 0.000 
+saving the latest model (epoch 10, total_steps 10000)
+saving the model at the end of epoch 10, iters 10000
+End of epoch 10 / 100 	 Time Taken: 132 sec
+dataset [DepthDataset] was created
+(epoch: 11, iters: 200, time: 0.227) G_B: 0.600 G_L1: 0.466 D: 0.356 TV: 0.000 
+(epoch: 11, iters: 400, time: 0.233) G_B: 0.403 G_L1: 0.355 D: 0.511 TV: 0.000 
+(epoch: 11, iters: 600, time: 0.240) G_B: 0.551 G_L1: 0.379 D: 0.332 TV: 0.000 
+(epoch: 11, iters: 800, time: 0.234) G_B: 0.470 G_L1: 0.556 D: 0.375 TV: 0.000 
+(epoch: 11, iters: 1000, time: 0.216) G_B: 0.441 G_L1: 0.440 D: 0.413 TV: 0.000 
+End of epoch 11 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 12, iters: 200, time: 0.229) G_B: 0.482 G_L1: 0.432 D: 0.406 TV: 0.000 
+(epoch: 12, iters: 400, time: 0.219) G_B: 0.515 G_L1: 0.368 D: 0.323 TV: 0.000 
+(epoch: 12, iters: 600, time: 0.230) G_B: 0.579 G_L1: 0.367 D: 0.364 TV: 0.000 
+(epoch: 12, iters: 800, time: 0.228) G_B: 0.484 G_L1: 0.474 D: 0.467 TV: 0.000 
+(epoch: 12, iters: 1000, time: 0.207) G_B: 0.469 G_L1: 0.592 D: 0.380 TV: 0.000 
+End of epoch 12 / 100 	 Time Taken: 133 sec
+dataset [DepthDataset] was created
+(epoch: 13, iters: 200, time: 0.231) G_B: 0.436 G_L1: 0.441 D: 0.453 TV: 0.000 
+(epoch: 13, iters: 400, time: 0.233) G_B: 0.340 G_L1: 0.664 D: 0.565 TV: 0.000 
+(epoch: 13, iters: 600, time: 0.226) G_B: 0.361 G_L1: 0.396 D: 0.475 TV: 0.000 
+(epoch: 13, iters: 800, time: 0.225) G_B: 0.586 G_L1: 0.486 D: 0.323 TV: 0.000 
+(epoch: 13, iters: 1000, time: 0.223) G_B: 0.507 G_L1: 0.401 D: 0.328 TV: 0.000 
+End of epoch 13 / 100 	 Time Taken: 132 sec
 dataset [DepthDataset] was created

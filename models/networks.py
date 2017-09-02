@@ -248,21 +248,27 @@ class AODNetGenerator(nn.Module):
 
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
             pre_last = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
-            if self.filtering == 'guided':
-                return self.last_layer(guidance, pre_last)
+            if self.filtering is not None:
+                if self.filtering == 'guided':
+                    return self.last_layer(guidance, pre_last)
+                else:
+                    return nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
             else:
-                return nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
+                return pre_last
         else:
             pre_last = self.model(input)
-            if self.filtering == 'guided':
-                return self.last_layer(guidance, pre_last)
+            if self.filtering is not None:
+                if self.filtering == 'guided':
+                    return self.last_layer(guidance, pre_last)
+                else:
+                    return self.last_layer(pre_last)
             else:
-                return self.last_layer(pre_last)
+                return pre_last
 
 
 # Guided image filtering for grayscale images
 class GuidedFilter(nn.Module):
-    def __init__(self, r=40, eps=1e-3, tensor=torch.cuda.FloatTensor):
+    def __init__(self, r=40, eps=1e-3, tensor=torch.cuda.FloatTensor):    # only work for gpu case at this moment
         super(GuidedFilter, self).__init__()
         self.r = r
         self.eps = eps
@@ -588,7 +594,7 @@ class NLayerDiscriminator(nn.Module):
 # Defines the Multiscale-PatchGAN discriminator with the specified arguments.
 class MultiDiscriminator(nn.Module):
     def __init__(self, input_nc, ndf=64, n_layers=5, norm_layer=nn.BatchNorm2d, use_sigmoid=False, gpu_ids=[]):
-        super(NLayerDiscriminator, self).__init__()
+        super(MultiDiscriminator, self).__init__()
         self.gpu_ids = gpu_ids
         if type(norm_layer) == functools.partial:
             use_bias = norm_layer.func == nn.InstanceNorm2d
@@ -607,11 +613,12 @@ class MultiDiscriminator(nn.Module):
 
         scale1 += [
             nn.Conv2d(ndf, 2*ndf, kernel_size=kw, stride=2, padding=padw, bias=use_bias),
-            norm_layer(ndf),
+            norm_layer(ndf*2),
             nn.LeakyReLU(0.2, True)
             ]
         
         self.scale1 = nn.Sequential(*scale1)
+        self.scale1_output = nn.Conv2d(ndf*2, 1, kernel_size=kw, stride=1, padding=padw)    # compress to 1 channel
 
         scale2 = []
         nf_mult = 2
@@ -644,10 +651,12 @@ class MultiDiscriminator(nn.Module):
 
     def forward(self, input):
         if len(self.gpu_ids) and isinstance(input.data, torch.cuda.FloatTensor):
-            output1 = nn.parallel.data_parallel(self.scale1, input, self.gpu_ids)
-            output2 = nn.parallel.data_parallel(self.scale2, output1, self.gpu_ids)
+            scale1 = nn.parallel.data_parallel(self.scale1, input, self.gpu_ids)
+            output1 = nn.parallel.data_parallel(self.scale1_output, scale1, self.gpu_ids)
+            output2 = nn.parallel.data_parallel(self.scale2, scale1, self.gpu_ids)
         else:
-            output1 = self.scale1(input)
-            output2 = self.scale2(output1)
+            scale1 = self.scale1(input)
+            output1 = self.scale1_output(scale1)
+            output2 = self.scale2(scale1)
         
         return output1, output2
