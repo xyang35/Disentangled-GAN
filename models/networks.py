@@ -42,7 +42,7 @@ def define_VGG(pretrained=True, gpu_ids=[]):
     return vgg
 
 
-def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropout=False, gpu_ids=[], non_linearity='linear', pooling=False, n_layers=3):
+def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropout=False, gpu_ids=[], non_linearity='linear', pooling=False, n_layers=3, filtering=None):
     netG = None
     use_gpu = len(gpu_ids) > 0
     norm_layer = get_norm_layer(norm_type=norm)
@@ -59,7 +59,7 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
     elif which_model_netG == 'unet_256':
         netG = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids)
     elif which_model_netG == 'aod':
-        netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling)
+        netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling, filtering=filtering)
     elif which_model_netG == 'air':
         netG = AirGenerator(gpu_ids=gpu_ids, n_layers=n_layers)
     else:
@@ -82,6 +82,8 @@ def define_D(input_nc, ndf, which_model_netD,
         netD = NLayerDiscriminator(input_nc, ndf, n_layers=3, norm_layer=norm_layer, use_sigmoid=use_sigmoid, gpu_ids=gpu_ids)
     elif which_model_netD == 'n_layers':
         netD = NLayerDiscriminator(input_nc, ndf, n_layers_D, norm_layer=norm_layer, use_sigmoid=use_sigmoid, gpu_ids=gpu_ids)
+    elif which_model_netD == 'multi':
+        netD = MultiDiscriminator(input_nc, ndf, n_layers=n_layers_D, norm_layer=norm_layer, use_sigmoid=use_sigmoid, gpu_ids=gpu_ids)
     else:
         raise NotImplementedError('Discriminator model name [%s] is not recognized' %
                                   which_model_netD)
@@ -196,10 +198,12 @@ class AirGenerator(nn.Module):
 
 # Define AOD-Net
 class AODNetGenerator(nn.Module):
-    def __init__(self, input_nc=3, output_nc=1, ngf=6, gpu_ids=[], non_linearity='sigmoid', pooling=False):
+    def __init__(self, input_nc=3, output_nc=1, ngf=6, gpu_ids=[], non_linearity='sigmoid', pooling=False, filtering=None, r=10, eps=1e-3):
         super(AODNetGenerator, self).__init__()
         self.input_nc = input_nc
         self.gpu_ids = gpu_ids
+        self.pooling = pooling
+        self.filtering = filtering
         
         if non_linearity == 'BReLU':
             last_act = BReLU(0.99,0.01,0.99,0.01,True)
@@ -224,16 +228,75 @@ class AODNetGenerator(nn.Module):
 
         model += [nn.ReflectionPad2d(1),
                   nn.Conv2d(4*ngf, output_nc, kernel_size=3, padding=0)]
-        if last_act is not None:
-            model += [last_act]
 
         self.model = nn.Sequential(*model)
 
-    def forward(self, input):
+        last_layer = []
+        if last_act is not None:
+            last_layer += [last_act]
+
+        if filtering is not None:
+            if filtering == 'max':
+                last_layer += [nn.MaxPool2d(kernel_size=7, stride=1, padding=3)]
+            elif filtering == 'guided':
+                last_layer += [GuidedFilter(r=r, eps=eps)]
+
+        self.last_layer = nn.Sequential(*last_layer)
+
+
+    def forward(self, input, guidance=None):
+        if guidance is not None:
+            assert (self.filtering == 'guided')
+
+            # rgb2gray
+            guidance_gray = 0.2989 * guidance[:,0,:,:] + 0.5870 * guidance[:,1,:,:] + 0.1140 * guidance[:,2,:,:]
+
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
-            return nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            pre_last = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            if guidance is None:
+                return nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
+            else:
+                return self.last_layer(guidance_gray, pre_last)
         else:
-            return self.model(input)
+            pre_last = self.model(input)
+            if guidance is None:
+                return self.last_layer(pre_last)
+            else:
+                return self.last_layer(guidance_gray, pre_last)
+
+
+# Guided image filtering for grayscale images
+class GuidedFilter(nn.Module):
+    def __init__(self, r=40, eps=1e-3):
+        super(GUidedFilter, self).__init__()
+        self.r = r
+        self.eps = eps
+
+        self.boxfilter = nn.AvgPool2d(kernel_size=2*self.r+1, stride=1,padding=self.r)
+
+    def forward(self, I, p):
+        """
+        I -- guidance image, should be [0, 1]
+        p -- filtering input image, should be [0, 1]
+        """
+        
+        N = self.boxfilter(Variable(torch.ones_like(p),requires_grad=False))
+
+        mean_I = self.boxfilter(I) / N
+        mean_p = self.boxfilter(p) / N
+        mean_Ip = self.boxfilter(I*p) / N
+        cov_Ip = mean_Ip - mean_I * mean_p
+
+        mean_II = self.boxfilter(I*I) / N
+        var_I = mean_II - mean_I * mean_I
+
+        a = cov_Ip / (var_I + self.eps)
+        b = mean_p - a * mean_I
+        mean_a = self.boxfilter(a) / N
+        mean_b = self.boxfilter(b) / N
+
+        return mean_a * I + mean_b
+
 
 class ConcatBlock(nn.Module):
     def __init__(self, input_nc, pooling=False):
@@ -525,3 +588,70 @@ class NLayerDiscriminator(nn.Module):
             return nn.parallel.data_parallel(self.model, input, self.gpu_ids)
         else:
             return self.model(input)
+
+# Defines the Multiscale-PatchGAN discriminator with the specified arguments.
+class MultiDiscriminator(nn.Module):
+    def __init__(self, input_nc, ndf=64, n_layers=5, norm_layer=nn.BatchNorm2d, use_sigmoid=False, gpu_ids=[]):
+        super(NLayerDiscriminator, self).__init__()
+        self.gpu_ids = gpu_ids
+        if type(norm_layer) == functools.partial:
+            use_bias = norm_layer.func == nn.InstanceNorm2d
+        else:
+            use_bias = norm_layer == nn.InstanceNorm2d
+
+        # cannot deal with use_sigmoid=True case at thie moment
+        assert(use_sigmoid == False)
+
+        kw = 4
+        padw = int(np.ceil((kw-1)/2))
+        scale1 = [
+            nn.Conv2d(input_nc, ndf, kernel_size=kw, stride=2, padding=padw),
+            nn.LeakyReLU(0.2, True)
+        ]
+
+        scale1 += [
+            nn.Conv2d(ndf, 2*ndf, kernel_size=kw, stride=2, padding=padw, bias=use_bias),
+            norm_layer(ndf),
+            nn.LeakyReLU(0.2, True)
+            ]
+        
+        self.scale1 = nn.Sequential(*scale1)
+
+        scale2 = []
+        nf_mult = 2
+        nf_mult_prev = 1
+        for n in range(2, n_layers):
+            nf_mult_prev = nf_mult
+            nf_mult = min(2**n, 8)
+            scale2 += [
+                nn.Conv2d(ndf * nf_mult_prev, ndf * nf_mult,
+                          kernel_size=kw, stride=2, padding=padw, bias=use_bias),
+                norm_layer(ndf * nf_mult),
+                nn.LeakyReLU(0.2, True)
+            ]
+
+        nf_mult_prev = nf_mult
+        nf_mult = min(2**n_layers, 8)
+        scale2 += [
+            nn.Conv2d(ndf * nf_mult_prev, ndf * nf_mult,
+                      kernel_size=kw, stride=1, padding=padw, bias=use_bias),
+            norm_layer(ndf * nf_mult),
+            nn.LeakyReLU(0.2, True)
+        ]
+
+        scale2 += [nn.Conv2d(ndf * nf_mult, 1, kernel_size=kw, stride=1, padding=padw)]
+
+        if use_sigmoid:
+            scale2 += [nn.Sigmoid()]
+
+        self.scale2 = nn.Sequential(*scale2)
+
+    def forward(self, input):
+        if len(self.gpu_ids) and isinstance(input.data, torch.cuda.FloatTensor):
+            output1 = nn.parallel.data_parallel(self.scale1, input, self.gpu_ids)
+            output2 = nn.parallel.data_parallel(self.scale2, output1, self.gpu_ids)
+        else:
+            output1 = self.scale1(input)
+            output2 = self.scale2(output1)
+        
+        return output1, output2

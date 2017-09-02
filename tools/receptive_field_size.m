@@ -1,4 +1,5 @@
 function receptive_field_size()
+% reference: https://github.com/phillipi/pix2pix/blob/master/scripts/receptive_field_sizes.m
 
 % compute input size from a given output size
 f = @(output_size, ksize, stride) (output_size - 1) * stride + ksize;

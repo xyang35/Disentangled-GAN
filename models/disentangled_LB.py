@@ -34,7 +34,7 @@ class DisentangledLBModel(BaseModel):
                                       opt.which_model_netG, opt.norm, not opt.no_dropout, self.gpu_ids,
                                       non_linearity=opt.non_linearity, pooling=opt.pooling)
         self.netDepth = networks.define_G(input_nc=opt.input_nc, output_nc=1, ngf=6,
-                                      which_model_netG=opt.which_model_depth, 
+                                      which_model_netG=opt.which_model_depth, filtering=opt.filtering,
                                       gpu_ids=self.gpu_ids, non_linearity=opt.non_linearity, pooling=opt.pooling)
 
         if self.isTrain:
