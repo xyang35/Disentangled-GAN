@@ -56,9 +56,9 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
     elif which_model_netG == 'resnet_6blocks':
         netG = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=6, gpu_ids=gpu_ids)
     elif which_model_netG == 'unet_128':
-        netG = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity)
+        netG = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids)
     elif which_model_netG == 'unet_256':
-        netG = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity)
+        netG = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids)
     elif which_model_netG == 'aod':
         netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling, filtering=filtering)
     elif which_model_netG == 'air':
@@ -459,32 +459,21 @@ class ResnetBlock(nn.Module):
 # at the bottleneck
 class UnetGenerator(nn.Module):
     def __init__(self, input_nc, output_nc, num_downs, ngf=64,
-                 norm_layer=nn.BatchNorm2d, use_dropout=False, gpu_ids=[], non_linearity='linear'):
+                 norm_layer=nn.BatchNorm2d, use_dropout=False, gpu_ids=[]):
         super(UnetGenerator, self).__init__()
         self.gpu_ids = gpu_ids
-        if non_linearity == 'BReLU':
-            last_act = BReLU(0.95,0.05,0.95,0.05,True)
-        elif non_linearity == 'ReLU':
-            last_act = nn.ReLU(True)
-        elif non_linearity == 'sigmoid':
-            last_act = nn.Sigmoid()
-        elif non_linearity == 'linear':
-            last_act = None
-        else:
-            print  non_linearity
-            raise NotImplementedError
 
         # currently support only input_nc == output_nc
 #        assert(input_nc == output_nc)
 
         # construct unet structure
-        unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, norm_layer=norm_layer, innermost=True, non_linearity=last_act)
+        unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, norm_layer=norm_layer, innermost=True)
         for i in range(num_downs - 5):
-            unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, unet_block, norm_layer=norm_layer, use_dropout=use_dropout, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(ngf * 4, ngf * 8, unet_block, norm_layer=norm_layer, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(ngf * 2, ngf * 4, unet_block, norm_layer=norm_layer, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(ngf, ngf * 2, unet_block, norm_layer=norm_layer, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(output_nc, ngf, unet_block, outermost=True, norm_layer=norm_layer, non_linearity=last_act)
+            unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, unet_block, norm_layer=norm_layer, use_dropout=use_dropout)
+        unet_block = UnetSkipConnectionBlock(ngf * 4, ngf * 8, unet_block, norm_layer=norm_layer)
+        unet_block = UnetSkipConnectionBlock(ngf * 2, ngf * 4, unet_block, norm_layer=norm_layer)
+        unet_block = UnetSkipConnectionBlock(ngf, ngf * 2, unet_block, norm_layer=norm_layer)
+        unet_block = UnetSkipConnectionBlock(output_nc, ngf, unet_block, outermost=True, norm_layer=norm_layer)
 
         self.model = unet_block
 
@@ -500,7 +489,7 @@ class UnetGenerator(nn.Module):
 #   |-- downsampling -- |submodule| -- upsampling --|
 class UnetSkipConnectionBlock(nn.Module):
     def __init__(self, outer_nc, inner_nc,
-                 submodule=None, outermost=False, innermost=False, norm_layer=nn.BatchNorm2d, use_dropout=False, non_linearity=None):
+                 submodule=None, outermost=False, innermost=False, norm_layer=nn.BatchNorm2d, use_dropout=False):
         super(UnetSkipConnectionBlock, self).__init__()
         self.outermost = outermost
         if type(norm_layer) == functools.partial:
@@ -522,8 +511,6 @@ class UnetSkipConnectionBlock(nn.Module):
                                         padding=1, bias=use_bias)
             down = [downconv]
             up = [uprelu, upconv, nn.Tanh()]
-            # modify it temporally for depth output
-#            up = [uprelu, upconv, non_linearity]
             model = down + [submodule] + up
         elif innermost:
             upconv = nn.ConvTranspose2d(inner_nc, outer_nc,
@@ -624,32 +611,19 @@ class MultiDiscriminator(nn.Module):
             nn.LeakyReLU(0.2, True)
         ]
 
-        nf_mult = 1
-        nf_mult_prev = 1
-        for n in range(1, 3):
-            nf_mult_prev = nf_mult
-            nf_mult = min(2**n, 8)
-            scale1 += [
-                nn.Conv2d(ndf * nf_mult_prev, ndf * nf_mult,
-                          kernel_size=kw, stride=2, padding=padw, bias=use_bias),
-                norm_layer(ndf * nf_mult),
-                nn.LeakyReLU(0.2, True)
+        scale1 += [
+            nn.Conv2d(ndf, 2*ndf, kernel_size=kw, stride=2, padding=padw, bias=use_bias),
+            norm_layer(ndf*2),
+            nn.LeakyReLU(0.2, True)
             ]
         
         self.scale1 = nn.Sequential(*scale1)
-        scale1_output = []
-#        scale1_output += [
-#            nn.Conv2d(ndf * nf_mult, ndf * nf_mult,
-#                      kernel_size=kw, stride=1, padding=padw, bias=use_bias),
-#            norm_layer(ndf * nf_mult),
-#            nn.LeakyReLU(0.2, True)
-#        ]
-        scale1_output += [nn.Conv2d(ndf*nf_mult, 1, kernel_size=kw, stride=1, padding=padw)]    # compress to 1 channel
-        self.scale1_output = nn.Sequential(*scale1_output)
+        self.scale1_output = nn.Conv2d(ndf*2, 1, kernel_size=kw, stride=1, padding=padw)    # compress to 1 channel
 
         scale2 = []
-        nf_mult = nf_mult
-        for n in range(3, n_layers):
+        nf_mult = 2
+        nf_mult_prev = 1
+        for n in range(2, n_layers):
             nf_mult_prev = nf_mult
             nf_mult = min(2**n, 8)
             scale2 += [

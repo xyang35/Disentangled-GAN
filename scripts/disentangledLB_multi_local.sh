@@ -14,7 +14,7 @@ gpu_ids=$2
 id=$1
 
 #name=disentangled_${netG}_${nonlinear}_A${lambda_A}_TV${lambda_TV}
-name=disentangledLB_multi_A${lambda_A}_TV${lambda_TV}_lr${lr}_id${id}
+name=disentangledLB_multi70add1_A${lambda_A}_TV${lambda_TV}_lr${lr}_id${id}
 model=disentangled_multi
 
 dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/NYU

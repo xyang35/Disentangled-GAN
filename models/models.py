@@ -42,6 +42,10 @@ def create_model(opt):
         assert(opt.dataset_mode == 'depth')
         from .disentangled_multi import DisentangledMultiModel
         model = DisentangledMultiModel()
+    elif opt.model == 'disentangled_final':
+        assert(opt.dataset_mode == 'depth')
+        from .disentangled_final import DisentangledModel
+        model = DisentangledModel()
     elif opt.model == 'test':
         assert(opt.dataset_mode == 'single')
         from .test_model import TestModel

@@ -4,6 +4,12 @@ function receptive_field_size()
 % compute input size from a given output size
 f = @(output_size, ksize, stride) (output_size - 1) * stride + ksize;
 
+out = ...
+f(f(f(1, 4, 1), ...   % conv4 -> conv5
+             4, 1), ...   % conv3 -> conv4
+             4, 2); ...   % conv2 -> conv3
+fprintf('n=1 discriminator receptive field size: %d\n', out);
+
 %% n=3 discriminator
 
 % fix the output size to 1 and derive the receptive field in the input
