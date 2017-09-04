@@ -60,7 +60,7 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
     elif which_model_netG == 'unet_256':
         netG = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity)
     elif which_model_netG == 'aod':
-        netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling, filtering=filtering)
+        netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling, filtering=filtering, norm_layer=norm_layer)
     elif which_model_netG == 'air':
         netG = AirGenerator(gpu_ids=gpu_ids, n_layers=n_layers)
     else:
@@ -199,12 +199,16 @@ class AirGenerator(nn.Module):
 
 # Define AOD-Net
 class AODNetGenerator(nn.Module):
-    def __init__(self, input_nc=3, output_nc=1, ngf=6, gpu_ids=[], non_linearity='sigmoid', pooling=False, filtering=None, r=10, eps=1e-3):
+    def __init__(self, input_nc=3, output_nc=1, ngf=6, norm_layer=nn.BatchNorm2d, gpu_ids=[], non_linearity='sigmoid', pooling=False, filtering=None, r=10, eps=1e-3):
         super(AODNetGenerator, self).__init__()
         self.input_nc = input_nc
         self.gpu_ids = gpu_ids
         self.pooling = pooling
         self.filtering = filtering
+        if type(norm_layer) == functools.partial:
+            use_bias = norm_layer.func == nn.InstanceNorm2d
+        else:
+            use_bias = norm_layer == nn.InstanceNorm2d
         
         if non_linearity == 'BReLU':
             last_act = BReLU(0.99,0.01,0.99,0.01,True)
@@ -217,15 +221,16 @@ class AODNetGenerator(nn.Module):
         else:
             raise NotImplementedError
 
-        model = [nn.Conv2d(input_nc, ngf, kernel_size=1, padding=0),
-                 nn.BatchNorm2d(ngf),
+        model = [nn.Conv2d(input_nc, ngf, kernel_size=1, padding=0, bias=use_bias),
+#                 nn.BatchNorm2d(ngf),
+                 norm_layer(ngf),
                  nn.ReLU(True)]
 
         if pooling:
             model += [nn.MaxPool2d(kernel_size=2, padding=0),
                       nn.Upsample(scale_factor=2, mode='nearest')]
 
-        model += [ConcatBlock(ngf, pooling)]
+        model += [ConcatBlock(ngf, pooling, norm_layer)]
 
         model += [nn.ReflectionPad2d(1),
                   nn.Conv2d(4*ngf, output_nc, kernel_size=3, padding=0)]
@@ -301,16 +306,22 @@ class GuidedFilter(nn.Module):
 
 
 class ConcatBlock(nn.Module):
-    def __init__(self, input_nc, pooling=False):
+    def __init__(self, input_nc, pooling=False, norm_layer=nn.BatchNorm2d):
         super(ConcatBlock, self).__init__()
-        self.conv_block1 = self.build_block(input_nc, 3, input_nc, pooling)
-        self.conv_block2 = self.build_block(2*input_nc, 5, input_nc, pooling)
-        self.conv_block3 = self.build_block(2*input_nc, 7, input_nc, pooling)
+        self.conv_block1 = self.build_block(input_nc, 3, input_nc, pooling, norm_layer)
+        self.conv_block2 = self.build_block(2*input_nc, 5, input_nc, pooling, norm_layer)
+        self.conv_block3 = self.build_block(2*input_nc, 7, input_nc, pooling, norm_layer)
 
-    def build_block(self, input_nc, kernel_size, output_nc, pooling):
+    def build_block(self, input_nc, kernel_size, output_nc, pooling, norm_layer):
+        if type(norm_layer) == functools.partial:
+            use_bias = norm_layer.func == nn.InstanceNorm2d
+        else:
+            use_bias = norm_layer == nn.InstanceNorm2d
+
         model = [nn.ReflectionPad2d(kernel_size/2),
-                 nn.Conv2d(input_nc, output_nc, kernel_size=kernel_size, padding=0),
-                 nn.BatchNorm2d(output_nc),
+                 nn.Conv2d(input_nc, output_nc, kernel_size=kernel_size, padding=0, bias=use_bias),
+#                 nn.BatchNorm2d(output_nc),
+                 norm_layer(output_nc),
                  nn.ReLU(True)]
 
         if pooling:

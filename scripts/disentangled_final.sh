@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -t 24:00:00
+#SBATCH -p gpu
+#SBATCH --mem=10000
+#SBATCH --gres=gpu:2
+
 # exit if not suceed
 set -e
 
@@ -15,9 +22,9 @@ id=$1
 name=disentangled_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}_id${id}
 model=disentangled_final
 
-dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/NYU
-checkpoints_dir=/home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints
-results_dir=/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results
+dataroot=/home-4/xyang35@umd.edu/work/xyang/GAN/Haze/D-HAZY/NYU
+checkpoints_dir=/home-4/xyang35@umd.edu/work/xyang/GAN/Haze/D-HAZY/checkpoints
+results_dir=/home-4/xyang35@umd.edu/work/xyang/GAN/Haze/D-HAZY/results/
 
 python train.py --dataroot $dataroot \
     --checkpoints_dir $checkpoints_dir \
@@ -33,9 +40,16 @@ python test.py --dataroot $dataroot \
     --non_linearity $nonlinear  --no_dropout --depth_reverse \
     --dataset_mode depth --display_id 0 --serial_batches --phase test --how_many 500
 
+# pack the results
+#cd $checkpoints_dir/$name
+#zip ${name}_checkpoints.zip web/ -r
+
+#cd $results_dir
+#zip ${name}_results.zip $name -r
 
 # evaluation
 echo "Evaluation ..."
 
 cd tools
-matlab <<< "name = '$name'; evaluation;"
+module load matlab
+matlab <<< "name = '$name'; evaluation_server;"
