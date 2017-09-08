@@ -18,9 +18,10 @@ total_steps = 0
 for epoch in range(1, opt.niter + opt.niter_decay + 1):
     epoch_start_time = time.time()
 
-    # reinitialize data_load at each epoch for random pairing
-    data_loader.initialize(opt)
-    dataset = data_loader.load_data()
+    if (epoch-1) % 5 == 0:
+        # reinitialize data_load at each epoch for random pairing
+        data_loader.initialize(opt)
+        dataset = data_loader.load_data()
 
     for i, data in enumerate(dataset):
         iter_start_time = time.time()

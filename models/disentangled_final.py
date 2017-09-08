@@ -90,9 +90,9 @@ class DisentangledModel(BaseModel):
 
     def forward(self):
         self.real_A = Variable(self.input_A)
-        self.fake_B, _ = self.netG.forward(self.real_A)
+        self.fake_B = self.netG.forward(self.real_A)
         self.real_B = Variable(self.input_B)
-        self.pre_last, self.depth = self.netDepth.forward(self.real_A)
+        self.pre_filter, self.depth = self.netDepth.forward(self.real_A)
 
         # recover B according to depth
         self.fake_B2 = util.reverse_matting(self.real_A, self.depth)
@@ -103,9 +103,9 @@ class DisentangledModel(BaseModel):
     # no backprop gradients
     def test(self):
         self.real_A = Variable(self.input_A, volatile=True)
-        self.fake_B, _ = self.netG.forward(self.real_A)
+        self.fake_B = self.netG.forward(self.real_A)
         self.real_B = Variable(self.input_B, volatile=True)
-        self.pre_last, self.depth = self.netDepth.forward(self.real_A)
+        self.pre_filter, self.depth = self.netDepth.forward(self.real_A)
 
         # recover B according to depth
         self.fake_B2 = util.reverse_matting(self.real_A, self.depth)
@@ -146,7 +146,7 @@ class DisentangledModel(BaseModel):
         self.loss_G_L1 = self.criterionL1(self.fake_A, self.real_A) * self.opt.lambda_A
 
         # Third, total variance loss
-        self.loss_TV = self.criterionTV(self.pre_last) * self.opt.lambda_TV
+        self.loss_TV = self.criterionTV(self.depth) * self.opt.lambda_TV
 
         self.loss_G = self.loss_G_L1 + self.loss_G_B + self.loss_TV
 
@@ -173,13 +173,16 @@ class DisentangledModel(BaseModel):
     def get_current_visuals(self):
         real_A = util.tensor2im(self.real_A.data)
         fake_B = util.tensor2im(self.fake_B.data)
-        pre_last = util.tensor2im(self.pre_last.data)
+        if self.pre_filter is None:
+            pre_filter = util.tensor2im(self.depth.data)
+        else:
+            pre_filter = util.tensor2im(self.pre_filter.data)
         fake_depth = util.tensor2im(self.depth.data)
         real_B = util.tensor2im(self.real_B.data)
         real_depth = util.tensor2im(self.input_C)
         fake_A = util.tensor2im(self.fake_A.data)
         fake_B2 = util.tensor2im(self.fake_B2.data)
-        return OrderedDict([('Hazy', real_A), ('Haze-free', fake_B), ('Haze-free-depth', fake_B2), ('pre_last', pre_last), ('Estimate_depth', fake_depth), 
+        return OrderedDict([('Hazy', real_A), ('Haze-free', fake_B), ('Haze-free-depth', fake_B2), ('pre_filter', pre_filter), ('Estimate_depth', fake_depth), 
             ('recover', fake_A), ('real_depth', real_depth), ('real_B', real_B)])
 
     def save(self, label):
