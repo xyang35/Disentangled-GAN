@@ -5,7 +5,7 @@ set -e
 
 cd ..
 
-nonlinear=sigmoid
+#nonlinear=sigmoid
 lambda_A=40
 lambda_TV=0
 lr=0.0002
@@ -13,12 +13,12 @@ filtering=none
 gpu_ids=$2
 id=$1
 
-name=disentangled_variable_resnet_${nonlinear}_A${lambda_A}_TV${lambda_TV}_lr${lr}_${filtering}_id${id}
+name=disentangled_final_A${lambda_A}_TV${lambda_TV}_lr${lr}_${filtering}_id${id}
 model=disentangled_final
 
-dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/NYU
-checkpoints_dir=/home/xyang/UTS/Data/Haze/D-HAZY/NYU/checkpoints
-results_dir=/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results
+dataroot=/home/xyang/UTS/Data/Haze/D-HAZY/final
+checkpoints_dir=/home/xyang/UTS/Data/Haze/D-HAZY/final/checkpoints
+results_dir=/home/xyang/UTS/Data/Haze/D-HAZY/final/results
 
 python train.py --dataroot $dataroot \
     --checkpoints_dir $checkpoints_dir \
