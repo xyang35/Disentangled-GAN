@@ -21,7 +21,7 @@ class BaseOptions():
         self.parser.add_argument('--which_model_netD', type=str, default='basic', help='selects model to use for netD')
         self.parser.add_argument('--which_model_netG', type=str, default='resnet_9blocks', help='selects model to use for netG')
         self.parser.add_argument('--which_model_depth', type=str, default='aod', help='selects model to use for generating depth')
-        self.parser.add_argument('--non_linearity', type=str, default='linear', help='last nonliearity layer for AODNet: linear | sigmoid | ReLU | BReLU')
+        self.parser.add_argument('--non_linearity', type=str, default=None, help='last nonliearity layer None(tanh)| linear | sigmoid | ReLU | BReLU')
         self.parser.add_argument('--pooling', action='store_true',  help='if specified, use pooling layers in AODNet')
         self.parser.add_argument('--filtering', type=str, default=None, help='filtering at the last layer: None | max')
         self.parser.add_argument('--n_layers', type=int, default=3, help='# of layers for airlight generator')

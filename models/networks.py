@@ -43,7 +43,7 @@ def define_VGG(pretrained=True, gpu_ids=[]):
     return vgg
 
 
-def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropout=False, gpu_ids=[], non_linearity='linear', pooling=False, n_layers=3, filtering=None):
+def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropout=False, gpu_ids=[], non_linearity=None, pooling=False, n_layers=3, filtering=None):
     netG = None
     use_gpu = len(gpu_ids) > 0
     norm_layer = get_norm_layer(norm_type=norm)
@@ -52,9 +52,9 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
         assert(torch.cuda.is_available())
 
     if which_model_netG == 'resnet_9blocks':
-        netG = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=9, gpu_ids=gpu_ids)
+        netG = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=9, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
     elif which_model_netG == 'resnet_6blocks':
-        netG = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=6, gpu_ids=gpu_ids)
+        netG = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=6, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
     elif which_model_netG == 'unet_128':
         netG = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
     elif which_model_netG == 'unet_256':
@@ -372,7 +372,7 @@ class BReLU(nn.Module):
 # Code and idea originally from Justin Johnson's architecture.
 # https://github.com/jcjohnson/fast-neural-style/
 class ResnetGenerator(nn.Module):
-    def __init__(self, input_nc, output_nc, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, gpu_ids=[], padding_type='reflect'):
+    def __init__(self, input_nc, output_nc, ngf=64, norm_layer=nn.BatchNorm2d, use_dropout=False, n_blocks=6, gpu_ids=[], padding_type='reflect', non_linearity=None, filtering=None, r=10, eps=1e-3):
         assert(n_blocks >= 0)
         super(ResnetGenerator, self).__init__()
         self.input_nc = input_nc
@@ -383,6 +383,22 @@ class ResnetGenerator(nn.Module):
             use_bias = norm_layer.func == nn.InstanceNorm2d
         else:
             use_bias = norm_layer == nn.InstanceNorm2d
+
+        self.filtering=filtering
+        self.non_linearity = non_linearity
+        if non_linearity is None:
+            last_act = nn.Tanh()
+        elif non_linearity == 'BReLU':
+            last_act = BReLU(0.95,0.05,0.95,0.05,True)
+        elif non_linearity == 'ReLU':
+            last_act = nn.ReLU(True)
+        elif non_linearity == 'sigmoid':
+            last_act = nn.Sigmoid()
+        elif non_linearity == 'linear':
+            last_act = None
+        else:
+            print  non_linearity
+            raise NotImplementedError
 
         model = [nn.ReflectionPad2d(3),
                  nn.Conv2d(input_nc, ngf, kernel_size=7, padding=0, bias=use_bias),
@@ -412,15 +428,51 @@ class ResnetGenerator(nn.Module):
                       nn.ReLU(True)]
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
-        model += [nn.Tanh()]
+        if last_act is not None:
+            model += [last_act]
 
         self.model = nn.Sequential(*model)
 
+        if filtering is not None:
+            if filtering == 'max':
+                self.last_layer = nn.MaxPool2d(kernel_size=7, stride=1, padding=3)
+            elif filtering == 'guided':
+                self.last_layer = GuidedFilter(r=r, eps=eps)
+
     def forward(self, input):
+        if self.filtering == 'guided':
+            # rgb2gray
+            guidance = 0.2989 * input[:,0,:,:] + 0.5870 * input[:,1,:,:] + 0.1140 * input[:,2,:,:]
+            # rescale to [0,1]
+            guidance = (guidance + 1) / 2
+            guidance = torch.unsqueeze(guidance, dim=1)
+
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
-            return nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            pre_last = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            if self.non_linearity is None:
+                # rescale to [0,1]
+                pre_last = (pre_last + 1) / 2
+
+            if self.filtering is not None:
+                if self.filtering == 'guided':
+                    return pre_last, self.last_layer(guidance, pre_last)
+                else:
+                    return pre_last, nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
+            else:
+                return pre_last, pre_last
         else:
-            return self.model(input)
+            pre_last = self.model(input)
+            if self.non_linearity is None:
+                # rescale to [0,1]
+                pre_last = (pre_last + 1) / 2
+
+            if self.filtering is not None:
+                if self.filtering == 'guided':
+                    return pre_last, self.last_layer(guidance, pre_last)
+                else:
+                    return pre_last, self.last_layer(pre_last)
+            else:
+                return pre_last, pre_last
 
 
 # Define a resnet block
