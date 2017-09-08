@@ -12,8 +12,8 @@ import pdb
 
 """
 Use haze-free image as extra input
-Output of netG should be the same input
-Output of netDepth should be 1
+Output of netG should be the same as input
+Output of reconstruction should be the same as input
 """
 
 class DisentangledExtraModel(BaseModel):
@@ -35,8 +35,8 @@ class DisentangledExtraModel(BaseModel):
         self.netG = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf,
                                       opt.which_model_netG, opt.norm, not opt.no_dropout, self.gpu_ids,
                                       non_linearity=opt.non_linearity, pooling=opt.pooling)
-        self.netDepth = networks.define_G(input_nc=opt.input_nc, output_nc=1, ngf=6,
-                                      which_model_netG=opt.which_model_depth, 
+        self.netDepth = networks.define_G(input_nc=opt.input_nc, output_nc=1, ngf=6, norm=opt.norm, use_dropout=not opt.no_dropout,
+                                      which_model_netG=opt.which_model_depth, filtering=opt.filtering,
                                       gpu_ids=self.gpu_ids, non_linearity=opt.non_linearity, pooling=opt.pooling)
 
         if self.isTrain:
@@ -58,7 +58,6 @@ class DisentangledExtraModel(BaseModel):
             self.criterionGAN = networks.GANLoss(use_lsgan=not opt.no_lsgan, tensor=self.Tensor)
             self.criterionL1 = torch.nn.L1Loss()
             self.criterionTV = networks.TVLoss()
-            self.criterionL2 = torch.nn.MSELoss()
 
             # initialize optimizers
             self.optimizer_G = torch.optim.Adam(itertools.chain(self.netG.parameters(), self.netDepth.parameters()),
@@ -97,24 +96,18 @@ class DisentangledExtraModel(BaseModel):
         if not self.opt.which_model_depth == 'aod':
             self.depth = (self.depth + 1) / 2.    # scale it to [0,1]
 
-        # regularize depth by lower bound (modified version: max(depth, min(0.1, LB)) )
-        real_A = (self.real_A + 1) / 2    # scale it to [0,1]
-        A = 1.    # A is 1 at this moment
-        LB = 1 - torch.min(real_A / A, dim=1, keepdim=True)[0]    # get lower bould of depth
-        self.depth_LB = torch.max(self.depth, LB)
-#        self.depth_LB = torch.max(self.depth, torch.clamp(LB, max=0.1))
-
         # recover B according to depth
-        self.fake_B2 = util.reverse_matting(self.real_A, self.depth_LB)
+        self.fake_B2 = util.reverse_matting(self.real_A, self.depth)
 
         # reconstruct A based on optical model
-        self.fake_A = util.synthesize_matting(self.fake_B, self.depth_LB)
+        self.fake_A = util.synthesize_matting(self.fake_B, self.depth)
 
         # feed haze-free image
         self.extra_B = self.netG.forward(self.real_B)
         self.extra_depth = self.netDepth.forward(self.real_B)
         if not self.opt.which_model_depth == 'aod':
             self.extra_depth = (self.extra_depth + 1) / 2.    # scale it to [0,1]
+        self.extra_A = util.synthesize_matting(self.extra_B, self.extra_depth)
 
     # no backprop gradients
     def test(self):
@@ -126,23 +119,18 @@ class DisentangledExtraModel(BaseModel):
         if not self.opt.which_model_depth == 'aod':
             self.depth = (self.depth + 1) / 2.
 
-        # regularize depth by lower bound
-        real_A = (self.real_A + 1) / 2    # scale it to [0,1]
-        A = 1.    # A is 1 at this moment
-        LB = 1 - torch.min(real_A / A, dim=1, keepdim=True)[0]    # get lower bould of depth
-        self.depth_LB = torch.max(self.depth, LB)
-
         # recover B according to depth
-        self.fake_B2 = util.reverse_matting(self.real_A, self.depth_LB)
+        self.fake_B2 = util.reverse_matting(self.real_A, self.depth)
 
         # reconstruct A based on optical model
-        self.fake_A = util.synthesize_matting(self.fake_B, self.depth_LB)
+        self.fake_A = util.synthesize_matting(self.fake_B, self.depth)
 
         # feed haze-free image
         self.extra_B = self.netG.forward(self.real_B)
         self.extra_depth = self.netDepth.forward(self.real_B)
         if not self.opt.which_model_depth == 'aod':
             self.extra_depth = (self.extra_depth + 1) / 2.    # scale it to [0,1]
+        self.extra_A = util.synthesize_matting(self.extra_B, self.extra_depth)
 
 
     # get image paths
@@ -152,12 +140,13 @@ class DisentangledExtraModel(BaseModel):
     def backward_D_basic(self, netD, real, fake):
         # Fake
         # stop backprop to the generator by detaching fake_B
-        pred_fake = netD.forward(fake.detach())
-        loss_D_fake = self.criterionGAN(pred_fake, False)
+        pred1_fake, pred2_fake = netD.forward(fake.detach())
+        loss_D_fake = 0.5*(self.criterionGAN(pred1_fake, False) + self.criterionGAN(pred2_fake, False))
 
         # Real
-        pred_real = netD.forward(real)
-        loss_D_real = self.criterionGAN(pred_real, True)
+        pred1_real, pred2_real = netD.forward(real)
+        loss_D_real = 0.5*(self.criterionGAN(pred1_real, True) + self.criterionGAN(pred2_real, True))
+
 
         # Combined loss
         loss_D = loss_D_fake + loss_D_real
@@ -171,18 +160,17 @@ class DisentangledExtraModel(BaseModel):
 
     def backward_G(self):
         # First, G(A) should fake the discriminator
-        pred_fake_B = self.netD.forward(self.fake_B)
-        self.loss_G_B = self.criterionGAN(pred_fake_B, True)
+        pred1_fake_B, pred2_fake_B = self.netD.forward(self.fake_B)
+        self.loss_G_B = 0.5*(self.criterionGAN(pred1_fake_B, True) + self.criterionGAN(pred2_fake_B, True))
 
         # Second, L1 loss for reconstruction
         self.loss_G_L1 = self.criterionL1(self.fake_A, self.real_A) * self.opt.lambda_A
 
         # Third, total variance loss
-        self.loss_TV = self.criterionTV(self.depth_LB) * self.opt.lambda_TV
+        self.loss_TV = self.criterionTV(self.depth) * self.opt.lambda_TV
 
         # Forth, loss from extra input
-        one_var = Variable(self.Tensor(self.extra_depth.size()).fill_(1), requires_grad=False)
-        self.loss_extra = (self.criterionL1(self.extra_B, self.real_B) + self.criterionL2(self.extra_depth, one_var)) * self.opt.lambda_extra
+        self.loss_extra = (self.criterionL1(self.extra_B, self.real_B) + self.criterionL1(self.extra_A, self.real_B)) * self.opt.lambda_extra
 
         self.loss_G = self.loss_G_L1 + self.loss_G_B + self.loss_TV + self.loss_extra
 
@@ -210,7 +198,7 @@ class DisentangledExtraModel(BaseModel):
     def get_current_visuals(self):
         real_A = util.tensor2im(self.real_A.data)
         fake_B = util.tensor2im(self.fake_B.data)
-        fake_depth = util.tensor2im(self.depth_LB.data)
+        fake_depth = util.tensor2im(self.depth.data)
         real_B = util.tensor2im(self.real_B.data)
         real_depth = util.tensor2im(self.input_C)
         fake_A = util.tensor2im(self.fake_A.data)

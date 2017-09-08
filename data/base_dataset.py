@@ -30,7 +30,9 @@ def get_transform(opt):
     elif opt.resize_or_crop == 'scale_width_and_crop':
         transform_list.append(transforms.Lambda(
             lambda img: __scale_width(img, opt.loadSize)))
-        transform_list.append(transforms.RandomCrop(opt.fineSize))
+        # no random crop in testing time
+        if opt.isTrain:
+            transform_list.append(transforms.RandomCrop(opt.fineSize))
 
     if opt.isTrain and not opt.no_flip:
         transform_list.append(transforms.RandomHorizontalFlip())

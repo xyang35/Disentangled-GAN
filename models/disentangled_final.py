@@ -93,7 +93,9 @@ class DisentangledModel(BaseModel):
         self.fake_B = self.netG.forward(self.real_A)
         self.real_B = Variable(self.input_B)
         self.depth = self.netDepth.forward(self.real_A)
-        if not self.opt.which_model_depth == 'aod':
+#        self.pre_last, self.depth = self.netDepth.forward(self.real_A)
+        if not self.opt.which_model_depth == 'resnet':
+#            self.pre_last = (self.depth + 1) / 2.    # scale it to [0,1]
             self.depth = (self.depth + 1) / 2.    # scale it to [0,1]
 
         # recover B according to depth
@@ -108,7 +110,9 @@ class DisentangledModel(BaseModel):
         self.fake_B = self.netG.forward(self.real_A)
         self.real_B = Variable(self.input_B, volatile=True)
         self.depth = self.netDepth.forward(self.real_A)
-        if not self.opt.which_model_depth == 'aod':
+#        self.pre_last, self.depth = self.netDepth.forward(self.real_A)
+        if not self.opt.which_model_depth == 'resnet':
+#            self.pre_last = (self.depth + 1) / 2.    # scale it to [0,1]
             self.depth = (self.depth + 1) / 2.    # scale it to [0,1]
 
         # recover B according to depth
@@ -150,6 +154,7 @@ class DisentangledModel(BaseModel):
         self.loss_G_L1 = self.criterionL1(self.fake_A, self.real_A) * self.opt.lambda_A
 
         # Third, total variance loss
+#        self.loss_TV = self.criterionTV(self.pre_last) * self.opt.lambda_TV
         self.loss_TV = self.criterionTV(self.depth) * self.opt.lambda_TV
 
         self.loss_G = self.loss_G_L1 + self.loss_G_B + self.loss_TV
@@ -177,6 +182,7 @@ class DisentangledModel(BaseModel):
     def get_current_visuals(self):
         real_A = util.tensor2im(self.real_A.data)
         fake_B = util.tensor2im(self.fake_B.data)
+#        pre_last = util.tensor2im(self.pre_last.data)
         fake_depth = util.tensor2im(self.depth.data)
         real_B = util.tensor2im(self.real_B.data)
         real_depth = util.tensor2im(self.input_C)

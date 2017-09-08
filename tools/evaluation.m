@@ -6,6 +6,7 @@ root = ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results/',name,'/test_latest/image
 
 %suffix1 = '_dcp_radiance-refinedt'; folder = ['/home/xyang/Downloads/GAN/demo/app/static/DCP/']; 
 %suffix1 = '_DehazeNet'; folder = ['/home/xyang/Downloads/GAN/demo/app/static/DehazeNet/'];
+%suffix1 = '_J_beta1'; folder = ['/home/xyang/Downloads/GAN/demo/app/static/CAP/'];
 %suffix1 = '_fake_B'; folder = ['/home/xyang/Downloads/GAN/demo/app/static/cyclegan/'];
 suffix1 = '_Haze-free'; folder = root;
 suffix2 = '_Haze-free-depth';
@@ -54,16 +55,17 @@ for i = 1 : length(img_names)
 end
 
 save([folder, 'evaluation.mat'], 'peaksnr_all1', 'ssim_all1', 'peaksnr_all2', 'ssim_all2', ...
-                                 'ciede_all1', 'ciede_all2', 'img_names');
+                                'ciede_all1', 'ciede_all2', 'img_names');
+%save([folder, 'evaluation.mat'], 'peaksnr_all1', 'ssim_all1', 'ciede_all1', 'img_names');
 
 display('test_latest')
 display('Haze-free')
-display(mean(ciede_all1))
 display( mean(peaksnr_all1) );
 display( mean(ssim_all1) );
+display(mean(ciede_all1))
 
 display('Haze-free-depth')
-display(mean(ciede_all2))
 display( mean(peaksnr_all2) );
 display( mean(ssim_all2) );
+display(mean(ciede_all2))
 

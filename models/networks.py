@@ -56,9 +56,9 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
     elif which_model_netG == 'resnet_6blocks':
         netG = ResnetGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=6, gpu_ids=gpu_ids)
     elif which_model_netG == 'unet_128':
-        netG = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity)
+        netG = UnetGenerator(input_nc, output_nc, 7, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
     elif which_model_netG == 'unet_256':
-        netG = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity)
+        netG = UnetGenerator(input_nc, output_nc, 8, ngf, norm_layer=norm_layer, use_dropout=use_dropout, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
     elif which_model_netG == 'aod':
         netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling, filtering=filtering, norm_layer=norm_layer)
     elif which_model_netG == 'air':
@@ -249,26 +249,28 @@ class AODNetGenerator(nn.Module):
         if self.filtering == 'guided':
             # rgb2gray
             guidance = 0.2989 * input[:,0,:,:] + 0.5870 * input[:,1,:,:] + 0.1140 * input[:,2,:,:]
+            # rescale to [0,1]
+            guidance = (guidance + 1) / 2
             guidance = torch.unsqueeze(guidance, dim=1)
 
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
             pre_last = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
             if self.filtering is not None:
                 if self.filtering == 'guided':
-                    return self.last_layer(guidance, pre_last)
+                    return pre_last, self.last_layer(guidance, pre_last)
                 else:
-                    return nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
+                    return pre_last, nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
             else:
-                return pre_last
+                return pre_last, pre_last
         else:
             pre_last = self.model(input)
             if self.filtering is not None:
                 if self.filtering == 'guided':
-                    return self.last_layer(guidance, pre_last)
+                    return pre_last, self.last_layer(guidance, pre_last)
                 else:
-                    return self.last_layer(pre_last)
+                    return pre_last, self.last_layer(pre_last)
             else:
-                return pre_last
+                return pre_last, pre_last
 
 
 # Guided image filtering for grayscale images
@@ -470,9 +472,10 @@ class ResnetBlock(nn.Module):
 # at the bottleneck
 class UnetGenerator(nn.Module):
     def __init__(self, input_nc, output_nc, num_downs, ngf=64,
-                 norm_layer=nn.BatchNorm2d, use_dropout=False, gpu_ids=[], non_linearity='linear'):
+                 norm_layer=nn.BatchNorm2d, use_dropout=False, gpu_ids=[], non_linearity='linear', filtering=None, r=10, eps=1e-3):
         super(UnetGenerator, self).__init__()
         self.gpu_ids = gpu_ids
+        self.filtering=filtering
         if non_linearity == 'BReLU':
             last_act = BReLU(0.95,0.05,0.95,0.05,True)
         elif non_linearity == 'ReLU':
@@ -499,11 +502,38 @@ class UnetGenerator(nn.Module):
 
         self.model = unet_block
 
+        if filtering is not None:
+            if filtering == 'max':
+                self.last_layer = nn.MaxPool2d(kernel_size=7, stride=1, padding=3)
+            elif filtering == 'guided':
+                self.last_layer = GuidedFilter(r=r, eps=eps)
+
     def forward(self, input):
+        if self.filtering == 'guided':
+            # rgb2gray
+            guidance = 0.2989 * input[:,0,:,:] + 0.5870 * input[:,1,:,:] + 0.1140 * input[:,2,:,:]
+            # rescale to [0,1]
+            guidance = (guidance + 1) / 2
+            guidance = torch.unsqueeze(guidance, dim=1)
+
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
-            return nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            pre_last = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            if self.filtering is not None:
+                if self.filtering == 'guided':
+                    return pre_last, self.last_layer(guidance, pre_last)
+                else:
+                    return pre_last, nn.parallel.data_parallel(self.last_layer, pre_last, self.gpu_ids)
+            else:
+                return pre_last, pre_last
         else:
-            return self.model(input)
+            pre_last = self.model(input)
+            if self.filtering is not None:
+                if self.filtering == 'guided':
+                    return pre_last, self.last_layer(guidance, pre_last)
+                else:
+                    return pre_last, self.last_layer(pre_last)
+            else:
+                return pre_last, pre_last
 
 
 # Defines the submodule with skip connection.
@@ -532,9 +562,9 @@ class UnetSkipConnectionBlock(nn.Module):
                                         kernel_size=4, stride=2,
                                         padding=1, bias=use_bias)
             down = [downconv]
-            up = [uprelu, upconv, nn.Tanh()]
+#            up = [uprelu, upconv, nn.Tanh()]
             # modify it temporally for depth output
-#            up = [uprelu, upconv, non_linearity]
+            up = [uprelu, upconv, non_linearity]
             model = down + [submodule] + up
         elif innermost:
             upconv = nn.ConvTranspose2d(inner_nc, outer_nc,
@@ -561,7 +591,9 @@ class UnetSkipConnectionBlock(nn.Module):
         if self.outermost:
             return self.model(x)
         else:
-            return torch.cat([self.model(x), x], 1)
+            y = self.model(x)
+            print y.size(), x.size()
+            return torch.cat([y, x], 1)
 
 
 # Defines the PatchGAN discriminator with the specified arguments.
@@ -649,12 +681,12 @@ class MultiDiscriminator(nn.Module):
         
         self.scale1 = nn.Sequential(*scale1)
         scale1_output = []
-#        scale1_output += [
-#            nn.Conv2d(ndf * nf_mult, ndf * nf_mult,
-#                      kernel_size=kw, stride=1, padding=padw, bias=use_bias),
-#            norm_layer(ndf * nf_mult),
-#            nn.LeakyReLU(0.2, True)
-#        ]
+        scale1_output += [
+            nn.Conv2d(ndf * nf_mult, ndf * nf_mult,
+                      kernel_size=kw, stride=1, padding=padw, bias=use_bias),
+            norm_layer(ndf * nf_mult),
+            nn.LeakyReLU(0.2, True)
+        ]
         scale1_output += [nn.Conv2d(ndf*nf_mult, 1, kernel_size=kw, stride=1, padding=padw)]    # compress to 1 channel
         self.scale1_output = nn.Sequential(*scale1_output)
 
