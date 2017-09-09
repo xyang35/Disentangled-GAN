@@ -1,0 +1,1710 @@
+------------ Options -------------
+batchSize: 8
+beta1: 0.5
+checkpoints_dir: /home/xyang/UTS/Data/Haze/D-HAZY/final/checkpoints
+continue_train: False
+dataroot: /home/xyang/UTS/Data/Haze/D-HAZY/final
+dataset_mode: depth
+depth_nc: 3
+depth_reverse: True
+display_freq: 100
+display_id: 0
+display_port: 8097
+display_single_pane_ncols: 0
+display_winsize: 256
+filtering: None
+fineSize: 256
+gpu_ids: [0]
+grad_clip: -1
+identity: 0.0
+input_nc: 3
+isTrain: True
+lambda_A: 40.0
+lambda_B: 10.0
+lambda_Content: 0.1
+lambda_TV: 0.0
+lambda_extra: 0.1
+lambda_perceptual: 0.1
+loadSize: 256
+lr: 0.0002
+max_dataset_size: inf
+model: disentangled_final
+nThreads: 1
+n_layers: 3
+n_layers_D: 5
+name: disentangled_final_A40_TV0_lr0.0002_none_id2
+ndf: 64
+ngf: 64
+niter: 50
+niter_decay: 50
+no_dropout: True
+no_flip: False
+no_html: False
+no_lsgan: False
+non_linearity: None
+norm: instance
+output_nc: 3
+phase: train
+pool_size: 50
+pooling: False
+print_freq: 100
+resize_or_crop: scale_width
+save_epoch_freq: 5
+save_latest_freq: 5000
+serial_batches: False
+which_direction: AtoB
+which_epoch: latest
+which_model_depth: resnet_depth
+which_model_netD: multi
+which_model_netG: resnet_9blocks
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [DepthDataset] was created
+#training images = 725
+disentangled_final
+---------- Networks initialized -------------
+ResnetGenerator (
+  (model): Sequential (
+    (0): ReflectionPad2d (3, 3, 3, 3)
+    (1): Conv2d(3, 64, kernel_size=(7, 7), stride=(1, 1))
+    (2): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (3): ReLU (inplace)
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (5): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (6): ReLU (inplace)
+    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (9): ReLU (inplace)
+    (10): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (11): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (12): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (13): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (14): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (15): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (16): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (17): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (18): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (19): ConvTranspose2d(256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (20): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (21): ReLU (inplace)
+    (22): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (23): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (24): ReLU (inplace)
+    (25): ReflectionPad2d (3, 3, 3, 3)
+    (26): Conv2d(64, 3, kernel_size=(7, 7), stride=(1, 1))
+    (27): Tanh ()
+  )
+)
+Total number of parameters: 11378179
+ResnetDepthGenerator (
+  (model): Sequential (
+    (0): ReflectionPad2d (3, 3, 3, 3)
+    (1): Conv2d(3, 6, kernel_size=(7, 7), stride=(1, 1))
+    (2): InstanceNorm2d(6, eps=1e-05, momentum=0.1, affine=False)
+    (3): ReLU (inplace)
+    (4): Conv2d(6, 12, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (5): InstanceNorm2d(12, eps=1e-05, momentum=0.1, affine=False)
+    (6): ReLU (inplace)
+    (7): Conv2d(12, 24, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+    (9): ReLU (inplace)
+    (10): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (11): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (12): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (13): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (14): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (15): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (16): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (17): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (18): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (19): ConvTranspose2d(24, 12, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (20): InstanceNorm2d(12, eps=1e-05, momentum=0.1, affine=False)
+    (21): ReLU (inplace)
+    (22): ConvTranspose2d(12, 6, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (23): InstanceNorm2d(6, eps=1e-05, momentum=0.1, affine=False)
+    (24): ReLU (inplace)
+    (25): ReflectionPad2d (3, 3, 3, 3)
+    (26): Conv2d(6, 1, kernel_size=(7, 7), stride=(1, 1))
+    (27): Tanh ()
+  )
+)
+Total number of parameters: 101461
+MultiDiscriminator (
+  (scale1): Sequential (
+    (0): Conv2d(3, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (1): LeakyReLU (0.2, inplace)
+    (2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (4): LeakyReLU (0.2, inplace)
+    (5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (7): LeakyReLU (0.2, inplace)
+  )
+  (scale1_output): Sequential (
+    (0): Conv2d(256, 256, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+    (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (2): LeakyReLU (0.2, inplace)
+    (3): Conv2d(256, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+  )
+  (scale2): Sequential (
+    (0): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (1): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (2): LeakyReLU (0.2, inplace)
+    (3): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (4): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (5): LeakyReLU (0.2, inplace)
+    (6): Conv2d(512, 512, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+    (7): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+    (8): LeakyReLU (0.2, inplace)
+    (9): Conv2d(512, 1, kernel_size=(4, 4), stride=(1, 1), padding=(1, 1))
+  )
+)
+Total number of parameters: 12207298
+-----------------------------------------------
+model [DisentangledModel] was created
+create web directory /home/xyang/UTS/Data/Haze/D-HAZY/final/checkpoints/disentangled_final_A40_TV0_lr0.0002_none_id2/web...
+dataset [DepthDataset] was created
+(epoch: 1, iters: 200, time: 0.078) G_B: 1.495 G_L1: 7.381 D: 1.922 TV: 0.000 
+(epoch: 1, iters: 400, time: 0.080) G_B: 0.604 G_L1: 5.257 D: 0.890 TV: 0.000 
+(epoch: 1, iters: 600, time: 0.079) G_B: 0.882 G_L1: 4.979 D: 0.895 TV: 0.000 
+End of epoch 1 / 100 	 Time Taken: 37 sec
+(epoch: 2, iters: 75, time: 0.080) G_B: 0.567 G_L1: 4.964 D: 0.448 TV: 0.000 
+(epoch: 2, iters: 275, time: 0.081) G_B: 0.583 G_L1: 3.921 D: 0.455 TV: 0.000 
+(epoch: 2, iters: 475, time: 0.082) G_B: 0.603 G_L1: 3.314 D: 0.510 TV: 0.000 
+(epoch: 2, iters: 675, time: 0.082) G_B: 0.402 G_L1: 4.760 D: 0.501 TV: 0.000 
+End of epoch 2 / 100 	 Time Taken: 37 sec
+(epoch: 3, iters: 150, time: 0.082) G_B: 0.555 G_L1: 3.410 D: 0.529 TV: 0.000 
+(epoch: 3, iters: 350, time: 0.082) G_B: 0.451 G_L1: 3.751 D: 0.431 TV: 0.000 
+(epoch: 3, iters: 550, time: 0.081) G_B: 0.576 G_L1: 3.750 D: 0.568 TV: 0.000 
+End of epoch 3 / 100 	 Time Taken: 37 sec
+(epoch: 4, iters: 25, time: 0.081) G_B: 0.487 G_L1: 3.102 D: 0.461 TV: 0.000 
+(epoch: 4, iters: 225, time: 0.081) G_B: 0.488 G_L1: 4.163 D: 0.567 TV: 0.000 
+(epoch: 4, iters: 425, time: 0.084) G_B: 0.399 G_L1: 3.655 D: 0.431 TV: 0.000 
+(epoch: 4, iters: 625, time: 0.083) G_B: 0.415 G_L1: 6.026 D: 0.465 TV: 0.000 
+End of epoch 4 / 100 	 Time Taken: 37 sec
+(epoch: 5, iters: 100, time: 0.083) G_B: 0.448 G_L1: 3.397 D: 0.422 TV: 0.000 
+(epoch: 5, iters: 300, time: 0.083) G_B: 0.728 G_L1: 4.639 D: 0.585 TV: 0.000 
+(epoch: 5, iters: 500, time: 0.083) G_B: 0.478 G_L1: 3.211 D: 0.471 TV: 0.000 
+(epoch: 5, iters: 700, time: 0.086) G_B: 0.490 G_L1: 3.450 D: 0.414 TV: 0.000 
+saving the model at the end of epoch 5, iters 3640
+End of epoch 5 / 100 	 Time Taken: 37 sec
+dataset [DepthDataset] was created
+(epoch: 6, iters: 175, time: 0.084) G_B: 0.498 G_L1: 3.133 D: 0.389 TV: 0.000 
+(epoch: 6, iters: 375, time: 0.082) G_B: 0.594 G_L1: 2.931 D: 0.316 TV: 0.000 
+(epoch: 6, iters: 575, time: 0.082) G_B: 0.338 G_L1: 3.309 D: 0.507 TV: 0.000 
+End of epoch 6 / 100 	 Time Taken: 37 sec
+(epoch: 7, iters: 50, time: 0.082) G_B: 0.609 G_L1: 5.238 D: 0.620 TV: 0.000 
+(epoch: 7, iters: 250, time: 0.084) G_B: 0.456 G_L1: 3.444 D: 0.447 TV: 0.000 
+(epoch: 7, iters: 450, time: 0.084) G_B: 0.525 G_L1: 4.290 D: 0.366 TV: 0.000 
+(epoch: 7, iters: 650, time: 0.087) G_B: 0.457 G_L1: 3.337 D: 0.454 TV: 0.000 
+saving the latest model (epoch 7, total_steps 5000)
+End of epoch 7 / 100 	 Time Taken: 37 sec
+(epoch: 8, iters: 125, time: 0.083) G_B: 0.636 G_L1: 3.794 D: 0.324 TV: 0.000 
+(epoch: 8, iters: 325, time: 0.084) G_B: 0.735 G_L1: 2.447 D: 0.313 TV: 0.000 
+(epoch: 8, iters: 525, time: 0.084) G_B: 0.612 G_L1: 4.261 D: 0.487 TV: 0.000 
+(epoch: 8, iters: 725, time: 0.085) G_B: 0.479 G_L1: 2.578 D: 0.395 TV: 0.000 
+End of epoch 8 / 100 	 Time Taken: 37 sec
+(epoch: 9, iters: 200, time: 0.085) G_B: 0.478 G_L1: 3.438 D: 0.414 TV: 0.000 
+(epoch: 9, iters: 400, time: 0.086) G_B: 0.827 G_L1: 4.215 D: 0.365 TV: 0.000 
+(epoch: 9, iters: 600, time: 0.085) G_B: 0.456 G_L1: 3.195 D: 0.369 TV: 0.000 
+End of epoch 9 / 100 	 Time Taken: 37 sec
+(epoch: 10, iters: 75, time: 0.086) G_B: 0.537 G_L1: 3.419 D: 0.508 TV: 0.000 
+(epoch: 10, iters: 275, time: 0.088) G_B: 0.555 G_L1: 3.146 D: 0.315 TV: 0.000 
+(epoch: 10, iters: 475, time: 0.088) G_B: 0.452 G_L1: 2.693 D: 0.387 TV: 0.000 
+(epoch: 10, iters: 675, time: 0.086) G_B: 0.518 G_L1: 3.097 D: 0.359 TV: 0.000 
+saving the model at the end of epoch 10, iters 7280
+End of epoch 10 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 11, iters: 150, time: 0.086) G_B: 0.594 G_L1: 4.443 D: 0.353 TV: 0.000 
+(epoch: 11, iters: 350, time: 0.084) G_B: 0.420 G_L1: 3.824 D: 0.385 TV: 0.000 
+(epoch: 11, iters: 550, time: 0.085) G_B: 0.630 G_L1: 2.571 D: 0.392 TV: 0.000 
+(epoch: 11, iters: 750, time: 0.084) G_B: 1.045 G_L1: 3.636 D: 0.403 TV: 0.000 
+End of epoch 11 / 100 	 Time Taken: 37 sec
+(epoch: 12, iters: 225, time: 0.088) G_B: 0.618 G_L1: 2.873 D: 0.377 TV: 0.000 
+(epoch: 12, iters: 425, time: 0.092) G_B: 1.022 G_L1: 3.234 D: 0.381 TV: 0.000 
+(epoch: 12, iters: 625, time: 0.087) G_B: 0.506 G_L1: 3.699 D: 0.337 TV: 0.000 
+End of epoch 12 / 100 	 Time Taken: 37 sec
+(epoch: 13, iters: 100, time: 0.088) G_B: 0.916 G_L1: 3.201 D: 0.346 TV: 0.000 
+(epoch: 13, iters: 300, time: 0.086) G_B: 1.084 G_L1: 2.627 D: 0.313 TV: 0.000 
+(epoch: 13, iters: 500, time: 0.085) G_B: 0.803 G_L1: 2.488 D: 0.341 TV: 0.000 
+(epoch: 13, iters: 700, time: 0.086) G_B: 0.841 G_L1: 2.132 D: 0.550 TV: 0.000 
+End of epoch 13 / 100 	 Time Taken: 37 sec
+(epoch: 14, iters: 175, time: 0.086) G_B: 0.901 G_L1: 2.582 D: 0.321 TV: 0.000 
+(epoch: 14, iters: 375, time: 0.087) G_B: 0.440 G_L1: 2.002 D: 0.451 TV: 0.000 
+(epoch: 14, iters: 575, time: 0.086) G_B: 0.524 G_L1: 2.881 D: 0.377 TV: 0.000 
+saving the latest model (epoch 14, total_steps 10000)
+End of epoch 14 / 100 	 Time Taken: 37 sec
+(epoch: 15, iters: 50, time: 0.072) G_B: 0.799 G_L1: 2.757 D: 0.461 TV: 0.000 
+(epoch: 15, iters: 250, time: 0.087) G_B: 0.403 G_L1: 3.278 D: 0.372 TV: 0.000 
+(epoch: 15, iters: 450, time: 0.084) G_B: 0.846 G_L1: 2.813 D: 0.360 TV: 0.000 
+(epoch: 15, iters: 650, time: 0.089) G_B: 0.665 G_L1: 2.404 D: 0.267 TV: 0.000 
+saving the model at the end of epoch 15, iters 10920
+End of epoch 15 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 16, iters: 125, time: 0.083) G_B: 0.550 G_L1: 2.227 D: 0.307 TV: 0.000 
+(epoch: 16, iters: 325, time: 0.085) G_B: 0.516 G_L1: 2.983 D: 0.395 TV: 0.000 
+(epoch: 16, iters: 525, time: 0.089) G_B: 0.444 G_L1: 2.922 D: 0.418 TV: 0.000 
+(epoch: 16, iters: 725, time: 0.089) G_B: 0.590 G_L1: 3.048 D: 0.411 TV: 0.000 
+End of epoch 16 / 100 	 Time Taken: 37 sec
+(epoch: 17, iters: 200, time: 0.087) G_B: 0.567 G_L1: 2.605 D: 0.266 TV: 0.000 
+(epoch: 17, iters: 400, time: 0.089) G_B: 0.636 G_L1: 2.518 D: 0.267 TV: 0.000 
+(epoch: 17, iters: 600, time: 0.087) G_B: 0.495 G_L1: 2.599 D: 0.370 TV: 0.000 
+End of epoch 17 / 100 	 Time Taken: 37 sec
+(epoch: 18, iters: 75, time: 0.087) G_B: 0.521 G_L1: 3.274 D: 0.295 TV: 0.000 
+(epoch: 18, iters: 275, time: 0.089) G_B: 0.762 G_L1: 2.936 D: 0.461 TV: 0.000 
+(epoch: 18, iters: 475, time: 0.088) G_B: 0.536 G_L1: 2.977 D: 0.256 TV: 0.000 
+(epoch: 18, iters: 675, time: 0.090) G_B: 0.266 G_L1: 2.698 D: 0.442 TV: 0.000 
+End of epoch 18 / 100 	 Time Taken: 37 sec
+(epoch: 19, iters: 150, time: 0.089) G_B: 0.591 G_L1: 3.755 D: 0.319 TV: 0.000 
+(epoch: 19, iters: 350, time: 0.089) G_B: 0.708 G_L1: 1.819 D: 0.278 TV: 0.000 
+(epoch: 19, iters: 550, time: 0.089) G_B: 0.457 G_L1: 2.441 D: 0.362 TV: 0.000 
+(epoch: 19, iters: 750, time: 0.088) G_B: 0.543 G_L1: 3.509 D: 0.342 TV: 0.000 
+End of epoch 19 / 100 	 Time Taken: 37 sec
+(epoch: 20, iters: 225, time: 0.086) G_B: 0.661 G_L1: 2.667 D: 0.244 TV: 0.000 
+(epoch: 20, iters: 425, time: 0.090) G_B: 0.548 G_L1: 2.151 D: 0.312 TV: 0.000 
+(epoch: 20, iters: 625, time: 0.087) G_B: 0.549 G_L1: 2.620 D: 0.340 TV: 0.000 
+saving the model at the end of epoch 20, iters 14560
+End of epoch 20 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 21, iters: 100, time: 0.088) G_B: 0.860 G_L1: 2.251 D: 0.316 TV: 0.000 
+(epoch: 21, iters: 300, time: 0.089) G_B: 0.647 G_L1: 2.242 D: 0.252 TV: 0.000 
+(epoch: 21, iters: 500, time: 0.085) G_B: 0.606 G_L1: 2.541 D: 0.369 TV: 0.000 
+saving the latest model (epoch 21, total_steps 15000)
+(epoch: 21, iters: 700, time: 0.090) G_B: 0.707 G_L1: 2.416 D: 0.349 TV: 0.000 
+End of epoch 21 / 100 	 Time Taken: 37 sec
+(epoch: 22, iters: 175, time: 0.088) G_B: 0.618 G_L1: 2.107 D: 0.356 TV: 0.000 
+(epoch: 22, iters: 375, time: 0.090) G_B: 0.702 G_L1: 2.483 D: 0.228 TV: 0.000 
+(epoch: 22, iters: 575, time: 0.092) G_B: 0.636 G_L1: 2.507 D: 0.252 TV: 0.000 
+(epoch: 22, iters: 775, time: 0.087) G_B: 0.750 G_L1: 2.421 D: 0.259 TV: 0.000 
+End of epoch 22 / 100 	 Time Taken: 38 sec
+(epoch: 23, iters: 250, time: 0.089) G_B: 0.906 G_L1: 2.968 D: 0.272 TV: 0.000 
+(epoch: 23, iters: 450, time: 0.087) G_B: 1.216 G_L1: 3.745 D: 0.381 TV: 0.000 
+(epoch: 23, iters: 650, time: 0.089) G_B: 1.033 G_L1: 2.649 D: 0.276 TV: 0.000 
+End of epoch 23 / 100 	 Time Taken: 37 sec
+(epoch: 24, iters: 125, time: 0.091) G_B: 0.876 G_L1: 2.208 D: 0.281 TV: 0.000 
+(epoch: 24, iters: 325, time: 0.090) G_B: 0.765 G_L1: 2.630 D: 0.315 TV: 0.000 
+(epoch: 24, iters: 525, time: 0.090) G_B: 0.509 G_L1: 2.404 D: 0.303 TV: 0.000 
+(epoch: 24, iters: 725, time: 0.090) G_B: 0.662 G_L1: 2.657 D: 0.297 TV: 0.000 
+End of epoch 24 / 100 	 Time Taken: 38 sec
+(epoch: 25, iters: 200, time: 0.090) G_B: 0.658 G_L1: 2.244 D: 0.305 TV: 0.000 
+(epoch: 25, iters: 400, time: 0.090) G_B: 0.718 G_L1: 2.551 D: 0.293 TV: 0.000 
+(epoch: 25, iters: 600, time: 0.089) G_B: 0.520 G_L1: 2.500 D: 0.305 TV: 0.000 
+(epoch: 25, iters: 800, time: 0.076) G_B: 0.705 G_L1: 2.083 D: 0.257 TV: 0.000 
+saving the model at the end of epoch 25, iters 18200
+End of epoch 25 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 26, iters: 275, time: 0.092) G_B: 0.516 G_L1: 2.646 D: 0.322 TV: 0.000 
+(epoch: 26, iters: 475, time: 0.094) G_B: 0.704 G_L1: 2.118 D: 0.247 TV: 0.000 
+(epoch: 26, iters: 675, time: 0.087) G_B: 0.897 G_L1: 2.585 D: 0.286 TV: 0.000 
+End of epoch 26 / 100 	 Time Taken: 37 sec
+(epoch: 27, iters: 150, time: 0.090) G_B: 0.493 G_L1: 2.540 D: 0.280 TV: 0.000 
+(epoch: 27, iters: 350, time: 0.093) G_B: 0.781 G_L1: 2.049 D: 0.285 TV: 0.000 
+(epoch: 27, iters: 550, time: 0.091) G_B: 0.635 G_L1: 2.241 D: 0.252 TV: 0.000 
+(epoch: 27, iters: 750, time: 0.091) G_B: 0.738 G_L1: 2.191 D: 0.328 TV: 0.000 
+End of epoch 27 / 100 	 Time Taken: 38 sec
+(epoch: 28, iters: 225, time: 0.091) G_B: 0.944 G_L1: 2.451 D: 0.263 TV: 0.000 
+(epoch: 28, iters: 425, time: 0.092) G_B: 0.686 G_L1: 2.334 D: 0.252 TV: 0.000 
+saving the latest model (epoch 28, total_steps 20000)
+(epoch: 28, iters: 625, time: 0.089) G_B: 0.488 G_L1: 2.330 D: 0.356 TV: 0.000 
+End of epoch 28 / 100 	 Time Taken: 38 sec
+(epoch: 29, iters: 100, time: 0.092) G_B: 0.733 G_L1: 2.646 D: 0.300 TV: 0.000 
+(epoch: 29, iters: 300, time: 0.090) G_B: 0.716 G_L1: 2.092 D: 0.294 TV: 0.000 
+(epoch: 29, iters: 500, time: 0.094) G_B: 0.610 G_L1: 2.415 D: 0.254 TV: 0.000 
+(epoch: 29, iters: 700, time: 0.093) G_B: 1.177 G_L1: 2.680 D: 0.332 TV: 0.000 
+End of epoch 29 / 100 	 Time Taken: 38 sec
+(epoch: 30, iters: 175, time: 0.091) G_B: 0.551 G_L1: 1.887 D: 0.272 TV: 0.000 
+(epoch: 30, iters: 375, time: 0.092) G_B: 0.530 G_L1: 2.052 D: 0.263 TV: 0.000 
+(epoch: 30, iters: 575, time: 0.092) G_B: 0.638 G_L1: 2.241 D: 0.303 TV: 0.000 
+(epoch: 30, iters: 775, time: 0.090) G_B: 1.020 G_L1: 2.097 D: 0.291 TV: 0.000 
+saving the model at the end of epoch 30, iters 21840
+End of epoch 30 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 31, iters: 250, time: 0.092) G_B: 0.920 G_L1: 2.088 D: 0.223 TV: 0.000 
+(epoch: 31, iters: 450, time: 0.097) G_B: 1.082 G_L1: 2.362 D: 0.322 TV: 0.000 
+(epoch: 31, iters: 650, time: 0.089) G_B: 0.636 G_L1: 2.257 D: 0.217 TV: 0.000 
+End of epoch 31 / 100 	 Time Taken: 37 sec
+(epoch: 32, iters: 125, time: 0.090) G_B: 0.723 G_L1: 2.582 D: 0.284 TV: 0.000 
+(epoch: 32, iters: 325, time: 0.092) G_B: 0.824 G_L1: 2.506 D: 0.253 TV: 0.000 
+(epoch: 32, iters: 525, time: 0.092) G_B: 0.697 G_L1: 2.532 D: 0.242 TV: 0.000 
+(epoch: 32, iters: 725, time: 0.088) G_B: 0.898 G_L1: 2.235 D: 0.294 TV: 0.000 
+End of epoch 32 / 100 	 Time Taken: 38 sec
+(epoch: 33, iters: 200, time: 0.093) G_B: 0.842 G_L1: 1.859 D: 0.210 TV: 0.000 
+(epoch: 33, iters: 400, time: 0.096) G_B: 0.937 G_L1: 2.524 D: 0.343 TV: 0.000 
+(epoch: 33, iters: 600, time: 0.092) G_B: 0.979 G_L1: 3.901 D: 0.242 TV: 0.000 
+(epoch: 33, iters: 800, time: 0.093) G_B: 0.797 G_L1: 1.950 D: 0.259 TV: 0.000 
+End of epoch 33 / 100 	 Time Taken: 38 sec
+(epoch: 34, iters: 275, time: 0.093) G_B: 0.729 G_L1: 2.212 D: 0.433 TV: 0.000 
+(epoch: 34, iters: 475, time: 0.094) G_B: 1.075 G_L1: 3.155 D: 0.226 TV: 0.000 
+(epoch: 34, iters: 675, time: 0.092) G_B: 0.462 G_L1: 2.202 D: 0.285 TV: 0.000 
+End of epoch 34 / 100 	 Time Taken: 37 sec
+(epoch: 35, iters: 150, time: 0.092) G_B: 0.765 G_L1: 2.118 D: 0.197 TV: 0.000 
+(epoch: 35, iters: 350, time: 0.095) G_B: 0.731 G_L1: 2.789 D: 0.294 TV: 0.000 
+saving the latest model (epoch 35, total_steps 25000)
+(epoch: 35, iters: 550, time: 0.091) G_B: 0.383 G_L1: 3.010 D: 0.332 TV: 0.000 
+(epoch: 35, iters: 750, time: 0.091) G_B: 0.569 G_L1: 2.424 D: 0.319 TV: 0.000 
+saving the model at the end of epoch 35, iters 25480
+End of epoch 35 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 36, iters: 225, time: 0.095) G_B: 0.771 G_L1: 2.350 D: 0.250 TV: 0.000 
+(epoch: 36, iters: 425, time: 0.092) G_B: 0.414 G_L1: 2.458 D: 0.267 TV: 0.000 
+(epoch: 36, iters: 625, time: 0.094) G_B: 0.821 G_L1: 2.321 D: 0.292 TV: 0.000 
+(epoch: 36, iters: 825, time: 0.093) G_B: 0.831 G_L1: 2.771 D: 2.194 TV: 0.000 
+End of epoch 36 / 100 	 Time Taken: 38 sec
+(epoch: 37, iters: 300, time: 0.096) G_B: 0.317 G_L1: 1.708 D: 0.513 TV: 0.000 
+(epoch: 37, iters: 500, time: 0.093) G_B: 0.324 G_L1: 2.575 D: 0.531 TV: 0.000 
+(epoch: 37, iters: 700, time: 0.095) G_B: 0.283 G_L1: 2.216 D: 0.573 TV: 0.000 
+End of epoch 37 / 100 	 Time Taken: 37 sec
+(epoch: 38, iters: 175, time: 0.096) G_B: 0.322 G_L1: 2.157 D: 0.488 TV: 0.000 
+(epoch: 38, iters: 375, time: 0.093) G_B: 0.352 G_L1: 2.216 D: 0.543 TV: 0.000 
+(epoch: 38, iters: 575, time: 0.095) G_B: 0.256 G_L1: 2.167 D: 0.489 TV: 0.000 
+(epoch: 38, iters: 775, time: 0.093) G_B: 0.335 G_L1: 1.911 D: 0.502 TV: 0.000 
+End of epoch 38 / 100 	 Time Taken: 38 sec
+(epoch: 39, iters: 250, time: 0.092) G_B: 0.515 G_L1: 1.806 D: 0.516 TV: 0.000 
+(epoch: 39, iters: 450, time: 0.095) G_B: 0.285 G_L1: 1.892 D: 0.515 TV: 0.000 
+(epoch: 39, iters: 650, time: 0.095) G_B: 0.362 G_L1: 2.373 D: 0.554 TV: 0.000 
+End of epoch 39 / 100 	 Time Taken: 37 sec
+(epoch: 40, iters: 125, time: 0.079) G_B: 0.379 G_L1: 2.388 D: 0.494 TV: 0.000 
+(epoch: 40, iters: 325, time: 0.095) G_B: 0.289 G_L1: 1.660 D: 0.478 TV: 0.000 
+(epoch: 40, iters: 525, time: 0.095) G_B: 0.387 G_L1: 1.864 D: 0.474 TV: 0.000 
+(epoch: 40, iters: 725, time: 0.098) G_B: 0.306 G_L1: 2.185 D: 0.472 TV: 0.000 
+saving the model at the end of epoch 40, iters 29120
+End of epoch 40 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 41, iters: 200, time: 0.095) G_B: 0.378 G_L1: 2.052 D: 0.446 TV: 0.000 
+(epoch: 41, iters: 400, time: 0.096) G_B: 0.299 G_L1: 1.660 D: 0.498 TV: 0.000 
+(epoch: 41, iters: 600, time: 0.099) G_B: 0.382 G_L1: 1.830 D: 0.448 TV: 0.000 
+(epoch: 41, iters: 800, time: 0.095) G_B: 0.394 G_L1: 1.864 D: 0.490 TV: 0.000 
+End of epoch 41 / 100 	 Time Taken: 38 sec
+(epoch: 42, iters: 275, time: 0.097) G_B: 0.417 G_L1: 1.531 D: 0.433 TV: 0.000 
+saving the latest model (epoch 42, total_steps 30000)
+(epoch: 42, iters: 475, time: 0.096) G_B: 0.303 G_L1: 2.412 D: 0.483 TV: 0.000 
+(epoch: 42, iters: 675, time: 0.091) G_B: 0.386 G_L1: 2.372 D: 0.472 TV: 0.000 
+End of epoch 42 / 100 	 Time Taken: 38 sec
+(epoch: 43, iters: 150, time: 0.095) G_B: 0.372 G_L1: 1.731 D: 0.464 TV: 0.000 
+(epoch: 43, iters: 350, time: 0.095) G_B: 0.361 G_L1: 1.666 D: 0.399 TV: 0.000 
+(epoch: 43, iters: 550, time: 0.095) G_B: 0.383 G_L1: 2.170 D: 0.395 TV: 0.000 
+(epoch: 43, iters: 750, time: 0.094) G_B: 0.351 G_L1: 2.945 D: 0.517 TV: 0.000 
+End of epoch 43 / 100 	 Time Taken: 38 sec
+(epoch: 44, iters: 225, time: 0.097) G_B: 0.441 G_L1: 2.320 D: 0.530 TV: 0.000 
+(epoch: 44, iters: 425, time: 0.096) G_B: 0.394 G_L1: 1.785 D: 0.454 TV: 0.000 
+(epoch: 44, iters: 625, time: 0.096) G_B: 0.382 G_L1: 1.700 D: 0.446 TV: 0.000 
+(epoch: 44, iters: 825, time: 0.097) G_B: 0.414 G_L1: 1.443 D: 0.515 TV: 0.000 
+End of epoch 44 / 100 	 Time Taken: 38 sec
+(epoch: 45, iters: 300, time: 0.093) G_B: 0.409 G_L1: 1.794 D: 0.376 TV: 0.000 
+(epoch: 45, iters: 500, time: 0.095) G_B: 0.570 G_L1: 1.748 D: 0.442 TV: 0.000 
+(epoch: 45, iters: 700, time: 0.096) G_B: 0.549 G_L1: 1.869 D: 0.383 TV: 0.000 
+saving the model at the end of epoch 45, iters 32760
+End of epoch 45 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 46, iters: 175, time: 0.097) G_B: 0.310 G_L1: 1.716 D: 0.437 TV: 0.000 
+(epoch: 46, iters: 375, time: 0.096) G_B: 0.467 G_L1: 1.836 D: 0.405 TV: 0.000 
+(epoch: 46, iters: 575, time: 0.098) G_B: 0.517 G_L1: 1.950 D: 0.497 TV: 0.000 
+(epoch: 46, iters: 775, time: 0.098) G_B: 0.361 G_L1: 1.978 D: 0.447 TV: 0.000 
+End of epoch 46 / 100 	 Time Taken: 38 sec
+(epoch: 47, iters: 250, time: 0.097) G_B: 0.581 G_L1: 1.953 D: 0.465 TV: 0.000 
+(epoch: 47, iters: 450, time: 0.095) G_B: 0.386 G_L1: 1.928 D: 0.381 TV: 0.000 
+(epoch: 47, iters: 650, time: 0.097) G_B: 0.465 G_L1: 1.741 D: 0.416 TV: 0.000 
+(epoch: 47, iters: 850, time: 0.097) G_B: 0.502 G_L1: 2.332 D: 0.458 TV: 0.000 
+End of epoch 47 / 100 	 Time Taken: 38 sec
+(epoch: 48, iters: 325, time: 0.099) G_B: 0.339 G_L1: 2.020 D: 0.464 TV: 0.000 
+(epoch: 48, iters: 525, time: 0.101) G_B: 0.300 G_L1: 1.579 D: 0.507 TV: 0.000 
+(epoch: 48, iters: 725, time: 0.095) G_B: 0.440 G_L1: 2.046 D: 0.438 TV: 0.000 
+End of epoch 48 / 100 	 Time Taken: 37 sec
+(epoch: 49, iters: 200, time: 0.096) G_B: 0.367 G_L1: 1.946 D: 0.474 TV: 0.000 
+saving the latest model (epoch 49, total_steps 35000)
+(epoch: 49, iters: 400, time: 0.103) G_B: 0.450 G_L1: 1.983 D: 0.422 TV: 0.000 
+(epoch: 49, iters: 600, time: 0.098) G_B: 0.461 G_L1: 1.412 D: 0.398 TV: 0.000 
+(epoch: 49, iters: 800, time: 0.098) G_B: 0.461 G_L1: 1.735 D: 0.498 TV: 0.000 
+End of epoch 49 / 100 	 Time Taken: 38 sec
+(epoch: 50, iters: 275, time: 0.102) G_B: 0.397 G_L1: 1.927 D: 0.349 TV: 0.000 
+(epoch: 50, iters: 475, time: 0.096) G_B: 0.543 G_L1: 1.626 D: 0.328 TV: 0.000 
+(epoch: 50, iters: 675, time: 0.098) G_B: 0.547 G_L1: 2.224 D: 0.530 TV: 0.000 
+(epoch: 50, iters: 875, time: 0.088) G_B: 0.599 G_L1: 1.470 D: 0.359 TV: 0.000 
+saving the model at the end of epoch 50, iters 36400
+End of epoch 50 / 100 	 Time Taken: 38 sec
+dataset [DepthDataset] was created
+(epoch: 51, iters: 350, time: 0.098) G_B: 0.445 G_L1: 1.952 D: 0.336 TV: 0.000 
+(epoch: 51, iters: 550, time: 0.101) G_B: 0.775 G_L1: 1.891 D: 0.381 TV: 0.000 
+(epoch: 51, iters: 750, time: 0.097) G_B: 0.375 G_L1: 1.857 D: 0.448 TV: 0.000 
+End of epoch 51 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000200 -> 0.000196
+(epoch: 52, iters: 225, time: 0.098) G_B: 0.390 G_L1: 2.311 D: 0.331 TV: 0.000 
+(epoch: 52, iters: 425, time: 0.098) G_B: 0.577 G_L1: 1.628 D: 0.335 TV: 0.000 
+(epoch: 52, iters: 625, time: 0.096) G_B: 0.887 G_L1: 2.050 D: 0.352 TV: 0.000 
+(epoch: 52, iters: 825, time: 0.098) G_B: 0.333 G_L1: 1.938 D: 0.510 TV: 0.000 
+End of epoch 52 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000196 -> 0.000192
+(epoch: 53, iters: 300, time: 0.096) G_B: 0.482 G_L1: 2.189 D: 0.296 TV: 0.000 
+(epoch: 53, iters: 500, time: 0.100) G_B: 0.629 G_L1: 1.554 D: 0.355 TV: 0.000 
+(epoch: 53, iters: 700, time: 0.099) G_B: 0.596 G_L1: 1.943 D: 0.394 TV: 0.000 
+End of epoch 53 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000192 -> 0.000188
+(epoch: 54, iters: 175, time: 0.099) G_B: 0.643 G_L1: 1.910 D: 0.342 TV: 0.000 
+(epoch: 54, iters: 375, time: 0.098) G_B: 1.098 G_L1: 2.037 D: 0.376 TV: 0.000 
+(epoch: 54, iters: 575, time: 0.099) G_B: 0.352 G_L1: 1.723 D: 0.414 TV: 0.000 
+(epoch: 54, iters: 775, time: 0.098) G_B: 0.758 G_L1: 1.683 D: 0.350 TV: 0.000 
+End of epoch 54 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000188 -> 0.000184
+(epoch: 55, iters: 250, time: 0.096) G_B: 0.884 G_L1: 1.711 D: 0.336 TV: 0.000 
+(epoch: 55, iters: 450, time: 0.100) G_B: 0.626 G_L1: 1.594 D: 0.363 TV: 0.000 
+(epoch: 55, iters: 650, time: 0.103) G_B: 0.438 G_L1: 1.488 D: 0.384 TV: 0.000 
+(epoch: 55, iters: 850, time: 0.096) G_B: 0.551 G_L1: 2.178 D: 0.390 TV: 0.000 
+saving the latest model (epoch 55, total_steps 40000)
+saving the model at the end of epoch 55, iters 40040
+End of epoch 55 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000184 -> 0.000180
+dataset [DepthDataset] was created
+(epoch: 56, iters: 325, time: 0.099) G_B: 0.398 G_L1: 1.782 D: 0.437 TV: 0.000 
+(epoch: 56, iters: 525, time: 0.101) G_B: 0.531 G_L1: 2.050 D: 0.352 TV: 0.000 
+(epoch: 56, iters: 725, time: 0.099) G_B: 0.742 G_L1: 1.639 D: 0.362 TV: 0.000 
+End of epoch 56 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000180 -> 0.000176
+(epoch: 57, iters: 200, time: 0.099) G_B: 0.652 G_L1: 1.428 D: 0.357 TV: 0.000 
+(epoch: 57, iters: 400, time: 0.098) G_B: 0.711 G_L1: 1.685 D: 0.302 TV: 0.000 
+(epoch: 57, iters: 600, time: 0.100) G_B: 0.512 G_L1: 2.076 D: 0.348 TV: 0.000 
+(epoch: 57, iters: 800, time: 0.097) G_B: 0.759 G_L1: 1.930 D: 0.288 TV: 0.000 
+End of epoch 57 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000176 -> 0.000172
+(epoch: 58, iters: 275, time: 0.100) G_B: 0.511 G_L1: 1.499 D: 0.335 TV: 0.000 
+(epoch: 58, iters: 475, time: 0.099) G_B: 0.843 G_L1: 1.505 D: 0.391 TV: 0.000 
+(epoch: 58, iters: 675, time: 0.103) G_B: 1.118 G_L1: 1.398 D: 0.396 TV: 0.000 
+(epoch: 58, iters: 875, time: 0.098) G_B: 0.920 G_L1: 1.659 D: 0.351 TV: 0.000 
+End of epoch 58 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000172 -> 0.000168
+(epoch: 59, iters: 350, time: 0.099) G_B: 0.944 G_L1: 1.595 D: 0.284 TV: 0.000 
+(epoch: 59, iters: 550, time: 0.101) G_B: 0.668 G_L1: 1.873 D: 0.283 TV: 0.000 
+(epoch: 59, iters: 750, time: 0.099) G_B: 0.938 G_L1: 1.716 D: 0.379 TV: 0.000 
+End of epoch 59 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000168 -> 0.000164
+(epoch: 60, iters: 225, time: 0.101) G_B: 0.721 G_L1: 1.759 D: 0.284 TV: 0.000 
+(epoch: 60, iters: 425, time: 0.100) G_B: 0.695 G_L1: 1.610 D: 0.292 TV: 0.000 
+(epoch: 60, iters: 625, time: 0.100) G_B: 0.667 G_L1: 1.693 D: 0.291 TV: 0.000 
+(epoch: 60, iters: 825, time: 0.100) G_B: 0.836 G_L1: 1.508 D: 0.336 TV: 0.000 
+saving the model at the end of epoch 60, iters 43680
+End of epoch 60 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000164 -> 0.000160
+dataset [DepthDataset] was created
+(epoch: 61, iters: 300, time: 0.100) G_B: 0.505 G_L1: 1.479 D: 0.336 TV: 0.000 
+(epoch: 61, iters: 500, time: 0.103) G_B: 0.645 G_L1: 2.067 D: 0.255 TV: 0.000 
+(epoch: 61, iters: 700, time: 0.103) G_B: 0.593 G_L1: 1.637 D: 0.398 TV: 0.000 
+(epoch: 61, iters: 900, time: 0.100) G_B: 0.689 G_L1: 1.789 D: 0.340 TV: 0.000 
+End of epoch 61 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000160 -> 0.000156
+(epoch: 62, iters: 375, time: 0.100) G_B: 0.156 G_L1: 1.679 D: 0.664 TV: 0.000 
+(epoch: 62, iters: 575, time: 0.100) G_B: 0.654 G_L1: 1.622 D: 0.309 TV: 0.000 
+(epoch: 62, iters: 775, time: 0.100) G_B: 0.416 G_L1: 1.554 D: 0.363 TV: 0.000 
+saving the latest model (epoch 62, total_steps 45000)
+End of epoch 62 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000156 -> 0.000152
+(epoch: 63, iters: 250, time: 0.097) G_B: 0.601 G_L1: 1.998 D: 0.325 TV: 0.000 
+(epoch: 63, iters: 450, time: 0.100) G_B: 0.779 G_L1: 1.772 D: 0.267 TV: 0.000 
+(epoch: 63, iters: 650, time: 0.098) G_B: 0.630 G_L1: 1.579 D: 0.269 TV: 0.000 
+(epoch: 63, iters: 850, time: 0.102) G_B: 0.997 G_L1: 1.813 D: 0.334 TV: 0.000 
+End of epoch 63 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000152 -> 0.000148
+(epoch: 64, iters: 325, time: 0.099) G_B: 0.604 G_L1: 1.939 D: 0.323 TV: 0.000 
+(epoch: 64, iters: 525, time: 0.102) G_B: 0.672 G_L1: 1.597 D: 0.328 TV: 0.000 
+(epoch: 64, iters: 725, time: 0.101) G_B: 0.470 G_L1: 1.893 D: 0.353 TV: 0.000 
+End of epoch 64 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000148 -> 0.000144
+(epoch: 65, iters: 200, time: 0.087) G_B: 0.871 G_L1: 1.831 D: 0.272 TV: 0.000 
+(epoch: 65, iters: 400, time: 0.103) G_B: 0.506 G_L1: 1.540 D: 0.284 TV: 0.000 
+(epoch: 65, iters: 600, time: 0.100) G_B: 0.868 G_L1: 1.848 D: 0.346 TV: 0.000 
+(epoch: 65, iters: 800, time: 0.100) G_B: 0.891 G_L1: 1.697 D: 0.297 TV: 0.000 
+saving the model at the end of epoch 65, iters 47320
+End of epoch 65 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000144 -> 0.000140
+dataset [DepthDataset] was created
+(epoch: 66, iters: 275, time: 0.101) G_B: 0.368 G_L1: 1.594 D: 0.437 TV: 0.000 
+(epoch: 66, iters: 475, time: 0.101) G_B: 0.832 G_L1: 1.749 D: 0.273 TV: 0.000 
+(epoch: 66, iters: 675, time: 0.102) G_B: 1.008 G_L1: 1.529 D: 0.298 TV: 0.000 
+(epoch: 66, iters: 875, time: 0.100) G_B: 0.455 G_L1: 1.679 D: 0.304 TV: 0.000 
+End of epoch 66 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000140 -> 0.000136
+(epoch: 67, iters: 350, time: 0.102) G_B: 0.612 G_L1: 1.602 D: 0.262 TV: 0.000 
+(epoch: 67, iters: 550, time: 0.106) G_B: 0.521 G_L1: 2.151 D: 0.286 TV: 0.000 
+(epoch: 67, iters: 750, time: 0.102) G_B: 1.041 G_L1: 1.960 D: 0.306 TV: 0.000 
+End of epoch 67 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000136 -> 0.000132
+(epoch: 68, iters: 225, time: 0.100) G_B: 0.697 G_L1: 1.764 D: 0.324 TV: 0.000 
+(epoch: 68, iters: 425, time: 0.102) G_B: 0.916 G_L1: 1.430 D: 0.367 TV: 0.000 
+(epoch: 68, iters: 625, time: 0.103) G_B: 0.770 G_L1: 2.255 D: 0.258 TV: 0.000 
+(epoch: 68, iters: 825, time: 0.106) G_B: 0.542 G_L1: 1.739 D: 0.350 TV: 0.000 
+End of epoch 68 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000132 -> 0.000128
+(epoch: 69, iters: 300, time: 0.102) G_B: 0.873 G_L1: 1.746 D: 0.338 TV: 0.000 
+(epoch: 69, iters: 500, time: 0.103) G_B: 0.903 G_L1: 1.569 D: 0.265 TV: 0.000 
+(epoch: 69, iters: 700, time: 0.102) G_B: 0.686 G_L1: 1.823 D: 0.279 TV: 0.000 
+saving the latest model (epoch 69, total_steps 50000)
+(epoch: 69, iters: 900, time: 0.102) G_B: 0.642 G_L1: 1.792 D: 0.273 TV: 0.000 
+End of epoch 69 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000128 -> 0.000124
+(epoch: 70, iters: 375, time: 0.105) G_B: 0.630 G_L1: 1.465 D: 0.280 TV: 0.000 
+(epoch: 70, iters: 575, time: 0.102) G_B: 0.995 G_L1: 1.663 D: 0.332 TV: 0.000 
+(epoch: 70, iters: 775, time: 0.101) G_B: 0.584 G_L1: 1.680 D: 0.227 TV: 0.000 
+saving the model at the end of epoch 70, iters 50960
+End of epoch 70 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000124 -> 0.000120
+dataset [DepthDataset] was created
+(epoch: 71, iters: 250, time: 0.100) G_B: 0.820 G_L1: 1.869 D: 0.213 TV: 0.000 
+(epoch: 71, iters: 450, time: 0.103) G_B: 0.592 G_L1: 1.537 D: 0.255 TV: 0.000 
+(epoch: 71, iters: 650, time: 0.106) G_B: 0.861 G_L1: 1.898 D: 0.205 TV: 0.000 
+(epoch: 71, iters: 850, time: 0.101) G_B: 0.901 G_L1: 1.827 D: 0.261 TV: 0.000 
+End of epoch 71 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000120 -> 0.000116
+(epoch: 72, iters: 325, time: 0.102) G_B: 0.549 G_L1: 1.706 D: 0.284 TV: 0.000 
+(epoch: 72, iters: 525, time: 0.101) G_B: 0.733 G_L1: 1.577 D: 0.211 TV: 0.000 
+(epoch: 72, iters: 725, time: 0.102) G_B: 0.773 G_L1: 1.533 D: 0.262 TV: 0.000 
+(epoch: 72, iters: 925, time: 0.107) G_B: 0.615 G_L1: 1.631 D: 0.251 TV: 0.000 
+End of epoch 72 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000116 -> 0.000112
+(epoch: 73, iters: 400, time: 0.103) G_B: 0.710 G_L1: 1.690 D: 0.207 TV: 0.000 
+(epoch: 73, iters: 600, time: 0.103) G_B: 0.701 G_L1: 1.497 D: 0.244 TV: 0.000 
+(epoch: 73, iters: 800, time: 0.103) G_B: 0.830 G_L1: 1.690 D: 0.243 TV: 0.000 
+End of epoch 73 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000112 -> 0.000108
+(epoch: 74, iters: 275, time: 0.103) G_B: 0.789 G_L1: 1.591 D: 0.238 TV: 0.000 
+(epoch: 74, iters: 475, time: 0.106) G_B: 0.939 G_L1: 1.707 D: 0.278 TV: 0.000 
+(epoch: 74, iters: 675, time: 0.102) G_B: 0.736 G_L1: 1.625 D: 0.248 TV: 0.000 
+(epoch: 74, iters: 875, time: 0.108) G_B: 0.411 G_L1: 1.458 D: 0.296 TV: 0.000 
+End of epoch 74 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000108 -> 0.000104
+(epoch: 75, iters: 350, time: 0.105) G_B: 0.755 G_L1: 1.583 D: 0.257 TV: 0.000 
+(epoch: 75, iters: 550, time: 0.101) G_B: 0.715 G_L1: 1.780 D: 0.243 TV: 0.000 
+(epoch: 75, iters: 750, time: 0.099) G_B: 0.653 G_L1: 1.703 D: 0.230 TV: 0.000 
+(epoch: 75, iters: 950, time: 0.090) G_B: 0.669 G_L1: 1.648 D: 0.184 TV: 0.000 
+saving the model at the end of epoch 75, iters 54600
+End of epoch 75 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000104 -> 0.000100
+dataset [DepthDataset] was created
+(epoch: 76, iters: 425, time: 0.105) G_B: 0.795 G_L1: 1.555 D: 0.244 TV: 0.000 
+(epoch: 76, iters: 625, time: 0.103) G_B: 1.134 G_L1: 1.462 D: 0.288 TV: 0.000 
+saving the latest model (epoch 76, total_steps 55000)
+(epoch: 76, iters: 825, time: 0.106) G_B: 0.840 G_L1: 1.563 D: 0.216 TV: 0.000 
+End of epoch 76 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000100 -> 0.000096
+(epoch: 77, iters: 300, time: 0.106) G_B: 0.848 G_L1: 1.426 D: 0.212 TV: 0.000 
+(epoch: 77, iters: 500, time: 0.105) G_B: 0.718 G_L1: 1.541 D: 0.218 TV: 0.000 
+(epoch: 77, iters: 700, time: 0.106) G_B: 0.688 G_L1: 1.594 D: 0.205 TV: 0.000 
+(epoch: 77, iters: 900, time: 0.103) G_B: 0.699 G_L1: 1.320 D: 0.245 TV: 0.000 
+End of epoch 77 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000096 -> 0.000092
+(epoch: 78, iters: 375, time: 0.109) G_B: 0.872 G_L1: 1.529 D: 0.243 TV: 0.000 
+(epoch: 78, iters: 575, time: 0.104) G_B: 0.516 G_L1: 1.540 D: 0.233 TV: 0.000 
+(epoch: 78, iters: 775, time: 0.104) G_B: 0.605 G_L1: 1.280 D: 0.244 TV: 0.000 
+End of epoch 78 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000092 -> 0.000088
+(epoch: 79, iters: 250, time: 0.104) G_B: 0.645 G_L1: 1.490 D: 0.190 TV: 0.000 
+(epoch: 79, iters: 450, time: 0.106) G_B: 0.722 G_L1: 1.523 D: 0.241 TV: 0.000 
+(epoch: 79, iters: 650, time: 0.107) G_B: 0.677 G_L1: 1.454 D: 0.239 TV: 0.000 
+(epoch: 79, iters: 850, time: 0.106) G_B: 0.636 G_L1: 1.444 D: 0.215 TV: 0.000 
+End of epoch 79 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000088 -> 0.000084
+(epoch: 80, iters: 325, time: 0.110) G_B: 0.727 G_L1: 1.394 D: 0.244 TV: 0.000 
+(epoch: 80, iters: 525, time: 0.101) G_B: 1.008 G_L1: 1.567 D: 0.230 TV: 0.000 
+(epoch: 80, iters: 725, time: 0.101) G_B: 0.705 G_L1: 1.417 D: 0.255 TV: 0.000 
+(epoch: 80, iters: 925, time: 0.102) G_B: 0.530 G_L1: 1.602 D: 0.243 TV: 0.000 
+saving the model at the end of epoch 80, iters 58240
+End of epoch 80 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000084 -> 0.000080
+dataset [DepthDataset] was created
+(epoch: 81, iters: 400, time: 0.102) G_B: 0.833 G_L1: 1.419 D: 0.191 TV: 0.000 
+(epoch: 81, iters: 600, time: 0.108) G_B: 0.588 G_L1: 1.370 D: 0.214 TV: 0.000 
+(epoch: 81, iters: 800, time: 0.106) G_B: 0.745 G_L1: 1.579 D: 0.256 TV: 0.000 
+End of epoch 81 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000080 -> 0.000076
+(epoch: 82, iters: 275, time: 0.109) G_B: 0.628 G_L1: 1.281 D: 0.175 TV: 0.000 
+(epoch: 82, iters: 475, time: 0.107) G_B: 0.755 G_L1: 1.350 D: 0.184 TV: 0.000 
+(epoch: 82, iters: 675, time: 0.102) G_B: 0.845 G_L1: 1.479 D: 0.248 TV: 0.000 
+(epoch: 82, iters: 875, time: 0.103) G_B: 0.638 G_L1: 1.422 D: 0.261 TV: 0.000 
+End of epoch 82 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000076 -> 0.000072
+(epoch: 83, iters: 350, time: 0.105) G_B: 0.772 G_L1: 1.456 D: 0.262 TV: 0.000 
+(epoch: 83, iters: 550, time: 0.106) G_B: 0.713 G_L1: 1.370 D: 0.223 TV: 0.000 
+saving the latest model (epoch 83, total_steps 60000)
+(epoch: 83, iters: 750, time: 0.105) G_B: 0.832 G_L1: 1.278 D: 0.217 TV: 0.000 
+(epoch: 83, iters: 950, time: 0.108) G_B: 0.793 G_L1: 1.376 D: 0.273 TV: 0.000 
+End of epoch 83 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000072 -> 0.000068
+(epoch: 84, iters: 425, time: 0.106) G_B: 0.753 G_L1: 1.776 D: 0.153 TV: 0.000 
+(epoch: 84, iters: 625, time: 0.111) G_B: 0.952 G_L1: 1.140 D: 0.203 TV: 0.000 
+(epoch: 84, iters: 825, time: 0.106) G_B: 0.970 G_L1: 1.164 D: 0.264 TV: 0.000 
+End of epoch 84 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000068 -> 0.000064
+(epoch: 85, iters: 300, time: 0.104) G_B: 0.577 G_L1: 1.620 D: 0.244 TV: 0.000 
+(epoch: 85, iters: 500, time: 0.104) G_B: 0.673 G_L1: 1.335 D: 0.189 TV: 0.000 
+(epoch: 85, iters: 700, time: 0.104) G_B: 0.829 G_L1: 1.335 D: 0.245 TV: 0.000 
+(epoch: 85, iters: 900, time: 0.106) G_B: 0.627 G_L1: 1.471 D: 0.202 TV: 0.000 
+saving the model at the end of epoch 85, iters 61880
+End of epoch 85 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000064 -> 0.000060
+dataset [DepthDataset] was created
+(epoch: 86, iters: 375, time: 0.107) G_B: 0.694 G_L1: 1.456 D: 0.198 TV: 0.000 
+(epoch: 86, iters: 575, time: 0.110) G_B: 0.678 G_L1: 1.402 D: 0.246 TV: 0.000 
+(epoch: 86, iters: 775, time: 0.107) G_B: 0.688 G_L1: 1.280 D: 0.217 TV: 0.000 
+(epoch: 86, iters: 975, time: 0.109) G_B: 0.666 G_L1: 1.380 D: 0.234 TV: 0.000 
+End of epoch 86 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000060 -> 0.000056
+(epoch: 87, iters: 450, time: 0.105) G_B: 0.696 G_L1: 1.453 D: 0.216 TV: 0.000 
+(epoch: 87, iters: 650, time: 0.115) G_B: 0.797 G_L1: 1.307 D: 0.185 TV: 0.000 
+(epoch: 87, iters: 850, time: 0.104) G_B: 0.702 G_L1: 1.627 D: 0.233 TV: 0.000 
+End of epoch 87 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000056 -> 0.000052
+(epoch: 88, iters: 325, time: 0.108) G_B: 0.648 G_L1: 1.319 D: 0.262 TV: 0.000 
+(epoch: 88, iters: 525, time: 0.106) G_B: 0.704 G_L1: 1.533 D: 0.200 TV: 0.000 
+(epoch: 88, iters: 725, time: 0.106) G_B: 0.677 G_L1: 1.324 D: 0.222 TV: 0.000 
+(epoch: 88, iters: 925, time: 0.106) G_B: 0.598 G_L1: 1.604 D: 0.265 TV: 0.000 
+End of epoch 88 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000052 -> 0.000048
+(epoch: 89, iters: 400, time: 0.107) G_B: 0.604 G_L1: 1.731 D: 0.179 TV: 0.000 
+(epoch: 89, iters: 600, time: 0.111) G_B: 0.679 G_L1: 1.408 D: 0.220 TV: 0.000 
+(epoch: 89, iters: 800, time: 0.107) G_B: 0.752 G_L1: 1.524 D: 0.178 TV: 0.000 
+End of epoch 89 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000048 -> 0.000044
+(epoch: 90, iters: 275, time: 0.098) G_B: 0.602 G_L1: 1.735 D: 0.260 TV: 0.000 
+(epoch: 90, iters: 475, time: 0.108) G_B: 0.817 G_L1: 1.570 D: 0.184 TV: 0.000 
+saving the latest model (epoch 90, total_steps 65000)
+(epoch: 90, iters: 675, time: 0.111) G_B: 0.669 G_L1: 1.420 D: 0.221 TV: 0.000 
+(epoch: 90, iters: 875, time: 0.106) G_B: 0.636 G_L1: 1.212 D: 0.208 TV: 0.000 
+saving the model at the end of epoch 90, iters 65520
+End of epoch 90 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000044 -> 0.000040
+dataset [DepthDataset] was created
+(epoch: 91, iters: 350, time: 0.108) G_B: 0.653 G_L1: 1.226 D: 0.233 TV: 0.000 
+(epoch: 91, iters: 550, time: 0.106) G_B: 0.666 G_L1: 1.327 D: 0.235 TV: 0.000 
+(epoch: 91, iters: 750, time: 0.105) G_B: 0.848 G_L1: 1.430 D: 0.146 TV: 0.000 
+(epoch: 91, iters: 950, time: 0.102) G_B: 0.659 G_L1: 1.611 D: 0.245 TV: 0.000 
+End of epoch 91 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000040 -> 0.000036
+(epoch: 92, iters: 425, time: 0.108) G_B: 0.731 G_L1: 1.516 D: 0.282 TV: 0.000 
+(epoch: 92, iters: 625, time: 0.107) G_B: 0.670 G_L1: 1.540 D: 0.189 TV: 0.000 
+(epoch: 92, iters: 825, time: 0.107) G_B: 0.630 G_L1: 1.370 D: 0.205 TV: 0.000 
+End of epoch 92 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000036 -> 0.000032
+(epoch: 93, iters: 300, time: 0.112) G_B: 0.662 G_L1: 1.335 D: 0.241 TV: 0.000 
+(epoch: 93, iters: 500, time: 0.108) G_B: 0.703 G_L1: 1.409 D: 0.239 TV: 0.000 
+(epoch: 93, iters: 700, time: 0.117) G_B: 0.621 G_L1: 1.277 D: 0.214 TV: 0.000 
+(epoch: 93, iters: 900, time: 0.106) G_B: 0.709 G_L1: 1.557 D: 0.185 TV: 0.000 
+End of epoch 93 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000032 -> 0.000028
+(epoch: 94, iters: 375, time: 0.113) G_B: 0.691 G_L1: 1.250 D: 0.218 TV: 0.000 
+(epoch: 94, iters: 575, time: 0.107) G_B: 0.709 G_L1: 1.251 D: 0.166 TV: 0.000 
+(epoch: 94, iters: 775, time: 0.110) G_B: 0.692 G_L1: 1.372 D: 0.223 TV: 0.000 
+(epoch: 94, iters: 975, time: 0.108) G_B: 0.755 G_L1: 1.345 D: 0.139 TV: 0.000 
+End of epoch 94 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000028 -> 0.000024
+(epoch: 95, iters: 450, time: 0.113) G_B: 0.738 G_L1: 1.382 D: 0.196 TV: 0.000 
+(epoch: 95, iters: 650, time: 0.108) G_B: 0.616 G_L1: 1.363 D: 0.199 TV: 0.000 
+(epoch: 95, iters: 850, time: 0.112) G_B: 0.661 G_L1: 1.345 D: 0.196 TV: 0.000 
+saving the model at the end of epoch 95, iters 69160
+End of epoch 95 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000024 -> 0.000020
+dataset [DepthDataset] was created
+(epoch: 96, iters: 325, time: 0.105) G_B: 0.702 G_L1: 1.462 D: 0.188 TV: 0.000 
+(epoch: 96, iters: 525, time: 0.109) G_B: 0.620 G_L1: 1.377 D: 0.210 TV: 0.000 
+(epoch: 96, iters: 725, time: 0.109) G_B: 0.676 G_L1: 1.634 D: 0.209 TV: 0.000 
+(epoch: 96, iters: 925, time: 0.109) G_B: 0.714 G_L1: 1.722 D: 0.167 TV: 0.000 
+End of epoch 96 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000020 -> 0.000016
+(epoch: 97, iters: 400, time: 0.108) G_B: 0.640 G_L1: 1.451 D: 0.244 TV: 0.000 
+saving the latest model (epoch 97, total_steps 70000)
+(epoch: 97, iters: 600, time: 0.108) G_B: 0.671 G_L1: 1.566 D: 0.215 TV: 0.000 
+(epoch: 97, iters: 800, time: 0.109) G_B: 0.640 G_L1: 1.235 D: 0.240 TV: 0.000 
+(epoch: 97, iters: 1000, time: 0.109) G_B: 0.731 G_L1: 1.276 D: 0.189 TV: 0.000 
+End of epoch 97 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000016 -> 0.000012
+(epoch: 98, iters: 475, time: 0.106) G_B: 0.666 G_L1: 1.506 D: 0.226 TV: 0.000 
+(epoch: 98, iters: 675, time: 0.105) G_B: 0.709 G_L1: 1.434 D: 0.165 TV: 0.000 
+(epoch: 98, iters: 875, time: 0.108) G_B: 0.649 G_L1: 1.385 D: 0.226 TV: 0.000 
+End of epoch 98 / 100 	 Time Taken: 37 sec
+update learning rate: 0.000012 -> 0.000008
+(epoch: 99, iters: 350, time: 0.109) G_B: 0.625 G_L1: 1.276 D: 0.232 TV: 0.000 
+(epoch: 99, iters: 550, time: 0.109) G_B: 0.607 G_L1: 1.299 D: 0.195 TV: 0.000 
+(epoch: 99, iters: 750, time: 0.110) G_B: 0.615 G_L1: 1.401 D: 0.222 TV: 0.000 
+(epoch: 99, iters: 950, time: 0.111) G_B: 0.738 G_L1: 1.717 D: 0.168 TV: 0.000 
+End of epoch 99 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000008 -> 0.000004
+(epoch: 100, iters: 425, time: 0.108) G_B: 0.599 G_L1: 1.391 D: 0.258 TV: 0.000 
+(epoch: 100, iters: 625, time: 0.115) G_B: 0.622 G_L1: 1.626 D: 0.206 TV: 0.000 
+(epoch: 100, iters: 825, time: 0.110) G_B: 0.688 G_L1: 1.347 D: 0.167 TV: 0.000 
+(epoch: 100, iters: 1025, time: 0.100) G_B: 0.686 G_L1: 1.300 D: 0.151 TV: 0.000 
+saving the model at the end of epoch 100, iters 72800
+End of epoch 100 / 100 	 Time Taken: 38 sec
+update learning rate: 0.000004 -> 0.000000
+------------ Options -------------
+aspect_ratio: 1.0
+batchSize: 1
+checkpoints_dir: /home/xyang/UTS/Data/Haze/D-HAZY/final/checkpoints
+dataroot: /home/xyang/UTS/Data/Haze/D-HAZY/final
+dataset_mode: depth
+depth_nc: 3
+depth_reverse: True
+display_id: 0
+display_port: 8097
+display_single_pane_ncols: 0
+display_winsize: 256
+filtering: None
+fineSize: 256
+gpu_ids: [0]
+how_many: 500
+identity: 0.0
+input_nc: 3
+isTrain: False
+loadSize: 256
+max_dataset_size: inf
+model: disentangled_final
+nThreads: 1
+n_layers: 3
+n_layers_D: 5
+name: disentangled_final_A40_TV0_lr0.0002_none_id2
+ndf: 64
+ngf: 64
+no_dropout: True
+no_flip: False
+non_linearity: None
+norm: instance
+ntest: inf
+output_nc: 3
+phase: test
+pooling: False
+resize_or_crop: scale_width
+results_dir: /home/xyang/UTS/Data/Haze/D-HAZY/final/results
+serial_batches: False
+which_direction: AtoB
+which_epoch: latest
+which_model_depth: resnet_depth
+which_model_netD: multi
+which_model_netG: resnet_9blocks
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [DepthDataset] was created
+disentangled_final
+---------- Networks initialized -------------
+ResnetGenerator (
+  (model): Sequential (
+    (0): ReflectionPad2d (3, 3, 3, 3)
+    (1): Conv2d(3, 64, kernel_size=(7, 7), stride=(1, 1))
+    (2): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (3): ReLU (inplace)
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (5): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (6): ReLU (inplace)
+    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+    (9): ReLU (inplace)
+    (10): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (11): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (12): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (13): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (14): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (15): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (16): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (17): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (18): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (19): ConvTranspose2d(256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (20): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+    (21): ReLU (inplace)
+    (22): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (23): InstanceNorm2d(64, eps=1e-05, momentum=0.1, affine=False)
+    (24): ReLU (inplace)
+    (25): ReflectionPad2d (3, 3, 3, 3)
+    (26): Conv2d(64, 3, kernel_size=(7, 7), stride=(1, 1))
+    (27): Tanh ()
+  )
+)
+Total number of parameters: 11378179
+ResnetDepthGenerator (
+  (model): Sequential (
+    (0): ReflectionPad2d (3, 3, 3, 3)
+    (1): Conv2d(3, 6, kernel_size=(7, 7), stride=(1, 1))
+    (2): InstanceNorm2d(6, eps=1e-05, momentum=0.1, affine=False)
+    (3): ReLU (inplace)
+    (4): Conv2d(6, 12, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (5): InstanceNorm2d(12, eps=1e-05, momentum=0.1, affine=False)
+    (6): ReLU (inplace)
+    (7): Conv2d(12, 24, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+    (9): ReLU (inplace)
+    (10): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (11): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (12): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (13): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (14): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (15): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (16): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (17): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (18): ResnetBlock (
+      (conv_block): Sequential (
+        (0): ReflectionPad2d (1, 1, 1, 1)
+        (1): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (2): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+        (3): ReLU (inplace)
+        (4): ReflectionPad2d (1, 1, 1, 1)
+        (5): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1))
+        (6): InstanceNorm2d(24, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (19): ConvTranspose2d(24, 12, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (20): InstanceNorm2d(12, eps=1e-05, momentum=0.1, affine=False)
+    (21): ReLU (inplace)
+    (22): ConvTranspose2d(12, 6, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))
+    (23): InstanceNorm2d(6, eps=1e-05, momentum=0.1, affine=False)
+    (24): ReLU (inplace)
+    (25): ReflectionPad2d (3, 3, 3, 3)
+    (26): Conv2d(6, 1, kernel_size=(7, 7), stride=(1, 1))
+    (27): Tanh ()
+  )
+)
+Total number of parameters: 101461
+-----------------------------------------------
+model [DisentangledModel] was created
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1000_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1001_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1002_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1003_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1004_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1005_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1006_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1007_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1008_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1009_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/100_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1010_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1011_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1012_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1013_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1014_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1015_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1016_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1017_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1018_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1019_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/101_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1020_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1021_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1022_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1023_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1024_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1025_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1026_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1027_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1028_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1029_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/102_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1030_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1031_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1032_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1033_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1034_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1035_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1036_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1037_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1038_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1039_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/103_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1040_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1041_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1042_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1043_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1044_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1045_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1046_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1047_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1048_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1049_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/104_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1050_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1051_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1052_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1053_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1054_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1055_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1056_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1057_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1058_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1059_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/105_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1060_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1061_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1062_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1063_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1064_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1065_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1066_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1067_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1068_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1069_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/106_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1070_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1071_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1072_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1073_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1074_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1075_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1076_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1077_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1078_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1079_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/107_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1080_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1081_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1082_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1083_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1084_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1085_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1086_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1087_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1088_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1089_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/108_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1090_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1091_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1092_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1093_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1094_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1095_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1096_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1097_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1098_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1099_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/109_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/10_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1100_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1101_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1102_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1103_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1104_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1105_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1106_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1107_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1108_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1109_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/110_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1110_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1111_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1112_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1113_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1114_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1115_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1116_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1117_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1118_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1119_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/111_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1120_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1121_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1122_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1123_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1124_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1125_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1126_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1127_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1128_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1129_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/112_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1130_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1131_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1132_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1133_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1134_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1135_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1136_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1137_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1138_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1139_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/113_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1140_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1141_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1142_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1143_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1144_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1145_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1146_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1147_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1148_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1149_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/114_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1150_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1151_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1152_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1153_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1154_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1155_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1156_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1157_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1158_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1159_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/115_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1160_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1161_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1162_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1163_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1164_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1165_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1166_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1167_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1168_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1169_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/116_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1170_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1171_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1172_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1173_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1174_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1175_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1176_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1177_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1178_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1179_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/117_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1180_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1181_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1182_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1183_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1184_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1185_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1186_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1187_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1188_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1189_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/118_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1190_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1191_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1192_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1193_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1194_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1195_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1196_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1197_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1198_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1199_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/119_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/11_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1200_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1201_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1202_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1203_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1204_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1205_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1206_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1207_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1208_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1209_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/120_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1210_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1211_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1212_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1213_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1214_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1215_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1216_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1217_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1218_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1219_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/121_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1220_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1221_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1222_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1223_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1224_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1225_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1226_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1227_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1228_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1229_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/122_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1230_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1231_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1232_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1233_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1234_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1235_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1236_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1237_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1238_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1239_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/123_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1240_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1241_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1242_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1243_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1244_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1245_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1246_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1247_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1248_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1249_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/124_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1250_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1251_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1252_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1253_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1254_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1255_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1256_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1257_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1258_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1259_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/125_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1260_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1261_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1262_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1263_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1264_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1265_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1266_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1267_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1268_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1269_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/126_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1270_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1271_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1272_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1273_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1274_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1275_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1276_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1277_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1278_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1279_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/127_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1280_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1281_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1282_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1283_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1284_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1285_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1286_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1287_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1288_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1289_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/128_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1290_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1291_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1292_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1293_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1294_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1295_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1296_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1297_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1298_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1299_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/129_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/12_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1300_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1301_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1302_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1303_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1304_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1305_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1306_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1307_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1308_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1309_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/130_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1310_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1311_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1312_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1313_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1314_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1315_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1316_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1317_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1318_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1319_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/131_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1320_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1321_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1322_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1323_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1324_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1325_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1326_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1327_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1328_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1329_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/132_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1330_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1331_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1332_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1333_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1334_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1335_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1336_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1337_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1338_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1339_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/133_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1340_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1341_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1342_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1343_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1344_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1345_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1346_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1347_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1348_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1349_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/134_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1350_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1351_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1352_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1353_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1354_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1355_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1356_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1357_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1358_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1359_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/135_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1360_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1361_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1362_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1363_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1364_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1365_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1366_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1367_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1368_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1369_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/136_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1370_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1371_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1372_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1373_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1374_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1375_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1376_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1377_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1378_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1379_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/137_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1380_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1381_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1382_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1383_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1384_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1385_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1386_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1387_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1388_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1389_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/138_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1390_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1391_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1392_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1393_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1394_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1395_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1396_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1397_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1398_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1399_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/139_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/13_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1400_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1401_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1402_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1403_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1404_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1405_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1406_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1407_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1408_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1409_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/140_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1410_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1411_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1412_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1413_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1414_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1415_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1416_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1417_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1418_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1419_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/141_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1420_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1421_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1422_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1423_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1424_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1425_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1426_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1427_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1428_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1429_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/142_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1430_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1431_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1432_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1433_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1434_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1435_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1436_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1437_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1438_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1439_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/143_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1440_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1441_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1442_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1443_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1444_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1445_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1446_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1447_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1448_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/1449_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/144_Hazy.bmp']
+process image... ['/home/xyang/UTS/Data/Haze/D-HAZY/final/testA/145_Hazy.bmp']

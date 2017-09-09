@@ -63,7 +63,9 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
         netG = AODNetGenerator(input_nc, output_nc, ngf, gpu_ids=gpu_ids, non_linearity=non_linearity, pooling=pooling, filtering=filtering, norm_layer=norm_layer)
     elif which_model_netG == 'air':
         netG = AirGenerator(gpu_ids=gpu_ids, n_layers=n_layers)
-    elif which_model_netG == 'resnet_depth':
+    elif which_model_netG == 'resnet6_depth':
+        netG = ResnetDepthGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=6, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
+    elif which_model_netG == 'resnet9_depth':
         netG = ResnetDepthGenerator(input_nc, output_nc, ngf, norm_layer=norm_layer, use_dropout=use_dropout, n_blocks=9, gpu_ids=gpu_ids, non_linearity=non_linearity, filtering=filtering)
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % which_model_netG)
@@ -201,7 +203,7 @@ class AirGenerator(nn.Module):
 
 # Define AOD-Net
 class AODNetGenerator(nn.Module):
-    def __init__(self, input_nc=3, output_nc=1, ngf=6, norm_layer=nn.BatchNorm2d, gpu_ids=[], non_linearity='sigmoid', pooling=False, filtering=None, r=10, eps=1e-3):
+    def __init__(self, input_nc=3, output_nc=1, ngf=6, norm_layer=nn.BatchNorm2d, gpu_ids=[], non_linearity=None, pooling=False, filtering=None, r=10, eps=1e-3):
         super(AODNetGenerator, self).__init__()
         self.input_nc = input_nc
         self.gpu_ids = gpu_ids
@@ -212,8 +214,11 @@ class AODNetGenerator(nn.Module):
         else:
             use_bias = norm_layer == nn.InstanceNorm2d
         
-        if non_linearity == 'BReLU':
-            last_act = BReLU(0.99,0.01,0.99,0.01,True)
+        self.non_linearity = non_linearity
+        if non_linearity is None:
+            last_act = nn.Tanh()
+        elif non_linearity == 'BReLU':
+            last_act = BReLU(0.95,0.05,0.95,0.05,True)
         elif non_linearity == 'ReLU':
             last_act = nn.ReLU(True)
         elif non_linearity == 'sigmoid':
@@ -221,6 +226,7 @@ class AODNetGenerator(nn.Module):
         elif non_linearity == 'linear':
             last_act = None
         else:
+            print  non_linearity
             raise NotImplementedError
 
         model = [nn.Conv2d(input_nc, ngf, kernel_size=1, padding=0, bias=use_bias),
@@ -257,22 +263,31 @@ class AODNetGenerator(nn.Module):
 
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
             pre_filter = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            if self.non_linearity is None:
+                # rescale to [0,1]
+                pre_filter = (pre_filter + 1) / 2
+
             if self.filtering is not None:
                 if self.filtering == 'guided':
                     return pre_filter, self.last_layer(guidance, pre_filter)
                 else:
                     return pre_filter, nn.parallel.data_parallel(self.last_layer, pre_filter, self.gpu_ids)
             else:
-                return pre_filter, pre_filter
+                return None, pre_filter
         else:
             pre_filter = self.model(input)
+            if self.non_linearity is None:
+                # rescale to [0,1]
+                pre_filter = (pre_filter + 1) / 2
+
             if self.filtering is not None:
                 if self.filtering == 'guided':
                     return pre_filter, self.last_layer(guidance, pre_filter)
                 else:
                     return pre_filter, self.last_layer(pre_filter)
             else:
-                return pre_filter, pre_filter
+                return None, pre_filter
+
 
 
 # Guided image filtering for grayscale images
@@ -323,6 +338,7 @@ class ConcatBlock(nn.Module):
             use_bias = norm_layer == nn.InstanceNorm2d
 
         model = [nn.ReflectionPad2d(kernel_size/2),
+                 nn.Conv2d(input_nc, output_nc, kernel_size=kernel_size, padding=0, bias=use_bias),
                  norm_layer(output_nc),
                  nn.ReLU(True)]
 
@@ -577,11 +593,14 @@ class ResnetBlock(nn.Module):
 # at the bottleneck
 class UnetGenerator(nn.Module):
     def __init__(self, input_nc, output_nc, num_downs, ngf=64,
-                 norm_layer=nn.BatchNorm2d, use_dropout=False, gpu_ids=[], non_linearity='linear', filtering=None, r=10, eps=1e-3):
+                 norm_layer=nn.BatchNorm2d, use_dropout=False, gpu_ids=[], non_linearity=None, filtering=None, r=10, eps=1e-3):
         super(UnetGenerator, self).__init__()
         self.gpu_ids = gpu_ids
         self.filtering=filtering
-        if non_linearity == 'BReLU':
+        self.non_linearity = non_linearity
+        if non_linearity is None:
+            last_act = nn.Tanh()
+        elif non_linearity == 'BReLU':
             last_act = BReLU(0.95,0.05,0.95,0.05,True)
         elif non_linearity == 'ReLU':
             last_act = nn.ReLU(True)
@@ -597,12 +616,12 @@ class UnetGenerator(nn.Module):
 #        assert(input_nc == output_nc)
 
         # construct unet structure
-        unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, norm_layer=norm_layer, innermost=True, non_linearity=last_act)
+        unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, norm_layer=norm_layer, innermost=True)
         for i in range(num_downs - 5):
-            unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, unet_block, norm_layer=norm_layer, use_dropout=use_dropout, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(ngf * 4, ngf * 8, unet_block, norm_layer=norm_layer, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(ngf * 2, ngf * 4, unet_block, norm_layer=norm_layer, non_linearity=last_act)
-        unet_block = UnetSkipConnectionBlock(ngf, ngf * 2, unet_block, norm_layer=norm_layer, non_linearity=last_act)
+            unet_block = UnetSkipConnectionBlock(ngf * 8, ngf * 8, unet_block, norm_layer=norm_layer, use_dropout=use_dropout)
+        unet_block = UnetSkipConnectionBlock(ngf * 4, ngf * 8, unet_block, norm_layer=norm_layer)
+        unet_block = UnetSkipConnectionBlock(ngf * 2, ngf * 4, unet_block, norm_layer=norm_layer)
+        unet_block = UnetSkipConnectionBlock(ngf, ngf * 2, unet_block, norm_layer=norm_layer)
         unet_block = UnetSkipConnectionBlock(output_nc, ngf, unet_block, outermost=True, norm_layer=norm_layer, non_linearity=last_act)
 
         self.model = unet_block
@@ -623,22 +642,30 @@ class UnetGenerator(nn.Module):
 
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor):
             pre_filter = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
+            if self.non_linearity is None:
+                # rescale to [0,1]
+                pre_filter = (pre_filter + 1) / 2
+
             if self.filtering is not None:
                 if self.filtering == 'guided':
                     return pre_filter, self.last_layer(guidance, pre_filter)
                 else:
                     return pre_filter, nn.parallel.data_parallel(self.last_layer, pre_filter, self.gpu_ids)
             else:
-                return pre_filter, pre_filter
+                return None, pre_filter
         else:
             pre_filter = self.model(input)
+            if self.non_linearity is None:
+                # rescale to [0,1]
+                pre_filter = (pre_filter + 1) / 2
+
             if self.filtering is not None:
                 if self.filtering == 'guided':
                     return pre_filter, self.last_layer(guidance, pre_filter)
                 else:
                     return pre_filter, self.last_layer(pre_filter)
             else:
-                return pre_filter, pre_filter
+                return None, pre_filter
 
 
 # Defines the submodule with skip connection.

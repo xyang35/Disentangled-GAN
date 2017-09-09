@@ -2,7 +2,8 @@
 %root = '/home/xyang/Downloads/GAN/disentangled_resnet_9blocks_sigmoid_A100_TV0.00001/disentangled_resnet_9blocks_sigmoid_A100_TV0.00001/test_latest/images/';
 %name = 'disentangled_resnet_9blocks_sigmoid_A100_TV1';
 
-root = ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results/',name,'/test_latest/images/'];
+root = ['/home/xyang/UTS/Data/Haze/D-HAZY/final/results/',name,'/test_latest/images/'];
+%root = ['/home/xyang/UTS/Data/Haze/D-HAZY/NYU/results/',name,'/test_latest/images/'];
 
 %suffix1 = '_dcp_radiance-refinedt'; folder = ['/home/xyang/Downloads/GAN/demo/app/static/DCP/']; 
 %suffix1 = '_DehazeNet'; folder = ['/home/xyang/Downloads/GAN/demo/app/static/DehazeNet/'];
@@ -27,7 +28,8 @@ display(suffix2);
 
 %parpool(4)
 %parfor i = 1 : length(img_names)
-for i = 1 : length(img_names)
+%for i = 1 : length(img_names)
+for i = 1 : 500
     display( img_names(i).name );
     ref_img = imread([root, img_names(i).name]);
 
@@ -63,9 +65,15 @@ display('Haze-free')
 display( mean(peaksnr_all1) );
 display( mean(ssim_all1) );
 display(mean(ciede_all1))
+%display( mean(peaksnr_all1(1:725)) );display( mean(peaksnr_all1(725:end)) );
+%display( mean(ssim_all1(1:725)) );display( mean(ssim_all1(725:end)) );
+%display( mean(ciede_all1(1:725)) );display( mean(ciede_all1(725:end)) );
 
 display('Haze-free-depth')
 display( mean(peaksnr_all2) );
 display( mean(ssim_all2) );
 display(mean(ciede_all2))
+%display( mean(peaksnr_all2(1:725)) );display( mean(peaksnr_all2(725:end)) );
+%display( mean(ssim_all2(1:725)) );display( mean(ssim_all2(725:end)) );
+%display( mean(ciede_all2(1:725)) );display( mean(ciede_all2(725:end)) );
 
