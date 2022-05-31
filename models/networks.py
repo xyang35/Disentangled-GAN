@@ -28,19 +28,19 @@ def get_norm_layer(norm_type='instance'):
     elif norm_type == 'instance':
         norm_layer = functools.partial(nn.InstanceNorm2d, affine=False)
     else:
-        raise NotImplementedError('normalization layer [%s] is not found' % norm)
+        raise NotImplementedError('normalization layer [%s] is not found' % norm_type)
     return norm_layer
 
 
-def define_VGG(pretrained=True, gpu_ids=[]):
-    vgg = Vgg16()
+# def define_VGG(pretrained=True, gpu_ids=[]):
+#     vgg = Vgg16()
 
-    if pretrained:
-        vgg.load_state_dict(torch.load('models/vgg16.weight'))
+#     if pretrained:
+#         vgg.load_state_dict(torch.load('models/vgg16.weight'))
 
-    if len(gpu_ids) > 0:
-        vgg.cuda(device_id=gpu_ids[0])
-    return vgg
+#     if len(gpu_ids) > 0:
+#         vgg.cuda(device_id=gpu_ids[0])
+#     return vgg
 
 
 def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropout=False, gpu_ids=[], non_linearity=None, pooling=False, n_layers=3, filtering=None):
@@ -70,7 +70,7 @@ def define_G(input_nc, output_nc, ngf, which_model_netG, norm='batch', use_dropo
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % which_model_netG)
     if len(gpu_ids) > 0:
-        netG.cuda(device_id=gpu_ids[0])
+        netG.to(gpu_ids[0])
     netG.apply(weights_init)
     return netG
 
@@ -93,7 +93,7 @@ def define_D(input_nc, ndf, which_model_netD,
         raise NotImplementedError('Discriminator model name [%s] is not recognized' %
                                   which_model_netD)
     if use_gpu:
-        netD.cuda(device_id=gpu_ids[0])
+        netD.to(gpu_ids[0])
     netD.apply(weights_init)
     return netD
 
@@ -226,7 +226,7 @@ class AODNetGenerator(nn.Module):
         elif non_linearity == 'linear':
             last_act = None
         else:
-            print  non_linearity
+            print(non_linearity)
             raise NotImplementedError
 
         model = [nn.Conv2d(input_nc, ngf, kernel_size=1, padding=0, bias=use_bias),
@@ -466,7 +466,7 @@ class ResnetDepthGenerator(nn.Module):
         elif non_linearity == 'linear':
             last_act = None
         else:
-            print  non_linearity
+            print(non_linearity)
             raise NotImplementedError
 
         model = [nn.ReflectionPad2d(3),
@@ -609,7 +609,7 @@ class UnetGenerator(nn.Module):
         elif non_linearity == 'linear':
             last_act = None
         else:
-            print  non_linearity
+            print(non_linearity)
             raise NotImplementedError
 
         # currently support only input_nc == output_nc
@@ -724,7 +724,7 @@ class UnetSkipConnectionBlock(nn.Module):
             return self.model(x)
         else:
             y = self.model(x)
-            print y.size(), x.size()
+            print(y.size(), x.size())
             return torch.cat([y, x], 1)
 
 
